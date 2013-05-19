@@ -1,0 +1,7 @@
+;# dBankLite Canary Plugin configuration file
+author=darkdiplomat
+version=1.0
+mount-point=post
+name=dBankLite
+dependencies=dConomy
+main-class=net.visualillusionsent.minecraft.server.mod.canary.plugin.dconomy.addon.bank.dBankLite

@@ -1,0 +1,173 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.visualillusionsent</groupId>
+  <artifactId>dBankLite</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>dBankLite</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <ProgramStatus>ALPHA</ProgramStatus>
+  </properties>
+  <description>Bank Add-On for dConomy3</description>
+  <licenses>
+    <license>
+      <name>GNU General Public License v3</name>
+      <url>http://www.gnu.org/licenses/gpl.html</url>
+      <comments>
+        dConomy is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+              
+        dConomy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+        without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        See the GNU General Public License for more details.
+      </comments>
+    </license>
+  </licenses>
+  <url>http://docs.visualillusionsent.net/dBankLite/</url>
+  <inceptionYear>2013</inceptionYear>
+  <organization>
+   <name>Visual Illusions Entertainment</name>
+   <url>http://visualillusionsent.net</url>
+  </organization>
+  <scm>
+   <url>https://github.com/Visual-Illusions/dBankLite</url>
+   <connection>GitHub</connection>
+   <developerConnection>scm:git:ssh://git@github.com:Visual-Illusions/dBankLite.git</developerConnection>
+  </scm>
+  <issueManagement>
+   <url>http://github.com/Visual-Illusions/dBankLite/issues</url>
+   <system>GitHub Issues Tracker</system>
+  </issueManagement>
+  <ciManagement>
+   <url>http://ci.visualillusionsent.net/job/dBankLite</url>
+   <system>Jenkins</system>
+  </ciManagement>
+  <distributionManagement>
+    <repository>
+      <id>vi-repo</id>
+      <url>ftp://repo.visualillusionsent.net/</url>
+    </repository>
+  </distributionManagement>
+  <repositories>
+    <repository>
+      <id>CodeBukkit</id>
+      <name>Bukkit Public Repository</name>
+      <url>http://repo.bukkit.org/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>vi-repo</id>
+      <name>Visual Illusions Repository</name>
+      <url>http://repo.visualillusionsent.net/</url>
+      <releases>
+        <updatePolicy>always</updatePolicy>
+      </releases>
+      <snapshots>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+  <dependencies>
+   <!-- Libraries -->
+   <dependency>
+    <groupId>net.visualillusionsent</groupId>
+    <artifactId>viutils</artifactId>
+    <version>1.0.4-SNAPSHOT</version>
+   </dependency>
+   <dependency>
+    <groupId>org.xerial</groupId>
+    <artifactId>sqlite-jdbc</artifactId>
+    <version>3.7.2</version>
+   </dependency>
+   <!-- Libraries End -->
+   <!-- Mods -->
+   <dependency>
+    <groupId>net.canarymod</groupId>
+    <artifactId>CanaryLib</artifactId>
+    <version>0.8-SNAPSHOT</version>
+   </dependency>
+   <dependency>
+    <groupId>org.bukkit</groupId>
+    <artifactId>bukkit</artifactId>
+    <version>1.5.1-R0.2</version>
+   </dependency>
+   <!-- Mods End -->
+   <!-- Requires dConomy -->
+   <dependency>
+   	<groupId>net.visualillusionsent</groupId>
+   	<artifactId>dconomy</artifactId>
+   	<version>3.0-SNAPSHOT</version>
+   </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!-- Start: Build Number Generator -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.2</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+          <format>{0,number}</format>
+          <items>
+            <item>buildNumber0</item>
+          </items>
+        </configuration>
+      </plugin>
+      <!-- End: Build Number Generator -->
+      <!-- Start: Compiler -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <!-- End: Compiler -->
+      <!-- Start: Package -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <finalName>${project.build.finalName}</finalName>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <manifest>
+              <addClasspath>false</addClasspath>
+            </manifest>
+            <manifestEntries>
+                <Title>dBankLite</Title>
+                <Version>${project.version}</Version>
+                <Build-Time>${maven.build.timestamp}</Build-Time>
+                <Build>${buildNumber}</Build>
+                <ProgramStatus>${ProgramStatus}</ProgramStatus>
+                <Vendor>Visual Illusions Entertainment</Vendor>
+                <Built-By>${user.name}</Built-By>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <!-- End: Package -->
+    </plugins>
+    <extensions>
+      <!-- FTP Extension to upload to repo.visualillusionsent.net -->
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ftp</artifactId>
+        <version>1.0-alpha-6</version>
+      </extension>
+    </extensions>
+  </build>
+</project>
