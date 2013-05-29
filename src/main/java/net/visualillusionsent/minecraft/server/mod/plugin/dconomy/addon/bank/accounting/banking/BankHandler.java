@@ -19,6 +19,8 @@
  */
 package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
@@ -125,5 +127,9 @@ public final class BankHandler{
      */
     public static final void cleanUp(){
         $.accounts.clear();
+    }
+
+    public static final Collection<BankAccount> getAccounts(){
+        return Collections.unmodifiableCollection($.accounts.values());
     }
 }

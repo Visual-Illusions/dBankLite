@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.List;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.Account;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.wallet.Wallet;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
 import net.visualillusionsent.utils.SystemUtils;
@@ -102,29 +101,29 @@ public final class BankXMLSource implements BankDataSource{
     }
 
     @Override
-    public final boolean saveAccount(Account account){
+    public final boolean saveAccount(Account bankaccount){
         boolean success = true;
         synchronized (lock) {
             File bankFile = new File(bank_Path);
             try {
                 Document doc = builder.build(bankFile);
                 Element root = doc.getRootElement();
-                List<Element> wallets = root.getChildren();
+                List<Element> accounts = root.getChildren();
                 boolean found = false;
-                for (Element wallet : wallets) {
-                    String name = wallet.getChildText("owner");
-                    if (name.equals(account.getOwner())) {
-                        wallet.getAttribute("balance").setValue(String.format("%.2f", account.getBalance()));
-                        wallet.getAttribute("lockedOut").setValue(String.valueOf(((Wallet) account).isLocked()));
+                for (Element account : accounts) {
+                    String name = account.getChildText("owner");
+                    if (name.equals(bankaccount.getOwner())) {
+                        account.getAttribute("balance").setValue(String.format("%.2f", bankaccount.getBalance()));
+                        account.getAttribute("lockedOut").setValue(String.valueOf(((BankAccount) bankaccount).isLocked()));
                         found = true;
                         break;
                     }
                 }
                 if (!found) {
-                    Element newWallet = new Element("wallet");
-                    newWallet.setAttribute("owner", account.getOwner());
-                    newWallet.setAttribute("balance", String.format("%.2f", account.getBalance()));
-                    newWallet.setAttribute("lockedOut", String.valueOf(((Wallet) account).isLocked()));
+                    Element newWallet = new Element("bankaccount");
+                    newWallet.setAttribute("owner", bankaccount.getOwner());
+                    newWallet.setAttribute("balance", String.format("%.2f", bankaccount.getBalance()));
+                    newWallet.setAttribute("lockedOut", String.valueOf(((BankAccount) bankaccount).isLocked()));
                     root.addContent(newWallet);
                 }
                 try {
@@ -147,12 +146,12 @@ public final class BankXMLSource implements BankDataSource{
                 }
             }
             catch (JDOMException jdomex) {
-                dBankLiteBase.severe("JDOM Exception while trying to save bank account for User:" + account.getOwner());
+                dBankLiteBase.severe("JDOM Exception while trying to save bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(jdomex);
                 success = false;
             }
             catch (IOException ioex) {
-                dBankLiteBase.severe("Input/Output Exception while trying to save bank account for User:" + account.getOwner());
+                dBankLiteBase.severe("Input/Output Exception while trying to save bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(ioex);
                 success = false;
             }
@@ -161,7 +160,7 @@ public final class BankXMLSource implements BankDataSource{
     }
 
     @Override
-    public final boolean reloadAccount(Account account){
+    public final boolean reloadAccount(Account bankaccount){
         boolean success = true;
         synchronized (lock) {
             File bankFile = new File(bank_Path);
@@ -171,20 +170,20 @@ public final class BankXMLSource implements BankDataSource{
                 List<Element> wallets = root.getChildren();
                 for (Element wallet : wallets) {
                     String name = wallet.getChildText("owner");
-                    if (name.equals(account.getOwner())) {
-                        account.setBalance(wallet.getAttribute("balance").getDoubleValue());
-                        ((Wallet) account).setLockOut(wallet.getAttribute("lockedOut").getBooleanValue());
+                    if (name.equals(bankaccount.getOwner())) {
+                        bankaccount.setBalance(wallet.getAttribute("balance").getDoubleValue());
+                        ((BankAccount) bankaccount).setLockOut(wallet.getAttribute("lockedOut").getBooleanValue());
                         break;
                     }
                 }
             }
             catch (JDOMException jdomex) {
-                dBankLiteBase.severe("JDOM Exception while trying to reload bank account for User:" + account.getOwner());
+                dBankLiteBase.severe("JDOM Exception while trying to reload bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(jdomex);
                 success = false;
             }
             catch (IOException ioex) {
-                dBankLiteBase.severe("Input/Output Exception while trying to reload bank account for User:" + account.getOwner());
+                dBankLiteBase.severe("Input/Output Exception while trying to reload bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(ioex);
                 success = false;
             }

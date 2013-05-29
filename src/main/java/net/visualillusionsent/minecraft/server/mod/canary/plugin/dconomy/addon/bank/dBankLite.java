@@ -43,7 +43,7 @@ public final class dBankLite extends Plugin implements IdBankLite{
 
     @Override
     public void disable(){
-
+        dBankLiteBase.cleanUp();
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
-import net.visualillusionsent.minecraft.server.mod.interfaces.MCChatForm;
+import net.visualillusionsent.minecraft.server.mod.interfaces.MineChatForm;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.utils.StringUtils;
@@ -35,14 +35,14 @@ public final class dBankLiteInformationCommand extends dConomyCommand{
     public dBankLiteInformationCommand(){
         super(0);
         List<String> pre = new ArrayList<String>();
-        pre.add(center(MCChatForm.CYAN + "---" + MCChatForm.LIGHT_GREEN + " d" + MCChatForm.ORANGE + "BankLite " + MCChatForm.PURPLE + "v" + dBankLiteBase.getRawVersion() + MCChatForm.CYAN + " ---"));
+        pre.add(center(MineChatForm.CYAN + "---" + MineChatForm.LIGHT_GREEN + " d" + MineChatForm.ORANGE + "BankLite " + MineChatForm.PURPLE + "v" + dBankLiteBase.getRawVersion() + MineChatForm.CYAN + " ---"));
         pre.add("$VERSION_CHECK$");
-        pre.add(MCChatForm.CYAN + "Build: " + MCChatForm.LIGHT_GREEN + dBankLiteBase.getBuildNumber());
-        pre.add(MCChatForm.CYAN + "Built: " + MCChatForm.LIGHT_GREEN + dBankLiteBase.getBuildTime());
-        pre.add(MCChatForm.CYAN + "Lead Developer: " + MCChatForm.LIGHT_GREEN + "DarkDiplomat");
-        pre.add(MCChatForm.CYAN + "Contributers: " + MCChatForm.LIGHT_GREEN + " "); // If someone adds to dBankLite, their name can go here
-        pre.add(MCChatForm.CYAN + "Website: " + MCChatForm.LIGHT_GREEN + "http://wiki.visualillusionsent.net/dBankLite");
-        pre.add(MCChatForm.CYAN + "Issues: " + MCChatForm.LIGHT_GREEN + "https://github.com/Visual-Illusions/dBankLite/issues");
+        pre.add(MineChatForm.CYAN + "Build: " + MineChatForm.LIGHT_GREEN + dBankLiteBase.getBuildNumber());
+        pre.add(MineChatForm.CYAN + "Built: " + MineChatForm.LIGHT_GREEN + dBankLiteBase.getBuildTime());
+        pre.add(MineChatForm.CYAN + "Lead Developer: " + MineChatForm.LIGHT_GREEN + "DarkDiplomat");
+        pre.add(MineChatForm.CYAN + "Contributers: " + MineChatForm.LIGHT_GREEN + " "); // If someone adds to dBankLite, their name can go here
+        pre.add(MineChatForm.CYAN + "Website: " + MineChatForm.LIGHT_GREEN + "http://wiki.visualillusionsent.net/dBankLite");
+        pre.add(MineChatForm.CYAN + "Issues: " + MineChatForm.LIGHT_GREEN + "https://github.com/Visual-Illusions/dBankLite/issues");
 
         // Next 2 lines should always remain at the end of the About
         pre.add(center("§aCopyright © 2013 §2Visual §6I§9l§bl§4u§as§2i§5o§en§7s §2Entertainment"));
@@ -55,13 +55,13 @@ public final class dBankLiteInformationCommand extends dConomyCommand{
                 VersionChecker vc = dBankLiteBase.getVersionChecker();
                 Boolean islatest = vc.isLatest();
                 if (islatest == null) {
-                    user.message(center(MCChatForm.GRAY + "VersionCheckerError: " + vc.getErrorMessage()));
+                    user.message(center(MineChatForm.GRAY + "VersionCheckerError: " + vc.getErrorMessage()));
                 }
                 else if (!vc.isLatest()) {
-                    user.message(center(MCChatForm.GRAY + vc.getUpdateAvailibleMessage()));
+                    user.message(center(MineChatForm.GRAY + vc.getUpdateAvailibleMessage()));
                 }
                 else {
-                    user.message(center(MCChatForm.LIGHT_GREEN + "Latest Version Installed"));
+                    user.message(center(MineChatForm.LIGHT_GREEN + "Latest Version Installed"));
                 }
             }
             else {
@@ -71,7 +71,7 @@ public final class dBankLiteInformationCommand extends dConomyCommand{
     }
 
     private final String center(String toCenter){
-        String strColorless = MCChatForm.removeFormating(toCenter);
+        String strColorless = MineChatForm.removeFormating(toCenter);
         return StringUtils.padCharLeft(toCenter, (int) (Math.floor(63 - strColorless.length()) / 2), ' ');
     }
 }

@@ -22,6 +22,7 @@ package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
+import java.util.Timer;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -35,9 +36,10 @@ import net.visualillusionsent.utils.VersionChecker;
 
 public final class dBankLiteBase{
 
-    private final float dCoVersion = 3.0f;
+    private final float dCoVersion = 3.0F;
     private final Logger logger;
     private final VersionChecker vc;
+    private final Timer timer;
     private ProgramStatus status;
     private float version;
     private short build;
@@ -56,6 +58,8 @@ public final class dBankLiteBase{
         checkStatus();
         vc = new VersionChecker("dBankLite", String.valueOf(version), String.valueOf(build), "http://visualillusionsent.net/minecraft/plugins/", status, true);
         checkVersion();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new InterestPayer(this), getInitialStart(), getInterestInterval());
     }
 
     private final void testdBankLiteProps(){
@@ -213,5 +217,36 @@ public final class dBankLiteBase{
         if (dCoBase.getProperties().getBooleanValue("debug.enabled")) {
             $.logger.log(dCoLevel.GENERAL, msg);
         }
+    }
+
+    public final static void cleanUp(){
+        $.timer.cancel();
+        $.timer.purge();
+        dCoBase.getProperties().getPropertiesFile().save();
+    }
+
+    private final long getInitialStart(){
+        if (dCoBase.getProperties().getPropertiesFile().containsKey("bank.timer.reset")) {
+            long reset = dCoBase.getProperties().getPropertiesFile().getLong("bank.timer.reset") - System.currentTimeMillis();
+            if (reset < 0) {
+                return 0;
+            }
+            else {
+                dCoBase.getProperties().getPropertiesFile().setLong("bank.timer.reset", System.currentTimeMillis() + reset);
+                return reset;
+            }
+        }
+        else {
+            setResetTime();
+            return getInterestInterval();
+        }
+    }
+
+    private final long getInterestInterval(){
+        return dCoBase.getProperties().getPropertiesFile().getLong("interest.pay.interval") * 60000;
+    }
+
+    final void setResetTime(){
+        dCoBase.getProperties().getPropertiesFile().setLong("bank.timer.reset", System.currentTimeMillis() + getInterestInterval());
     }
 }
