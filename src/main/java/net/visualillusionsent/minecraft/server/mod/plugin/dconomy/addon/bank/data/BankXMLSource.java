@@ -24,7 +24,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.Account;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
 import net.visualillusionsent.utils.SystemUtils;
@@ -45,12 +44,12 @@ public final class BankXMLSource implements BankDataSource{
 
     @Override
     public final boolean load(){
-        dCoBase.info("Loading Bank Accounts...");
+        dBankLiteBase.info("Loading Bank Accounts...");
         File bankFile = new File(bank_Path);
         Exception ex = null;
         int load = 0;
         if (!bankFile.exists()) {
-            dCoBase.info("BankAccounts file not found. Creating...");
+            dBankLiteBase.info("BankAccounts file not found. Creating...");
             Element accounts = new Element("bankaccounts");
             Document root = new Document(accounts);
             try {
@@ -101,7 +100,7 @@ public final class BankXMLSource implements BankDataSource{
     }
 
     @Override
-    public final boolean saveAccount(Account bankaccount){
+    public final boolean saveAccount(BankAccount bankaccount){
         boolean success = true;
         synchronized (lock) {
             File bankFile = new File(bank_Path);
@@ -111,7 +110,7 @@ public final class BankXMLSource implements BankDataSource{
                 List<Element> accounts = root.getChildren();
                 boolean found = false;
                 for (Element account : accounts) {
-                    String name = account.getChildText("owner");
+                    String name = account.getAttributeValue("owner");
                     if (name.equals(bankaccount.getOwner())) {
                         account.getAttribute("balance").setValue(String.format("%.2f", bankaccount.getBalance()));
                         account.getAttribute("lockedOut").setValue(String.valueOf(((BankAccount) bankaccount).isLocked()));
@@ -160,19 +159,19 @@ public final class BankXMLSource implements BankDataSource{
     }
 
     @Override
-    public final boolean reloadAccount(Account bankaccount){
+    public final boolean reloadAccount(BankAccount bankaccount){
         boolean success = true;
         synchronized (lock) {
             File bankFile = new File(bank_Path);
             try {
                 Document doc = builder.build(bankFile);
                 Element root = doc.getRootElement();
-                List<Element> wallets = root.getChildren();
-                for (Element wallet : wallets) {
-                    String name = wallet.getChildText("owner");
+                List<Element> accounts = root.getChildren();
+                for (Element account : accounts) {
+                    String name = account.getChildText("owner");
                     if (name.equals(bankaccount.getOwner())) {
-                        bankaccount.setBalance(wallet.getAttribute("balance").getDoubleValue());
-                        ((BankAccount) bankaccount).setLockOut(wallet.getAttribute("lockedOut").getBooleanValue());
+                        bankaccount.setBalance(account.getAttribute("balance").getDoubleValue());
+                        ((BankAccount) bankaccount).setLockOut(account.getAttribute("lockedOut").getBooleanValue());
                         break;
                     }
                 }

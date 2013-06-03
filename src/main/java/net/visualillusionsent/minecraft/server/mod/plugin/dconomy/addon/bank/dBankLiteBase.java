@@ -28,10 +28,12 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.MessageTranslator;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.io.logging.dCoLevel;
 import net.visualillusionsent.utils.ProgramStatus;
 import net.visualillusionsent.utils.PropertiesFile;
+import net.visualillusionsent.utils.UtilityException;
 import net.visualillusionsent.utils.VersionChecker;
 
 public final class dBankLiteBase{
@@ -58,8 +60,14 @@ public final class dBankLiteBase{
         checkStatus();
         vc = new VersionChecker("dBankLite", String.valueOf(version), String.valueOf(build), "http://visualillusionsent.net/minecraft/plugins/", status, true);
         checkVersion();
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new InterestPayer(this), getInitialStart(), getInterestInterval());
+        installBankMessages();
+        if (getInterestInterval() > 0) { // interest enabled?
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new InterestPayer(this), getInitialStart(), getInterestInterval());
+        }
+        else {
+            timer = null;
+        }
     }
 
     private final void testdBankLiteProps(){
@@ -68,7 +76,7 @@ public final class dBankLiteBase{
             dCoProps.setFloat("interest.rate", 2.0F, "dBankLite: Interest Rate (in percentage) (Default: 2%)");
         }
         if (!dCoProps.containsKey("interest.pay.interval")) {
-            dCoProps.setInt("interest.pay.interval", 360, "dBankLite: Interest Pay Interval (in minutes) (Default: 360 [6 Hours])");
+            dCoProps.setInt("interest.pay.interval", 360, "dBankLite: Interest Pay Interval (in minutes) (Default: 360 [6 Hours]) Set to 0 or less to disable");
         }
         if (!dCoProps.containsKey("interest.max.payout")) {
             dCoProps.setInt("interest.max.payout", 10000, "dBankLite: Max Interest Payout (Default: 10000)");
@@ -220,8 +228,10 @@ public final class dBankLiteBase{
     }
 
     public final static void cleanUp(){
-        $.timer.cancel();
-        $.timer.purge();
+        if ($.timer != null) {
+            $.timer.cancel();
+            $.timer.purge();
+        }
         dCoBase.getProperties().getPropertiesFile().save();
     }
 
@@ -248,5 +258,22 @@ public final class dBankLiteBase{
 
     final void setResetTime(){
         dCoBase.getProperties().getPropertiesFile().setLong("bank.timer.reset", System.currentTimeMillis() + getInterestInterval());
+    }
+
+    private final void installBankMessages(){
+        try {
+            PropertiesFile lang = new PropertiesFile("config/dConomy3/lang/en_US.lang");
+            if (!lang.containsKey("bank.deposit")) {
+                lang.setString("bank.deposit", "$cAYou have deposited $cE{0, number, 0.00} $m$cA into your $c3Bank Account$cA.", ";dBankLite Message");
+            }
+            if (!lang.containsKey("bank.withdraw")) {
+                lang.setString("bank.withdraw", "$cAYou have withdrawn $cE{0, number, 0.00} $m$cA from your $c3Bank Account$cA.", ";dBankLite Message");
+            }
+            lang.save();
+            MessageTranslator.reloadMessages();
+        }
+        catch (UtilityException uex) {
+            warning("Failed to install dBankLite messages into dConomy English file (en_US.lang)");
+        }
     }
 }

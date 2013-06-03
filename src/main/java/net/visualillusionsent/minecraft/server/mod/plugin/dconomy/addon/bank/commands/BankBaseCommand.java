@@ -21,7 +21,6 @@ package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.co
 
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.wallet.WalletHandler;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
@@ -40,7 +39,7 @@ public final class BankBaseCommand extends dConomyCommand{
                 user.error("error.404.user", args[0]);
                 return;
             }
-            if (!args[0].toUpperCase().equals("SERVER") && !WalletHandler.verifyAccount(theUser.getName())) {
+            if (!args[0].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
                 user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
                 return;
             }

@@ -25,9 +25,9 @@ import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.Acc
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
 
-public final class BankAddCommand extends dConomyCommand{
+public final class BankRemoveCommand extends dConomyCommand{
 
-    public BankAddCommand(){
+    public BankRemoveCommand(){
         super(2);
     }
 
@@ -38,15 +38,13 @@ public final class BankAddCommand extends dConomyCommand{
             return;
         }
         if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
-            if (!(args.length > 2) || !args[2].equals("-force")) {
-                user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
-                return;
-            }
+            user.error("error.404.account", theUser.getName(), "BANKACCOUNT");
+            return;
         }
         try {
-            BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).deposit(args[0]);
-            user.error("admin.add.balance", theUser == null ? "SERVER" : theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
-            // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.ADMIN_ADD, Double.parseDouble(args[0])));
+            BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).debit(args[0]);
+            user.error("admin.remove.balance", theUser == null ? "SERVER" : theUser.getName(), Double.valueOf(args[0]), "BANKACCOUNT");
+            // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.ADMIN_REMOVE, Double.parseDouble(args[0])));
         }
         catch (AccountingException ae) {
             user.error(ae.getMessage());

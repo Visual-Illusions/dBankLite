@@ -85,6 +85,7 @@ public class BankAccount extends Account{
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     protected void save(){
         datasource.saveAccount(this);
@@ -93,6 +94,7 @@ public class BankAccount extends Account{
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean reload(){
         return datasource.reloadAccount(this);

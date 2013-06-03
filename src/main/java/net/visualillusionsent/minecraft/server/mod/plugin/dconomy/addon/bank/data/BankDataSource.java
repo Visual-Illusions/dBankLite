@@ -19,6 +19,7 @@
  */
 package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.data;
 
+import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.data.dCoDataSource;
 
-public interface BankDataSource extends dCoDataSource{}
+public interface BankDataSource extends dCoDataSource<BankAccount>{}

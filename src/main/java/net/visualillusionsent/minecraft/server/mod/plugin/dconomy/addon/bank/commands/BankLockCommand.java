@@ -21,14 +21,14 @@ package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.co
 
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.AccountingException;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
+import net.visualillusionsent.utils.BooleanUtils;
 
-public final class BankAddCommand extends dConomyCommand{
+public final class BankLockCommand extends dConomyCommand{
 
-    public BankAddCommand(){
-        super(2);
+    public BankLockCommand(){
+        super(1);
     }
 
     protected final void execute(IModUser user, String[] args){
@@ -38,18 +38,16 @@ public final class BankAddCommand extends dConomyCommand{
             return;
         }
         if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
-            if (!(args.length > 2) || !args[2].equals("-force")) {
-                user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
-                return;
-            }
+            user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
+            return;
         }
-        try {
-            BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).deposit(args[0]);
-            user.error("admin.add.balance", theUser == null ? "SERVER" : theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
-            // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.ADMIN_ADD, Double.parseDouble(args[0])));
+        boolean locked = BooleanUtils.parseBoolean(args[0]);
+        BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).setLockOut(locked);
+        if (locked) {
+            user.error("admin.account.locked", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
         }
-        catch (AccountingException ae) {
-            user.error(ae.getMessage());
+        else {
+            user.error("admin.account.unlocked", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
         }
     }
 }

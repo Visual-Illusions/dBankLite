@@ -24,11 +24,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.Account;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
 
-public abstract class BankSQL_Source implements BankDataSource{
+public abstract class BankSQLSource implements BankDataSource{
     protected Connection conn;
     protected String bank_table = dCoBase.getProperties().getString("sql.bank.table");
 
@@ -48,7 +47,7 @@ public abstract class BankSQL_Source implements BankDataSource{
                 new BankAccount(name, balance, locked, this);
                 load++;
             }
-            dCoBase.info(String.format("Loaded %d Bank Accounts...", load));
+            dBankLiteBase.info(String.format("Loaded %d Bank Accounts...", load));
         }
         catch (SQLException sqlex) {
             dBankLiteBase.severe("SQL Exception while parsing Bank Accounts table...");
@@ -71,7 +70,7 @@ public abstract class BankSQL_Source implements BankDataSource{
     }
 
     @Override
-    public boolean saveAccount(Account account){
+    public boolean saveAccount(BankAccount account){
         boolean success = true;
         synchronized (lock) {
             dBankLiteBase.debug("Saving Bank Account for: ".concat(account.getOwner()));
@@ -121,7 +120,7 @@ public abstract class BankSQL_Source implements BankDataSource{
     }
 
     @Override
-    public boolean reloadAccount(Account account){
+    public boolean reloadAccount(BankAccount account){
         boolean success = true;
         dBankLiteBase.debug("Reloading Wallet for: ".concat(account.getOwner()));
         PreparedStatement ps = null;

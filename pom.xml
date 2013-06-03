@@ -14,12 +14,12 @@
       <name>GNU General Public License v3</name>
       <url>http://www.gnu.org/licenses/gpl.html</url>
       <comments>
-        dConomy is free software: you can redistribute it and/or modify
+        dBankLite is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
         (at your option) any later version.
               
-        dConomy is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+        dBankLite is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
         without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
         See the GNU General Public License for more details.
       </comments>
@@ -52,11 +52,6 @@
   </distributionManagement>
   <repositories>
     <repository>
-      <id>CodeBukkit</id>
-      <name>Bukkit Public Repository</name>
-      <url>http://repo.bukkit.org/content/groups/public</url>
-    </repository>
-    <repository>
       <id>vi-repo</id>
       <name>Visual Illusions Repository</name>
       <url>http://repo.visualillusionsent.net/</url>
@@ -69,11 +64,6 @@
     </repository>
   </repositories>
   <dependencies>
-   <!-- Libraries -->
-   <!-- Libraries End -->
-   <!-- Mods -->
-   <!-- Mods End -->
-   <!-- Requires dConomy -->
    <dependency>
    	<groupId>net.visualillusionsent</groupId>
    	<artifactId>dconomy</artifactId>

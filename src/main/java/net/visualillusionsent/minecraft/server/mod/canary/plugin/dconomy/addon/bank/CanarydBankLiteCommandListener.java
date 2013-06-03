@@ -28,15 +28,11 @@ import net.canarymod.commandsys.CommandListener;
 import net.visualillusionsent.minecraft.server.mod.canary.plugin.dconomy.Canary_User;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands.BankAddCommand;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands.BankBaseCommand;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands.BankDepositCommand;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands.BankWithdrawCommand;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands.dBankLiteInformationCommand;
+import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands.*;
 import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
 
 public final class CanarydBankLiteCommandListener implements CommandListener{
-    private final dConomyCommand infoCmd, bankbase, bankdeposit, bankwithdraw, bankadd;
+    private final dConomyCommand infoCmd, bankbase, bankdeposit, bankwithdraw, bankadd, bankremove, bankset, bankreset, bankreload, banklock;
 
     CanarydBankLiteCommandListener(dBankLite dBL) throws CommandDependencyException{
         infoCmd = new dBankLiteInformationCommand();
@@ -44,6 +40,11 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         bankdeposit = new BankDepositCommand();
         bankwithdraw = new BankWithdrawCommand();
         bankadd = new BankAddCommand();
+        bankremove = new BankRemoveCommand();
+        bankset = new BankSetCommand();
+        bankreset = new BankResetCommand();
+        bankreload = new BankReloadCommand();
+        banklock = new BankLockCommand();
         Canary.commands().registerCommands(this, dBL, false);
     }
 
@@ -83,5 +84,65 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
     public final void bankwithdraw(MessageReceiver msgrec, String[] args){
         IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
         bankwithdraw.parseCommand(user, args, true);
+    }
+
+    @Command(aliases = { "add" },
+            description = "Bank add command",
+            permissions = { "dconomy.admin.bank" },
+            toolTip = "/bank add <amount> <user>",
+            parent = "bank")
+    public final void bankadd(MessageReceiver msgrec, String[] args){
+        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        bankadd.parseCommand(user, args, true);
+    }
+
+    @Command(aliases = { "remove" },
+            description = "Bank remove command",
+            permissions = { "dconomy.admin.bank" },
+            toolTip = "/bank remove <amount> <user>",
+            parent = "bank")
+    public final void bankremove(MessageReceiver msgrec, String[] args){
+        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        bankremove.parseCommand(user, args, true);
+    }
+
+    @Command(aliases = { "set" },
+            description = "Bank set command",
+            permissions = { "dconomy.admin.bank" },
+            toolTip = "/bank set <amount> <user>",
+            parent = "bank")
+    public final void bankset(MessageReceiver msgrec, String[] args){
+        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        bankset.parseCommand(user, args, true);
+    }
+
+    @Command(aliases = { "reset" },
+            description = "Bank reset command",
+            permissions = { "dconomy.admin.bank" },
+            toolTip = "/bank reset <amount> <user>",
+            parent = "bank")
+    public final void bankreset(MessageReceiver msgrec, String[] args){
+        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        bankreset.parseCommand(user, args, true);
+    }
+
+    @Command(aliases = { "reload" },
+            description = "Bank reload command",
+            permissions = { "dconomy.admin.bank" },
+            toolTip = "/bank reload <user>",
+            parent = "bank")
+    public final void bankreload(MessageReceiver msgrec, String[] args){
+        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        bankreload.parseCommand(user, args, true);
+    }
+
+    @Command(aliases = { "lock" },
+            description = "Bank lock command",
+            permissions = { "dconomy.admin.bank" },
+            toolTip = "/bank lock <user>",
+            parent = "bank")
+    public final void banklock(MessageReceiver msgrec, String[] args){
+        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        banklock.parseCommand(user, args, true);
     }
 }
