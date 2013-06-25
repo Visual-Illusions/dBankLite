@@ -17,15 +17,15 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.data;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankAccount;
 import net.visualillusionsent.utils.SystemUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;

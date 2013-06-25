@@ -17,18 +17,18 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
 
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.AccountingException;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
+import net.visualillusionsent.utils.BooleanUtils;
 
-public final class BankRemoveCommand extends dConomyCommand{
+public final class BankLockCommand extends dConomyCommand{
 
-    public BankRemoveCommand(){
-        super(2);
+    public BankLockCommand(){
+        super(1);
     }
 
     protected final void execute(IModUser user, String[] args){
@@ -38,16 +38,16 @@ public final class BankRemoveCommand extends dConomyCommand{
             return;
         }
         if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
-            user.error("error.404.account", theUser.getName(), "BANKACCOUNT");
+            user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
-        try {
-            BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).debit(args[0]);
-            user.error("admin.remove.balance", theUser == null ? "SERVER" : theUser.getName(), Double.valueOf(args[0]), "BANKACCOUNT");
-            // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.ADMIN_REMOVE, Double.parseDouble(args[0])));
+        boolean locked = BooleanUtils.parseBoolean(args[0]);
+        BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).setLockOut(locked);
+        if (locked) {
+            user.error("admin.account.locked", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
         }
-        catch (AccountingException ae) {
-            user.error(ae.getMessage());
+        else {
+            user.error("admin.account.unlocked", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
         }
     }
 }

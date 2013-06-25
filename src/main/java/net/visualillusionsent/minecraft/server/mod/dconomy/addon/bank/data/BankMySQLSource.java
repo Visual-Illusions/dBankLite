@@ -17,13 +17,13 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.data;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankAccount;
 
 public final class BankMySQLSource extends BankSQLSource{
 
@@ -34,7 +34,7 @@ public final class BankMySQLSource extends BankSQLSource{
             PreparedStatement ps = null;
             dCoBase.debug("Testing BankAccount table and creating if needed...");
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `" + bank_table + "` " + //
-                    "(`owner` VARCHAR(16) NOT NULL, `balance` DOUBLE(18,2) NOT NULL, `lockedOut` TINYINT(1) NOT NULL, PRIMARY KEY (`owner`))");
+                "(`owner` VARCHAR(16) NOT NULL, `balance` DOUBLE(18,2) NOT NULL, `lockedOut` TINYINT(1) NOT NULL, PRIMARY KEY (`owner`))");
             ps.execute();
             ps.close();
         }

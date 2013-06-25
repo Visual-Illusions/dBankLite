@@ -17,15 +17,16 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank;
 
 import java.util.TimerTask;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.AccountingException;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.AccountingException;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankAccount;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
 
 final class InterestPayer extends TimerTask{
+
     private final dBankLiteBase base;
 
     public InterestPayer(dBankLiteBase base){

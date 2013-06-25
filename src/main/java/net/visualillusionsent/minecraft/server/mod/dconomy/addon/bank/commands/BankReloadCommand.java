@@ -17,37 +17,34 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
 
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
-import net.visualillusionsent.utils.BooleanUtils;
 
-public final class BankLockCommand extends dConomyCommand{
+public final class BankReloadCommand extends dConomyCommand{
 
-    public BankLockCommand(){
+    public BankReloadCommand(){
         super(1);
     }
 
     protected final void execute(IModUser user, String[] args){
-        IModUser theUser = args[1].toUpperCase().equals("SERVER") ? null : dCoBase.getServer().getUser(args[1]);
-        if (theUser == null && !args[1].toUpperCase().equals("SERVER")) {
-            user.error("error.404.user", args[1]);
+        IModUser theUser = args[0].toUpperCase().equals("SERVER") ? null : dCoBase.getServer().getUser(args[0]);
+        if (theUser == null && !args[0].toUpperCase().equals("SERVER")) {
+            user.error("error.404.user", args[0]);
             return;
         }
         if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
             user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
-        boolean locked = BooleanUtils.parseBoolean(args[0]);
-        BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).setLockOut(locked);
-        if (locked) {
-            user.error("admin.account.locked", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
+        if (BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).reload()) {
+            user.error("admin.reload.account.success", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
         }
         else {
-            user.error("admin.account.unlocked", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
+            user.error("admin.reload.account.fail", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
         }
     }
 }

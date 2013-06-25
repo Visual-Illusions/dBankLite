@@ -17,16 +17,17 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
 
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.AccountingException;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
 
-public final class BankSetCommand extends dConomyCommand{
+public final class BankAddCommand extends dConomyCommand{
 
-    public BankSetCommand(){
+    public BankAddCommand(){
         super(2);
     }
 
@@ -38,12 +39,17 @@ public final class BankSetCommand extends dConomyCommand{
         }
         if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
             if (!(args.length > 2) || !args[2].equals("-force")) {
-                user.error("error.404.account", theUser.getName(), "WALLET");
+                user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
                 return;
             }
         }
-        BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).setBalance(args[0]);
-        user.error("admin.set.balance", theUser == null ? "SERVER" : theUser.getName(), Double.valueOf(args[0]), "WALLET");
-        // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.ADMIN_SET, Double.parseDouble(args[0])));
+        try {
+            BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).deposit(args[0]);
+            user.error("admin.add.balance", theUser == null ? "SERVER" : theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
+            // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.ADMIN_ADD, Double.parseDouble(args[0])));
+        }
+        catch (AccountingException ae) {
+            user.error(ae.getMessage());
+        }
     }
 }

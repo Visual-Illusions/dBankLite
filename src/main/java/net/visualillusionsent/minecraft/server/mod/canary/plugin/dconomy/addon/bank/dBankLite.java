@@ -22,11 +22,16 @@ package net.visualillusionsent.minecraft.server.mod.canary.plugin.dconomy.addon.
 import java.util.logging.Logger;
 import net.canarymod.commandsys.CommandDependencyException;
 import net.canarymod.plugin.Plugin;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.IdBankLite;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.MessageTranslator;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.IdBankLite;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
 
 public final class dBankLite extends Plugin implements IdBankLite{
+
+    static {
+        MessageTranslator.transMessage("HerpDerp Herl");
+    }
 
     @Override
     public boolean enable(){

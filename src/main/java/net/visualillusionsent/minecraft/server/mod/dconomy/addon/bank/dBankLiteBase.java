@@ -17,7 +17,7 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -28,9 +28,9 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.MessageTranslator;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.io.logging.dCoLevel;
+import net.visualillusionsent.minecraft.server.mod.dconomy.MessageTranslator;
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.io.logging.dCoLevel;
 import net.visualillusionsent.utils.ProgramStatus;
 import net.visualillusionsent.utils.PropertiesFile;
 import net.visualillusionsent.utils.UtilityException;

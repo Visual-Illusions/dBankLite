@@ -17,16 +17,16 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
 
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
 
-public final class BankReloadCommand extends dConomyCommand{
+public final class BankResetCommand extends dConomyCommand{
 
-    public BankReloadCommand(){
+    public BankResetCommand(){
         super(1);
     }
 
@@ -36,15 +36,12 @@ public final class BankReloadCommand extends dConomyCommand{
             user.error("error.404.user", args[0]);
             return;
         }
-        if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
+        if (!args[0].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
             user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
-        if (BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).reload()) {
-            user.error("admin.reload.account.success", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
-        }
-        else {
-            user.error("admin.reload.account.fail", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
-        }
+        BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName()).setBalance(dCoBase.getProperties().getDouble("default.balance"));
+        user.error("admin.reset.balance", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
+        // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.ADMIN_SET, dCoBase.getProperties().getDouble("default.balance")));
     }
 }

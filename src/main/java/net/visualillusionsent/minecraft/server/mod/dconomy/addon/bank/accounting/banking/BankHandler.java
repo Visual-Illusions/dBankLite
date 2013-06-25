@@ -17,17 +17,17 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
+import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.wallet.Wallet;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data.BankDataSource;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data.BankXMLSource;
+import net.visualillusionsent.minecraft.server.mod.dconomy.data.DataSourceType;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.wallet.Wallet;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.data.BankDataSource;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.data.BankXMLSource;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.data.DataSourceType;
 
 /**
  * Bank Handler class<br>

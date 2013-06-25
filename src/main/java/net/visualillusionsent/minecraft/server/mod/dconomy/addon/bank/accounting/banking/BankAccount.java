@@ -17,15 +17,15 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking;
 
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.MessageTranslator;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.Account;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.AccountingException;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.wallet.Wallet;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.data.BankDataSource;
+import net.visualillusionsent.minecraft.server.mod.dconomy.MessageTranslator;
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.Account;
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.AccountingException;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data.BankDataSource;
 
 public class BankAccount extends Account{
+
     private boolean locked;
 
     public BankAccount(String owner, double balance, boolean locked, BankDataSource datasource){
@@ -105,7 +105,7 @@ public class BankAccount extends Account{
      */
     @Override
     public final boolean equals(Object obj){
-        if (obj instanceof Wallet) {
+        if (obj instanceof BankAccount) {
             return this == obj;
         }
         else if (obj instanceof String) {

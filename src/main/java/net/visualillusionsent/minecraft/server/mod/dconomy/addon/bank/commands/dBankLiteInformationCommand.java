@@ -17,19 +17,20 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
 import net.visualillusionsent.minecraft.server.mod.interfaces.MineChatForm;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.utils.StringUtils;
 import net.visualillusionsent.utils.VersionChecker;
 
 public final class dBankLiteInformationCommand extends dConomyCommand{
+
     private final List<String> about;
 
     public dBankLiteInformationCommand(){

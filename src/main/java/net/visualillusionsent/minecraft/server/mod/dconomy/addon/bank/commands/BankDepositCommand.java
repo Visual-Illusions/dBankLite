@@ -17,19 +17,19 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.commands;
+package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
 
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.AccountingException;
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.wallet.Wallet;
+import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.wallet.WalletHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankAccount;
+import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.AccountingException;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.wallet.Wallet;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.accounting.wallet.WalletHandler;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankAccount;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.addon.bank.accounting.banking.BankHandler;
-import net.visualillusionsent.minecraft.server.mod.plugin.dconomy.commands.dConomyCommand;
 
-public final class BankWithdrawCommand extends dConomyCommand{
+public final class BankDepositCommand extends dConomyCommand{
 
-    public BankWithdrawCommand(){
+    public BankDepositCommand(){
         super(1);
     }
 
@@ -38,11 +38,11 @@ public final class BankWithdrawCommand extends dConomyCommand{
         Wallet userWallet = WalletHandler.getWallet(user);
         BankAccount userBank = BankHandler.getBankAccount(user);
         try {
-            userWallet.testDeposit(args[0]);
-            userBank.testDebit(args[0]);
-            userBank.debit(args[0]);
-            userWallet.deposit(args[0]);
-            user.message("bank.withdraw", user, Double.parseDouble(args[0]));
+            userWallet.testDebit(args[0]);
+            userBank.testDeposit(args[0]);
+            userBank.deposit(args[0]);
+            userWallet.debit(args[0]);
+            user.message("bank.deposit", user, Double.parseDouble(args[0]));
             // dCoBase.getServer().newTransaction(new WalletTransaction(user, theUser == null ? (IModUser) dCoBase.getServer() : theUser, WalletTransaction.ActionType.PAY, Double.parseDouble(args[0])));
         }
         catch (AccountingException ae) {
