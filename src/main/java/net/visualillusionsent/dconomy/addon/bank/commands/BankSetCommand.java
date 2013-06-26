@@ -17,12 +17,12 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
+package net.visualillusionsent.dconomy.addon.bank.commands;
 
-import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankHandler;
-import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
-import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
+import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.dconomy.commands.dConomyCommand;
+import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
 
 public final class BankSetCommand extends dConomyCommand{
 
@@ -30,8 +30,8 @@ public final class BankSetCommand extends dConomyCommand{
         super(2);
     }
 
-    protected final void execute(IModUser user, String[] args){
-        IModUser theUser = args[1].toUpperCase().equals("SERVER") ? null : dCoBase.getServer().getUser(args[1]);
+    protected final void execute(ModUser user, String[] args){
+        ModUser theUser = args[1].toUpperCase().equals("SERVER") ? null : dCoBase.getServer().getUser(args[1]);
         if (theUser == null && !args[1].toUpperCase().equals("SERVER")) {
             user.error("error.404.user", args[1]);
             return;

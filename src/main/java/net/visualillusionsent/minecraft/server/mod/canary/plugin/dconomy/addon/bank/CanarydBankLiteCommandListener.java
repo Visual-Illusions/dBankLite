@@ -25,11 +25,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.Command;
 import net.canarymod.commandsys.CommandDependencyException;
 import net.canarymod.commandsys.CommandListener;
+import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.dconomy.addon.bank.commands.*;
+import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.minecraft.server.mod.canary.plugin.dconomy.Canary_User;
-import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands.*;
-import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
-import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
+import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
 
 public final class CanarydBankLiteCommandListener implements CommandListener{
 
@@ -54,7 +54,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         permissions = { "" },
         toolTip = "/dbanklite")
     public final void information(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         infoCmd.parseCommand(user, args, true);
     }
 
@@ -63,7 +63,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         permissions = { "dconomy.bank.base" },
         toolTip = "/bank")
     public final void bankbase(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankbase.parseCommand(user, args, true);
     }
 
@@ -73,7 +73,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank deposit <amount>",
         parent = "bank")
     public final void bankdeposit(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankdeposit.parseCommand(user, args, true);
     }
 
@@ -83,7 +83,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank withdraw <amount>",
         parent = "bank")
     public final void bankwithdraw(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankwithdraw.parseCommand(user, args, true);
     }
 
@@ -93,7 +93,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank add <amount> <user>",
         parent = "bank")
     public final void bankadd(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankadd.parseCommand(user, args, true);
     }
 
@@ -103,7 +103,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank remove <amount> <user>",
         parent = "bank")
     public final void bankremove(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankremove.parseCommand(user, args, true);
     }
 
@@ -113,7 +113,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank set <amount> <user>",
         parent = "bank")
     public final void bankset(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankset.parseCommand(user, args, true);
     }
 
@@ -123,7 +123,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank reset <amount> <user>",
         parent = "bank")
     public final void bankreset(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankreset.parseCommand(user, args, true);
     }
 
@@ -133,7 +133,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank reload <user>",
         parent = "bank")
     public final void bankreload(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         bankreload.parseCommand(user, args, true);
     }
 
@@ -143,7 +143,7 @@ public final class CanarydBankLiteCommandListener implements CommandListener{
         toolTip = "/bank lock <user>",
         parent = "bank")
     public final void banklock(MessageReceiver msgrec, String[] args){
-        IModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (IModUser) dCoBase.getServer();
+        ModUser user = msgrec instanceof Player ? new Canary_User((Player) msgrec) : (ModUser) dCoBase.getServer();
         banklock.parseCommand(user, args, true);
     }
 }

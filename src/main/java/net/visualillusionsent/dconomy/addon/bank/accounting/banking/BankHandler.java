@@ -17,17 +17,17 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking;
+package net.visualillusionsent.dconomy.addon.bank.accounting.banking;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
-import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.wallet.Wallet;
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data.BankDataSource;
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data.BankXMLSource;
-import net.visualillusionsent.minecraft.server.mod.dconomy.data.DataSourceType;
-import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
+import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.dconomy.accounting.wallet.Wallet;
+import net.visualillusionsent.dconomy.addon.bank.data.BankDataSource;
+import net.visualillusionsent.dconomy.addon.bank.data.BankXMLSource;
+import net.visualillusionsent.dconomy.data.DataSourceType;
+import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
 
 /**
  * Bank Handler class<br>
@@ -68,13 +68,13 @@ public final class BankHandler{
     }
 
     /**
-     * Gets a {@link Wallet} for a {@link IModUser}
+     * Gets a {@link Wallet} for a {@link ModUser}
      * 
      * @param user
-     *            the {@link IModUser} to get a wallet for
+     *            the {@link ModUser} to get a wallet for
      * @return the {@link Wallet} for the user if found; {@code null} if not found
      */
-    public static final BankAccount getBankAccount(IModUser user){
+    public static final BankAccount getBankAccount(ModUser user){
         return getBankAccountByName(user.getName());
     }
 

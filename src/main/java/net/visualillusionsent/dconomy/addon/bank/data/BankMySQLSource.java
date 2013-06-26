@@ -17,13 +17,13 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data;
+package net.visualillusionsent.dconomy.addon.bank.data;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import net.visualillusionsent.minecraft.server.mod.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankAccount;
+import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankAccount;
 
 public final class BankMySQLSource extends BankSQLSource{
 

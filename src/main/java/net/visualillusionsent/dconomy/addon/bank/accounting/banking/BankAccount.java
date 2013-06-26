@@ -17,12 +17,12 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking;
+package net.visualillusionsent.dconomy.addon.bank.accounting.banking;
 
-import net.visualillusionsent.minecraft.server.mod.dconomy.MessageTranslator;
-import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.Account;
-import net.visualillusionsent.minecraft.server.mod.dconomy.accounting.AccountingException;
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data.BankDataSource;
+import net.visualillusionsent.dconomy.MessageTranslator;
+import net.visualillusionsent.dconomy.accounting.Account;
+import net.visualillusionsent.dconomy.accounting.AccountingException;
+import net.visualillusionsent.dconomy.addon.bank.data.BankDataSource;
 
 public class BankAccount extends Account{
 

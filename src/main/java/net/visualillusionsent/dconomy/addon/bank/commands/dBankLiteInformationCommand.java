@@ -17,14 +17,14 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.commands;
+package net.visualillusionsent.dconomy.addon.bank.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.minecraft.server.mod.dconomy.commands.dConomyCommand;
-import net.visualillusionsent.minecraft.server.mod.interfaces.IModUser;
+import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.dconomy.commands.dConomyCommand;
+import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
 import net.visualillusionsent.minecraft.server.mod.interfaces.MineChatForm;
 import net.visualillusionsent.utils.StringUtils;
 import net.visualillusionsent.utils.VersionChecker;
@@ -50,7 +50,7 @@ public final class dBankLiteInformationCommand extends dConomyCommand{
         about = Collections.unmodifiableList(pre);
     }
 
-    public final void execute(IModUser user, String[] args){
+    public final void execute(ModUser user, String[] args){
         for (String msg : about) {
             if (msg.equals("$VERSION_CHECK$")) {
                 VersionChecker vc = dBankLiteBase.getVersionChecker();

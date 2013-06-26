@@ -17,9 +17,12 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.data;
+package net.visualillusionsent.dconomy.addon.bank;
 
-import net.visualillusionsent.minecraft.server.mod.dconomy.addon.bank.accounting.banking.BankAccount;
-import net.visualillusionsent.minecraft.server.mod.dconomy.data.dCoDataSource;
+import java.util.logging.Logger;
 
-public interface BankDataSource extends dCoDataSource<BankAccount>{}
+public interface IdBankLite{
+
+    Logger getPluginLogger();
+
+}
