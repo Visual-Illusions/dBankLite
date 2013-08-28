@@ -17,7 +17,7 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.canary.plugin.dconomy.addon.bank;
+package net.visualillusionsent.dconomy.canary.addon.bank;
 
 import java.util.logging.Logger;
 import net.canarymod.commandsys.CommandDependencyException;
@@ -27,14 +27,14 @@ import net.visualillusionsent.dconomy.addon.bank.IdBankLite;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankHandler;
 
-public final class dBankLite extends Plugin implements IdBankLite{
+public final class dBankLite extends Plugin implements IdBankLite {
 
     static {
-        MessageTranslator.transMessage("HerpDerp Herl");
+        MessageTranslator.getClassVersion();
     }
 
     @Override
-    public boolean enable(){
+    public boolean enable() {
         new dBankLiteBase(this);
         BankHandler.initialize();
         try {
@@ -47,12 +47,12 @@ public final class dBankLite extends Plugin implements IdBankLite{
     }
 
     @Override
-    public void disable(){
+    public void disable() {
         dBankLiteBase.cleanUp();
     }
 
     @Override
-    public Logger getPluginLogger(){
+    public Logger getPluginLogger() {
         return this.getLogman();
     }
 

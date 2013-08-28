@@ -19,16 +19,15 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.accounting.banking;
 
-import net.visualillusionsent.dconomy.MessageTranslator;
 import net.visualillusionsent.dconomy.accounting.Account;
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.data.BankDataSource;
 
-public class BankAccount extends Account{
+public class BankAccount extends Account {
 
     private boolean locked;
 
-    public BankAccount(String owner, double balance, boolean locked, BankDataSource datasource){
+    public BankAccount(String owner, double balance, boolean locked, BankDataSource datasource) {
         super(owner, balance, datasource);
         this.locked = locked;
     }
@@ -41,9 +40,9 @@ public class BankAccount extends Account{
      * @throws AccountingException
      *             if unable to debit the money
      */
-    public final void testDebit(double remove) throws AccountingException{
+    public final void testDebit(double remove) throws AccountingException {
         if (locked) {
-            throw new AccountingException(MessageTranslator.transFormMessage("error.lock.out", true, this.owner, "BANK ACCOUNT"));
+            throw new AccountingException("error.lock.out", this.owner, "BANK ACCOUNT");
         }
         if (balance - remove < 0) {
             throw new AccountingException("error.no.money");
@@ -58,7 +57,7 @@ public class BankAccount extends Account{
      * @throws AccountingException
      *             if unable to debit the money
      */
-    public final void testDebit(String remove) throws AccountingException{
+    public final void testDebit(String remove) throws AccountingException {
         testDebit(this.testArgumentString(remove));
     }
 
@@ -66,19 +65,19 @@ public class BankAccount extends Account{
      * {@inheritDoc}
      */
     @Override
-    public void testDeposit(double add) throws AccountingException{
+    public void testDeposit(double add) throws AccountingException {
         if (locked) {
-            throw new AccountingException(MessageTranslator.transFormMessage("error.lock.out", true, this.owner, "BANK ACCOUNT"));
+            throw new AccountingException("error.lock.out", this.owner, "BANK ACCOUNT");
         }
         super.testDeposit(add);
     }
 
-    public final void setLockOut(boolean locked){
+    public final void setLockOut(boolean locked) {
         this.locked = locked;
         this.save();
     }
 
-    public final boolean isLocked(){
+    public final boolean isLocked() {
         return locked;
     }
 
@@ -87,7 +86,7 @@ public class BankAccount extends Account{
      */
     @SuppressWarnings("unchecked")
     @Override
-    protected void save(){
+    protected void save() {
         datasource.saveAccount(this);
     }
 
@@ -96,7 +95,7 @@ public class BankAccount extends Account{
      */
     @SuppressWarnings("unchecked")
     @Override
-    public boolean reload(){
+    public boolean reload() {
         return datasource.reloadAccount(this);
     }
 
@@ -104,7 +103,7 @@ public class BankAccount extends Account{
      * {@inheritDoc}
      */
     @Override
-    public final boolean equals(Object obj){
+    public final boolean equals(Object obj) {
         if (obj instanceof BankAccount) {
             return this == obj;
         }
@@ -118,7 +117,7 @@ public class BankAccount extends Account{
      * {@inheritDoc}
      */
     @Override
-    public final int hashCode(){
+    public final int hashCode() {
         int hash = 7;
         hash = hash * 3 + owner.hashCode();
         hash = hash * 3 + super.hashCode();
@@ -129,7 +128,7 @@ public class BankAccount extends Account{
      * {@inheritDoc}
      */
     @Override
-    public final String toString(){
+    public final String toString() {
         return String.format("BankAccount[Owner: %s Balance: %.2f LockedOut: %b]", owner, balance, locked);
     }
 }

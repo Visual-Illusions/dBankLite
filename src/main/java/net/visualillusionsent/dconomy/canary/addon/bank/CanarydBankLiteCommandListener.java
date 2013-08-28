@@ -17,7 +17,7 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.minecraft.server.mod.canary.plugin.dconomy.addon.bank;
+package net.visualillusionsent.dconomy.canary.addon.bank;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -27,8 +27,8 @@ import net.canarymod.commandsys.CommandDependencyException;
 import net.canarymod.commandsys.CommandListener;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.addon.bank.commands.*;
+import net.visualillusionsent.dconomy.canary.api.Canary_User;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
-import net.visualillusionsent.minecraft.server.mod.canary.plugin.dconomy.Canary_User;
 import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
 
 public final class CanarydBankLiteCommandListener implements CommandListener {
