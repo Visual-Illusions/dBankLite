@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License along with dBankLite.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.canary;
+package net.visualillusionsent.dconomy.addon.bank.canary.api;
 
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
 import net.visualillusionsent.dconomy.canary.api.AccountTransactionHook;

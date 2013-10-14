@@ -20,6 +20,7 @@ package net.visualillusionsent.dconomy.addon.bank.canary;
 import net.canarymod.commandsys.CommandDependencyException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
+import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
 import net.visualillusionsent.dconomy.addon.bank.dBankLite;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
@@ -39,6 +40,7 @@ public final class CanarydBankLite extends VisualIllusionsCanaryPlugin implement
             return false;
         }
         dCoBase.getServer().registerTransactionHandler(BankTransactionHook.class, BankTransaction.class);
+        new CanarydBankLiteAPIListener(this);
         return true;
     }
 

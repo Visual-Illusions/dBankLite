@@ -46,6 +46,9 @@ public final class BankTransaction extends AccountTransaction {
         ADMIN_REMOVE, //
         ADMIN_SET, //
         ADMIN_RESET, //
+        PLUGIN_DEBIT, //
+        PLUGIN_DEPOSIT, //
+        PLUGIN_SET, //
         ;
     }
 
