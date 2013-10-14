@@ -15,10 +15,14 @@
  * You should have received a copy of the GNU General Public License along with dBankLite.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.data;
+package net.visualillusionsent.dconomy.addon.bank;
 
-import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankAccount;
-import net.visualillusionsent.dconomy.data.dCoDataSource;
+import java.util.logging.Logger;
 
-public interface BankDataSource extends dCoDataSource<BankAccount> {
+public interface dBankLite {
+
+    Logger getPluginLogger();
+
+    void check();
+
 }

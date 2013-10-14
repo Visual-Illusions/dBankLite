@@ -17,43 +17,48 @@
  * 
  * Source Code available @ https://github.com/Visual-Illusions/dBankLite
  */
-package net.visualillusionsent.dconomy.canary.addon.bank;
+package net.visualillusionsent.dconomy.addon.bank.canary;
+
+import net.canarymod.commandsys.CommandDependencyException;
+import net.visualillusionsent.dconomy.MessageTranslator;
+import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.dconomy.addon.bank.dBankLite;
+import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPlugin;
 
 import java.util.logging.Logger;
-import net.canarymod.commandsys.CommandDependencyException;
-import net.canarymod.plugin.Plugin;
-import net.visualillusionsent.dconomy.MessageTranslator;
-import net.visualillusionsent.dconomy.addon.bank.IdBankLite;
-import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankHandler;
 
-public final class dBankLite extends Plugin implements IdBankLite {
+public final class CanarydBankLite extends VisualIllusionsCanaryPlugin implements dBankLite {
 
     static {
         MessageTranslator.getClassVersion();
     }
 
     @Override
-    public boolean enable() {
+    public final boolean enable() {
         new dBankLiteBase(this);
         BankHandler.initialize();
         try {
             new CanarydBankLiteCommandListener(this);
-        }
-        catch (CommandDependencyException ex) {
+        } catch (CommandDependencyException ex) {
             return false;
         }
         return true;
     }
 
     @Override
-    public void disable() {
+    public final void disable() {
         dBankLiteBase.cleanUp();
     }
 
     @Override
-    public Logger getPluginLogger() {
+    public final Logger getPluginLogger() {
         return this.getLogman();
     }
 
+    @Override
+    public final void check() {
+        checkStatus();
+        checkVersion();
+    }
 }

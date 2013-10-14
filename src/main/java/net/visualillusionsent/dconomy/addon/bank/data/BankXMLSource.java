@@ -1,31 +1,25 @@
-/* 
- * Copyright 2013 Visual Illusions Entertainment.
- *  
+/*
  * This file is part of dBankLite.
  *
- * This program is free software: you can redistribute it and/or modify
+ * Copyright © 2013 Visual Illusions Entertainment
+ *
+ * dBankLite is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * dBankLite is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with this program.
- * If not, see http://www.gnu.org/licenses/gpl.html
- * 
- * Source Code available @ https://github.com/Visual-Illusions/dBankLite
+ * You should have received a copy of the GNU General Public License along with dBankLite.
+ * If not, see http://www.gnu.org/licenses/gpl.html.
  */
 package net.visualillusionsent.dconomy.addon.bank.data;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-import net.visualillusionsent.dconomy.dCoBase;
-import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankAccount;
+import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.utils.SystemUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -34,7 +28,12 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-public final class BankXMLSource implements BankDataSource{
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+public final class BankXMLSource implements BankDataSource {
 
     private final Format xmlform = Format.getPrettyFormat().setExpandEmptyElements(false).setOmitDeclaration(true).setOmitEncoding(true).setLineSeparator(SystemUtils.LINE_SEP);
     private final XMLOutputter outputter = new XMLOutputter(xmlform);
@@ -43,7 +42,7 @@ public final class BankXMLSource implements BankDataSource{
     private FileWriter writer;
 
     @Override
-    public final boolean load(){
+    public final boolean load() {
         dBankLiteBase.info("Loading Bank Accounts...");
         File bankFile = new File(bank_Path);
         Exception ex = null;
@@ -55,17 +54,15 @@ public final class BankXMLSource implements BankDataSource{
             try {
                 writer = new FileWriter(bank_Path);
                 outputter.output(root, writer);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 ex = e;
-            }
-            finally {
+            } finally {
                 try {
                     if (writer != null) {
                         writer.close();
                     }
+                } catch (IOException e) {
                 }
-                catch (IOException e) {}
                 writer = null;
                 if (ex != null) {
                     dBankLiteBase.severe("Failed to create new BankAccounts file...");
@@ -73,8 +70,7 @@ public final class BankXMLSource implements BankDataSource{
                     return false;
                 }
             }
-        }
-        else {
+        } else {
             try {
                 Document doc = builder.build(bankFile);
                 Element root = doc.getRootElement();
@@ -83,13 +79,11 @@ public final class BankXMLSource implements BankDataSource{
                     new BankAccount(account.getAttributeValue("owner"), account.getAttribute("balance").getDoubleValue(), account.getAttribute("lockedOut").getBooleanValue(), this);
                     load++;
                 }
-            }
-            catch (JDOMException jdomex) {
+            } catch (JDOMException jdomex) {
                 dBankLiteBase.severe("JDOM Exception while parsing BankAccounts file...");
                 dBankLiteBase.stacktrace(ex);
                 return false;
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 dBankLiteBase.severe("Input/Output Exception while parsing BankAccounts file...");
                 dBankLiteBase.stacktrace(ex);
                 return false;
@@ -100,7 +94,7 @@ public final class BankXMLSource implements BankDataSource{
     }
 
     @Override
-    public final boolean saveAccount(BankAccount bankaccount){
+    public final boolean saveAccount(BankAccount bankaccount) {
         boolean success = true;
         synchronized (lock) {
             File bankFile = new File(bank_Path);
@@ -128,28 +122,24 @@ public final class BankXMLSource implements BankDataSource{
                 try {
                     writer = new FileWriter(bankFile);
                     outputter.output(root, writer);
-                }
-                catch (IOException ex) {
+                } catch (IOException ex) {
                     dBankLiteBase.severe("Failed to write to BankAccounts file...");
                     dBankLiteBase.stacktrace(ex);
                     success = false;
-                }
-                finally {
+                } finally {
                     try {
                         if (writer != null) {
                             writer.close();
                         }
+                    } catch (IOException e) {
                     }
-                    catch (IOException e) {}
                     writer = null;
                 }
-            }
-            catch (JDOMException jdomex) {
+            } catch (JDOMException jdomex) {
                 dBankLiteBase.severe("JDOM Exception while trying to save bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(jdomex);
                 success = false;
-            }
-            catch (IOException ioex) {
+            } catch (IOException ioex) {
                 dBankLiteBase.severe("Input/Output Exception while trying to save bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(ioex);
                 success = false;
@@ -159,7 +149,7 @@ public final class BankXMLSource implements BankDataSource{
     }
 
     @Override
-    public final boolean reloadAccount(BankAccount bankaccount){
+    public final boolean reloadAccount(BankAccount bankaccount) {
         boolean success = true;
         synchronized (lock) {
             File bankFile = new File(bank_Path);
@@ -175,13 +165,11 @@ public final class BankXMLSource implements BankDataSource{
                         break;
                     }
                 }
-            }
-            catch (JDOMException jdomex) {
+            } catch (JDOMException jdomex) {
                 dBankLiteBase.severe("JDOM Exception while trying to reload bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(jdomex);
                 success = false;
-            }
-            catch (IOException ioex) {
+            } catch (IOException ioex) {
                 dBankLiteBase.severe("Input/Output Exception while trying to reload bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(ioex);
                 success = false;
@@ -190,5 +178,6 @@ public final class BankXMLSource implements BankDataSource{
         return success;
     }
 
-    public final void cleanUp(){}
+    public final void cleanUp() {
+    }
 }

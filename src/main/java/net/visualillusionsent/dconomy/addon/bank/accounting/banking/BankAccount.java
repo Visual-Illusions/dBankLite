@@ -1,21 +1,19 @@
-/* 
- * Copyright 2013 Visual Illusions Entertainment.
- *  
+/*
  * This file is part of dBankLite.
  *
- * This program is free software: you can redistribute it and/or modify
+ * Copyright © 2013 Visual Illusions Entertainment
+ *
+ * dBankLite is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * dBankLite is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with this program.
- * If not, see http://www.gnu.org/licenses/gpl.html
- * 
- * Source Code available @ https://github.com/Visual-Illusions/dBankLite
+ * You should have received a copy of the GNU General Public License along with dBankLite.
+ * If not, see http://www.gnu.org/licenses/gpl.html.
  */
 package net.visualillusionsent.dconomy.addon.bank.accounting.banking;
 
@@ -34,11 +32,9 @@ public class BankAccount extends Account {
 
     /**
      * Tests a debit before modifing the wallet
-     * 
-     * @param remove
-     *            the amount to test removal for
-     * @throws AccountingException
-     *             if unable to debit the money
+     *
+     * @param remove the amount to test removal for
+     * @throws AccountingException if unable to debit the money
      */
     public final void testDebit(double remove) throws AccountingException {
         if (locked) {
@@ -51,11 +47,9 @@ public class BankAccount extends Account {
 
     /**
      * Tests a debit before modifing the wallet
-     * 
-     * @param remove
-     *            the amount to test removal for
-     * @throws AccountingException
-     *             if unable to debit the money
+     *
+     * @param remove the amount to test removal for
+     * @throws AccountingException if unable to debit the money
      */
     public final void testDebit(String remove) throws AccountingException {
         testDebit(this.testArgumentString(remove));
@@ -106,8 +100,7 @@ public class BankAccount extends Account {
     public final boolean equals(Object obj) {
         if (obj instanceof BankAccount) {
             return this == obj;
-        }
-        else if (obj instanceof String) {
+        } else if (obj instanceof String) {
             return this.owner.equals(obj);
         }
         return false;
