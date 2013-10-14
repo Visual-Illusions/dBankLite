@@ -290,5 +290,13 @@
                 </executions>
             </plugin>
         </plugins>
+        <extensions>
+            <!-- FTP Extension to upload to repo.visualillusionsent.net -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>2.4</version>
+            </extension>
+        </extensions>
     </build>
 </project>
