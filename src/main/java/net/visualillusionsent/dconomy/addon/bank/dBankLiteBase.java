@@ -39,7 +39,7 @@ public final class dBankLiteBase {
         $ = this;
         this.logger = dbanklite.getPluginLogger();
         if (dCoBase.getVersion() > dCoVersion) {
-            warning("dBankLite appears to be a newer version. Incompatibility could result.");
+            warning("dConomy appears to be a newer version. Incompatibility could result.");
         }
         testdBankLiteProps();
         dbanklite.check();
