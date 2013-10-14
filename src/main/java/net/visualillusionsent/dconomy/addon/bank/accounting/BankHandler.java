@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU General Public License along with dBankLite.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.accounting.banking;
+package net.visualillusionsent.dconomy.addon.bank.accounting;
 
 import net.visualillusionsent.dconomy.accounting.wallet.Wallet;
 import net.visualillusionsent.dconomy.addon.bank.data.BankDataSource;
 import net.visualillusionsent.dconomy.addon.bank.data.BankXMLSource;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.data.DataSourceType;
-import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
+import net.visualillusionsent.dconomy.modinterface.ModUser;
 
 import java.util.Collection;
 import java.util.Collections;

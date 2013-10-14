@@ -17,11 +17,11 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.commands;
 
-import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankAccount;
-import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
-import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
+import net.visualillusionsent.dconomy.modinterface.ModUser;
 
 public final class BankBaseCommand extends dConomyCommand {
 

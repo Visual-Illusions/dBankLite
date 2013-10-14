@@ -18,8 +18,8 @@
 package net.visualillusionsent.dconomy.addon.bank;
 
 import net.visualillusionsent.dconomy.accounting.AccountingException;
-import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankAccount;
-import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankHandler;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.dCoBase;
 
 import java.util.TimerTask;

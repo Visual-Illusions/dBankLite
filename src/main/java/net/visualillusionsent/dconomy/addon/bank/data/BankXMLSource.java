@@ -17,7 +17,7 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.data;
 
-import net.visualillusionsent.dconomy.addon.bank.accounting.banking.BankAccount;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.utils.SystemUtils;

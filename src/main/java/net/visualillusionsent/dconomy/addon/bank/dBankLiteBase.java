@@ -20,7 +20,6 @@ package net.visualillusionsent.dconomy.addon.bank;
 import net.visualillusionsent.dconomy.MessageTranslator;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.io.logging.dCoLevel;
-import net.visualillusionsent.utils.ProgramStatus;
 import net.visualillusionsent.utils.PropertiesFile;
 import net.visualillusionsent.utils.UtilityException;
 
@@ -33,17 +32,13 @@ public final class dBankLiteBase {
     private final float dCoVersion = 3.0F;
     private final Logger logger;
     private final Timer timer;
-    private ProgramStatus status;
-    private float version;
-    private short build;
-    private String buildTime;
 
     private static dBankLiteBase $;
 
     public dBankLiteBase(dBankLite dbanklite) {
         $ = this;
         this.logger = dbanklite.getPluginLogger();
-        if (dCoBase.getRawVersion() > dCoVersion) {
+        if (dCoBase.getVersion() > dCoVersion) {
             warning("dBankLite appears to be a newer version. Incompatibility could result.");
         }
         testdBankLiteProps();

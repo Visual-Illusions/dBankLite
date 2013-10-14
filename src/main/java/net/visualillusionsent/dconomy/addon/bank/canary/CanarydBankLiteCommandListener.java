@@ -28,8 +28,8 @@ import net.visualillusionsent.dconomy.addon.bank.commands.*;
 import net.visualillusionsent.dconomy.canary.api.Canary_User;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.dconomy.modinterface.ModUser;
 import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPluginInformationCommand;
-import net.visualillusionsent.minecraft.server.mod.interfaces.ModUser;
 import net.visualillusionsent.utils.VersionChecker;
 
 public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryPluginInformationCommand implements CommandListener {
