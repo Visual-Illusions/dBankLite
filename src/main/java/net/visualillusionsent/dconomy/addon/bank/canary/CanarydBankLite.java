@@ -36,7 +36,8 @@ public final class CanarydBankLite extends VisualIllusionsCanaryPlugin implement
         BankHandler.initialize();
         try {
             new CanarydBankLiteCommandListener(this);
-        } catch (CommandDependencyException ex) {
+        }
+        catch (CommandDependencyException ex) {
             return false;
         }
         dCoBase.getServer().registerTransactionHandler(BankTransactionHook.class, BankTransaction.class);
@@ -46,7 +47,7 @@ public final class CanarydBankLite extends VisualIllusionsCanaryPlugin implement
 
     @Override
     public final void disable() {
-        dCoBase.getServer().deregisterTransactionHandler(BankTransactionHook.class);
+        dCoBase.getServer().unregisterTransactionHandler(BankTransactionHook.class);
         dBankLiteBase.cleanUp();
     }
 

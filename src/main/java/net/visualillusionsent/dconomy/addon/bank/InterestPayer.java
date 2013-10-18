@@ -42,7 +42,8 @@ final class InterestPayer extends TimerTask {
             }
             try {
                 account.deposit(interest);
-            } catch (AccountingException aex) {
+            }
+            catch (AccountingException aex) {
                 // Probably over balanced
             }
         }

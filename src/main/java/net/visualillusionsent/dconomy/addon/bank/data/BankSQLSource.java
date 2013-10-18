@@ -48,11 +48,13 @@ public abstract class BankSQLSource implements BankDataSource {
                 load++;
             }
             dBankLiteBase.info(String.format("Loaded %d Bank Accounts...", load));
-        } catch (SQLException sqlex) {
+        }
+        catch (SQLException sqlex) {
             dBankLiteBase.severe("SQL Exception while parsing Bank Accounts table...");
             dBankLiteBase.stacktrace(sqlex);
             success = false;
-        } finally {
+        }
+        finally {
             try {
                 if (rs != null && !rs.isClosed()) {
                     rs.close();
@@ -60,7 +62,8 @@ public abstract class BankSQLSource implements BankDataSource {
                 if (ps != null && !ps.isClosed()) {
                     ps.close();
                 }
-            } catch (AbstractMethodError e) {
+            }
+            catch (AbstractMethodError e) {
             } // SQLite weird stuff
             catch (Exception e) {
             }
@@ -87,7 +90,8 @@ public abstract class BankSQLSource implements BankDataSource {
                     ps.setInt(2, ((BankAccount) account).isLocked() ? 1 : 0);
                     ps.setString(3, account.getOwner());
                     ps.execute();
-                } else {
+                }
+                else {
                     ps.close();
                     ps = conn.prepareStatement("INSERT INTO `" + bank_table + "` (`owner`,`balance`,`lockedOut`) VALUES(?,?,?)");
                     ps.setString(1, account.getOwner());
@@ -96,10 +100,12 @@ public abstract class BankSQLSource implements BankDataSource {
                     ps.execute();
                 }
                 dBankLiteBase.debug("Bank Accoutn saved!");
-            } catch (SQLException sqlex) {
+            }
+            catch (SQLException sqlex) {
                 dBankLiteBase.severe("Failed to save Bank Account for: " + account.getOwner());
                 dBankLiteBase.stacktrace(sqlex);
-            } finally {
+            }
+            finally {
                 try {
                     if (rs != null && !rs.isClosed()) {
                         rs.close();
@@ -107,7 +113,8 @@ public abstract class BankSQLSource implements BankDataSource {
                     if (ps != null && !ps.isClosed()) {
                         ps.close();
                     }
-                } catch (AbstractMethodError e) {
+                }
+                catch (AbstractMethodError e) {
                 } // SQLite weird stuff
                 catch (Exception e) {
                 }
@@ -131,11 +138,13 @@ public abstract class BankSQLSource implements BankDataSource {
                 ((BankAccount) account).setLockOut(rs.getBoolean("lockedOut"));
             }
             dBankLiteBase.debug("Reloaded Wallet for: ".concat(account.getOwner()));
-        } catch (SQLException sqlex) {
+        }
+        catch (SQLException sqlex) {
             dBankLiteBase.severe("SQL Exception while reloading Wallet for: " + account.getOwner());
             dBankLiteBase.stacktrace(sqlex);
             success = false;
-        } finally {
+        }
+        finally {
             try {
                 if (rs != null && !rs.isClosed()) {
                     rs.close();
@@ -143,7 +152,8 @@ public abstract class BankSQLSource implements BankDataSource {
                 if (ps != null && !ps.isClosed()) {
                     ps.close();
                 }
-            } catch (AbstractMethodError e) {
+            }
+            catch (AbstractMethodError e) {
             } // SQLite weird stuff
             catch (Exception e) {
             }

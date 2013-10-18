@@ -54,14 +54,17 @@ public final class BankXMLSource implements BankDataSource {
             try {
                 writer = new FileWriter(bank_Path);
                 outputter.output(root, writer);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 ex = e;
-            } finally {
+            }
+            finally {
                 try {
                     if (writer != null) {
                         writer.close();
                     }
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                 }
                 writer = null;
                 if (ex != null) {
@@ -70,7 +73,8 @@ public final class BankXMLSource implements BankDataSource {
                     return false;
                 }
             }
-        } else {
+        }
+        else {
             try {
                 Document doc = builder.build(bankFile);
                 Element root = doc.getRootElement();
@@ -79,11 +83,13 @@ public final class BankXMLSource implements BankDataSource {
                     new BankAccount(account.getAttributeValue("owner"), account.getAttribute("balance").getDoubleValue(), account.getAttribute("lockedOut").getBooleanValue(), this);
                     load++;
                 }
-            } catch (JDOMException jdomex) {
+            }
+            catch (JDOMException jdomex) {
                 dBankLiteBase.severe("JDOM Exception while parsing BankAccounts file...");
                 dBankLiteBase.stacktrace(ex);
                 return false;
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 dBankLiteBase.severe("Input/Output Exception while parsing BankAccounts file...");
                 dBankLiteBase.stacktrace(ex);
                 return false;
@@ -122,24 +128,29 @@ public final class BankXMLSource implements BankDataSource {
                 try {
                     writer = new FileWriter(bankFile);
                     outputter.output(root, writer);
-                } catch (IOException ex) {
+                }
+                catch (IOException ex) {
                     dBankLiteBase.severe("Failed to write to BankAccounts file...");
                     dBankLiteBase.stacktrace(ex);
                     success = false;
-                } finally {
+                }
+                finally {
                     try {
                         if (writer != null) {
                             writer.close();
                         }
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e) {
                     }
                     writer = null;
                 }
-            } catch (JDOMException jdomex) {
+            }
+            catch (JDOMException jdomex) {
                 dBankLiteBase.severe("JDOM Exception while trying to save bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(jdomex);
                 success = false;
-            } catch (IOException ioex) {
+            }
+            catch (IOException ioex) {
                 dBankLiteBase.severe("Input/Output Exception while trying to save bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(ioex);
                 success = false;
@@ -165,11 +176,13 @@ public final class BankXMLSource implements BankDataSource {
                         break;
                     }
                 }
-            } catch (JDOMException jdomex) {
+            }
+            catch (JDOMException jdomex) {
                 dBankLiteBase.severe("JDOM Exception while trying to reload bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(jdomex);
                 success = false;
-            } catch (IOException ioex) {
+            }
+            catch (IOException ioex) {
                 dBankLiteBase.severe("Input/Output Exception while trying to reload bank account for User:" + bankaccount.getOwner());
                 dBankLiteBase.stacktrace(ioex);
                 success = false;

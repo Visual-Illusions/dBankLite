@@ -19,9 +19,9 @@ package net.visualillusionsent.dconomy.addon.bank.commands;
 
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
+import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
-import net.visualillusionsent.dconomy.modinterface.ModUser;
 
 public final class BankBaseCommand extends dConomyCommand {
 
@@ -29,10 +29,10 @@ public final class BankBaseCommand extends dConomyCommand {
         super(0);
     }
 
-    protected final void execute(ModUser user, String[] args) {
+    protected final void execute(dConomyUser user, String[] args) {
         BankAccount theAccount;
         if (args.length == 1 && (user.hasPermission("dconomy.admin.bank") || !dCoBase.getProperties().getBooleanValue("adminonly.balance.check"))) {
-            ModUser theUser = args[0].toUpperCase().equals("SERVER") ? null : dCoBase.getServer().getUser(args[0]);
+            dConomyUser theUser = args[0].toUpperCase().equals("SERVER") ? null : dCoBase.getServer().getUser(args[0]);
             if (theUser == null && !args[0].toUpperCase().equals("SERVER")) {
                 user.error("error.404.user", args[0]);
                 return;
@@ -44,14 +44,17 @@ public final class BankBaseCommand extends dConomyCommand {
             theAccount = BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName());
             if (theAccount.isLocked()) {
                 user.message("error.lock.out", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
-            } else {
+            }
+            else {
                 user.message("account.balance.other", theUser == null ? "SERVER" : theUser.getName(), theAccount.getBalance());
             }
-        } else {
+        }
+        else {
             theAccount = BankHandler.getBankAccountByName(user.getName());
             if (theAccount.isLocked()) {
                 user.message("error.lock.out", user.getName(), "BANK ACCOUNT");
-            } else {
+            }
+            else {
                 user.message("account.balance", Double.valueOf(theAccount.getBalance()), "BANK ACCOUNT");
             }
         }

@@ -43,7 +43,8 @@ public final class BankSQLiteSource extends BankSQLSource {
             st = conn.createStatement();
             st.execute("CREATE TABLE IF NOT EXISTS `" + bank_table + "` (`owner` VARCHAR(16) NOT NULL, `balance` DOUBLE(18,2) NOT NULL, `lockedOut` TINYINT(1) NOT NULL, PRIMARY KEY (`owner`))");
             st.close();
-        } catch (SQLException sqlex) {
+        }
+        catch (SQLException sqlex) {
             dCoBase.severe("SQL Exception while parsing BankAccounts table...");
             dCoBase.stacktrace(sqlex);
             return false;
@@ -54,7 +55,8 @@ public final class BankSQLiteSource extends BankSQLSource {
     public static void cleanUp() {
         try {
             $.conn.close();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
         $ = null;
     }

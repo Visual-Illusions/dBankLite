@@ -30,15 +30,14 @@ public class BankTransactionHook extends AccountTransactionHook {
     /**
      * Constructs a new Bank Transaction Hook
      *
-     * @param action the {@link BankTransaction} done
+     * @param action
+     *         the {@link BankTransaction} done
      */
     public BankTransactionHook(BankTransaction action) {
         super(action);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final BankTransaction getTransaction() {
         return (BankTransaction) action;

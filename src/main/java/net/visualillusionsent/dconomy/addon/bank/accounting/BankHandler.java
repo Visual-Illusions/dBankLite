@@ -20,9 +20,9 @@ package net.visualillusionsent.dconomy.addon.bank.accounting;
 import net.visualillusionsent.dconomy.accounting.wallet.Wallet;
 import net.visualillusionsent.dconomy.addon.bank.data.BankDataSource;
 import net.visualillusionsent.dconomy.addon.bank.data.BankXMLSource;
+import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.data.DataSourceType;
-import net.visualillusionsent.dconomy.modinterface.ModUser;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -49,9 +49,11 @@ public final class BankHandler {
         accounts = new ConcurrentHashMap<String, BankAccount>();
         if (type == DataSourceType.MYSQL) {
             source = new BankXMLSource();
-        } else if (type == DataSourceType.SQLITE) {
+        }
+        else if (type == DataSourceType.SQLITE) {
             source = new BankXMLSource();
-        } else {
+        }
+        else {
             source = new BankXMLSource();
         }
     }
@@ -64,19 +66,22 @@ public final class BankHandler {
     }
 
     /**
-     * Gets a {@link Wallet} for a {@link ModUser}
+     * Gets a {@link Wallet} for a {@link net.visualillusionsent.dconomy.api.dConomyUser}
      *
-     * @param user the {@link ModUser} to get a wallet for
+     * @param user
+     *         the {@link net.visualillusionsent.dconomy.api.dConomyUser} to get a wallet for
+     *
      * @return the {@link Wallet} for the user if found; {@code null} if not found
      */
-    public static final BankAccount getBankAccount(ModUser user) {
+    public static final BankAccount getBankAccount(dConomyUser user) {
         return getBankAccountByName(user.getName());
     }
 
     /**
-     * Adds a {@link Wallet} to the manager
+     * Adds a {@link BankAccount} to the manager
      *
-     * @param wallet the {@link Wallet} to be added
+     * @param account
+     *         the {@link BankAccount} to be added
      */
     public static final void addAccount(BankAccount account) {
         $.accounts.put(account.getOwner(), account);
@@ -85,7 +90,9 @@ public final class BankHandler {
     /**
      * Checks if a {@link Wallet} exists
      *
-     * @param username the user's name to check Wallet for
+     * @param username
+     *         the user's name to check Wallet for
+     *
      * @return {@code true} if the wallet exists; {@code false} otherwise
      */
     public static final boolean verifyAccount(String username) {
@@ -95,7 +102,9 @@ public final class BankHandler {
     /**
      * Creates a new {@link Wallet} with default balance
      *
-     * @param username the user's name to create a wallet for
+     * @param username
+     *         the user's name to create a wallet for
+     *
      * @return the new {@link Wallet}
      */
     public static final BankAccount newBankAccount(String username) {
@@ -104,9 +113,7 @@ public final class BankHandler {
         return account;
     }
 
-    /**
-     * Initializer method
-     */
+    /** Initializer method */
     public static final void initialize() {
         if (!init) {
             $.source.load();
@@ -114,9 +121,7 @@ public final class BankHandler {
         }
     }
 
-    /**
-     * Cleans up
-     */
+    /** Cleans up */
     public static final void cleanUp() {
         $.accounts.clear();
     }

@@ -20,9 +20,9 @@ package net.visualillusionsent.dconomy.addon.bank.commands;
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
+import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
-import net.visualillusionsent.dconomy.modinterface.ModUser;
 
 public final class BankAddCommand extends dConomyCommand {
 
@@ -30,8 +30,8 @@ public final class BankAddCommand extends dConomyCommand {
         super(2);
     }
 
-    protected final void execute(ModUser user, String[] args) {
-        ModUser theUser = args[1].toUpperCase().equals("SERVER") ? (ModUser) dCoBase.getServer() : dCoBase.getServer().getUser(args[1]);
+    protected final void execute(dConomyUser user, String[] args) {
+        dConomyUser theUser = args[1].toUpperCase().equals("SERVER") ? (dConomyUser) dCoBase.getServer() : dCoBase.getServer().getUser(args[1]);
         if (theUser == null) {
             user.error("error.404.user", args[1]);
             return;
@@ -46,7 +46,8 @@ public final class BankAddCommand extends dConomyCommand {
             BankHandler.getBankAccountByName(theUser.getName()).deposit(args[0]);
             user.error("admin.add.balance", theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
             dCoBase.getServer().newTransaction(new BankTransaction(theUser, user, BankTransaction.BankAction.ADMIN_ADD, Double.parseDouble(args[0])));
-        } catch (AccountingException ae) {
+        }
+        catch (AccountingException ae) {
             user.error(ae.getMessage());
         }
     }

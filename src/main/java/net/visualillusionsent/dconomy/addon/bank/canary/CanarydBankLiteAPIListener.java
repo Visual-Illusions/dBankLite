@@ -1,4 +1,21 @@
 /*
+ * This file is part of dBankLite.
+ *
+ * Copyright © 2013 Visual Illusions Entertainment
+ *
+ * dBankLite is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * dBankLite is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with dBankLite.
+ * If not, see http://www.gnu.org/licenses/gpl.html.
+ */
+/*
  * This file is part of dConomy.
  *
  * Copyright © 2011-2013 Visual Illusions Entertainment
@@ -24,8 +41,11 @@ import net.canarymod.plugin.Priority;
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
-import net.visualillusionsent.dconomy.addon.bank.canary.api.*;
-import net.visualillusionsent.dconomy.canary.CanarydConomy;
+import net.visualillusionsent.dconomy.addon.bank.canary.api.BankBalanceHook;
+import net.visualillusionsent.dconomy.addon.bank.canary.api.BankDebitHook;
+import net.visualillusionsent.dconomy.addon.bank.canary.api.BankDepositHook;
+import net.visualillusionsent.dconomy.addon.bank.canary.api.BankSetBalanceHook;
+import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
 import net.visualillusionsent.dconomy.dCoBase;
 
 public final class CanarydBankLiteAPIListener implements PluginListener {
@@ -39,10 +59,12 @@ public final class CanarydBankLiteAPIListener implements PluginListener {
         try {
             if (BankHandler.verifyAccount(hook.getUserName())) {
                 hook.setBalance(BankHandler.getBankAccountByName(hook.getUserName()).getBalance());
-            } else {
+            }
+            else {
                 hook.setErrorMessage("Bank Account Not Found");
             }
-        } catch (AccountingException aex) {
+        }
+        catch (AccountingException aex) {
             dCoBase.warning("Failed to handle Hook: '" + hook.getName() + "' called from Plugin: '" + hook.getCaller().getName() + "'. Reason: " + aex.getMessage());
             hook.setErrorMessage(aex.getMessage());
         }
@@ -54,10 +76,12 @@ public final class CanarydBankLiteAPIListener implements PluginListener {
             if (BankHandler.verifyAccount(hook.getUserName())) {
                 BankHandler.getBankAccountByName(hook.getUserName()).deposit(hook.getDeposit());
                 Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), BankTransaction.BankAction.PLUGIN_DEPOSIT, hook.getDeposit())));
-            } else {
+            }
+            else {
                 hook.setErrorMessage("Bank Account Not Found");
             }
-        } catch (AccountingException aex) {
+        }
+        catch (AccountingException aex) {
             dCoBase.warning("Failed to handle Hook: '" + hook.getName() + "' called from Plugin: '" + hook.getCaller().getName() + "'. Reason: " + aex.getMessage());
             hook.setErrorMessage(aex.getMessage());
         }
@@ -69,10 +93,12 @@ public final class CanarydBankLiteAPIListener implements PluginListener {
             if (BankHandler.verifyAccount(hook.getUserName())) {
                 BankHandler.getBankAccountByName(hook.getUserName()).debit(hook.getDebit());
                 Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), BankTransaction.BankAction.PLUGIN_DEBIT, hook.getDebit())));
-            } else {
+            }
+            else {
                 hook.setErrorMessage("Wallet Not Found");
             }
-        } catch (AccountingException aex) {
+        }
+        catch (AccountingException aex) {
             dCoBase.warning("Failed to handle Hook: '" + hook.getName() + "' called from Plugin: '" + hook.getCaller().getName() + "'. Reason: " + aex.getMessage());
             hook.setErrorMessage(aex.getMessage());
         }
@@ -84,10 +110,12 @@ public final class CanarydBankLiteAPIListener implements PluginListener {
             if (BankHandler.verifyAccount(hook.getUserName())) {
                 BankHandler.getBankAccountByName(hook.getUserName()).setBalance(hook.getToSet());
                 Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), BankTransaction.BankAction.PLUGIN_SET, hook.getToSet())));
-            } else {
+            }
+            else {
                 hook.setErrorMessage("Wallet Not Found");
             }
-        } catch (AccountingException aex) {
+        }
+        catch (AccountingException aex) {
             dCoBase.warning("Failed to handle Hook: '" + hook.getName() + "' called from Plugin: '" + hook.getCaller().getName() + "'. Reason: " + aex.getMessage());
             hook.setErrorMessage(aex.getMessage());
         }

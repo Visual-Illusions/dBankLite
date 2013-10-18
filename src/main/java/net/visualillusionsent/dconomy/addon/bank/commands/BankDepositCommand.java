@@ -23,9 +23,9 @@ import net.visualillusionsent.dconomy.accounting.wallet.WalletHandler;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
+import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
-import net.visualillusionsent.dconomy.modinterface.ModUser;
 
 public final class BankDepositCommand extends dConomyCommand {
 
@@ -34,7 +34,7 @@ public final class BankDepositCommand extends dConomyCommand {
     }
 
     @Override
-    protected final void execute(ModUser user, String[] args) {
+    protected final void execute(dConomyUser user, String[] args) {
         Wallet userWallet = WalletHandler.getWallet(user);
         BankAccount userBank = BankHandler.getBankAccount(user);
         try {
@@ -44,7 +44,8 @@ public final class BankDepositCommand extends dConomyCommand {
             userWallet.debit(args[0]);
             user.message("bank.deposit", user, Double.parseDouble(args[0]));
             dCoBase.getServer().newTransaction(new BankTransaction(user, null, BankTransaction.BankAction.DEPOSIT, Double.parseDouble(args[0])));
-        } catch (AccountingException ae) {
+        }
+        catch (AccountingException ae) {
             user.error(ae.getMessage());
         }
     }

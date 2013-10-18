@@ -19,7 +19,7 @@ package net.visualillusionsent.dconomy.addon.bank;
 
 import net.visualillusionsent.dconomy.MessageTranslator;
 import net.visualillusionsent.dconomy.dCoBase;
-import net.visualillusionsent.dconomy.io.logging.dCoLevel;
+import net.visualillusionsent.dconomy.logging.dCoLevel;
 import net.visualillusionsent.utils.PropertiesFile;
 import net.visualillusionsent.utils.UtilityException;
 
@@ -47,7 +47,8 @@ public final class dBankLiteBase {
         if (getInterestInterval() > 0) { // interest enabled?
             timer = new Timer();
             timer.scheduleAtFixedRate(new InterestPayer(this), getInitialStart(), getInterestInterval());
-        } else {
+        }
+        else {
             timer = null;
         }
     }
@@ -117,11 +118,13 @@ public final class dBankLiteBase {
             long reset = dCoBase.getProperties().getPropertiesFile().getLong("bank.timer.reset") - System.currentTimeMillis();
             if (reset < 0) {
                 return 0;
-            } else {
+            }
+            else {
                 dCoBase.getProperties().getPropertiesFile().setLong("bank.timer.reset", System.currentTimeMillis() + reset);
                 return reset;
             }
-        } else {
+        }
+        else {
             setResetTime();
             return getInterestInterval();
         }
@@ -137,7 +140,7 @@ public final class dBankLiteBase {
 
     private final void installBankMessages() {
         try {
-            PropertiesFile lang = new PropertiesFile("config/dConomy3/lang/en_US.lang");
+            PropertiesFile lang = new PropertiesFile("lang/dConomy3/en_US.lang");
             if (!lang.containsKey("bank.deposit")) {
                 lang.setString("bank.deposit", "$cAYou have deposited $cE{0, number, 0.00} $m$cA into your $c3Bank Account$cA.", ";dBankLite Message");
             }
@@ -146,7 +149,8 @@ public final class dBankLiteBase {
             }
             lang.save();
             MessageTranslator.reloadMessages();
-        } catch (UtilityException uex) {
+        }
+        catch (UtilityException uex) {
             warning("Failed to install dBankLite messages into dConomy English file (en_US.lang)");
         }
     }

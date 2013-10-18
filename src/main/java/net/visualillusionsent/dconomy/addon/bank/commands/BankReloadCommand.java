@@ -18,9 +18,9 @@
 package net.visualillusionsent.dconomy.addon.bank.commands;
 
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
+import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
-import net.visualillusionsent.dconomy.modinterface.ModUser;
 
 public final class BankReloadCommand extends dConomyCommand {
 
@@ -28,8 +28,8 @@ public final class BankReloadCommand extends dConomyCommand {
         super(1);
     }
 
-    protected final void execute(ModUser user, String[] args) {
-        ModUser theUser = args[1].toUpperCase().equals("SERVER") ? (ModUser) dCoBase.getServer() : dCoBase.getServer().getUser(args[1]);
+    protected final void execute(dConomyUser user, String[] args) {
+        dConomyUser theUser = args[1].toUpperCase().equals("SERVER") ? (dConomyUser) dCoBase.getServer() : dCoBase.getServer().getUser(args[1]);
         if (theUser == null) {
             user.error("error.404.user", args[1]);
             return;
@@ -40,7 +40,8 @@ public final class BankReloadCommand extends dConomyCommand {
         }
         if (BankHandler.getBankAccountByName(theUser.getName()).reload()) {
             user.error("admin.reload.account.success", theUser.getName(), "BANK ACCOUNT");
-        } else {
+        }
+        else {
             user.error("admin.reload.account.fail", theUser.getName(), "BANK ACCOUNT");
         }
     }

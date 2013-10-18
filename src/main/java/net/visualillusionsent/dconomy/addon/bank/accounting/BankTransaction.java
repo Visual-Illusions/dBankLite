@@ -34,8 +34,8 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.accounting;
 
-import net.visualillusionsent.dconomy.accounting.AccountTransaction;
-import net.visualillusionsent.dconomy.modinterface.ModUser;
+import net.visualillusionsent.dconomy.api.AccountTransaction;
+import net.visualillusionsent.dconomy.api.dConomyUser;
 
 public final class BankTransaction extends AccountTransaction {
 
@@ -52,22 +52,22 @@ public final class BankTransaction extends AccountTransaction {
         ;
     }
 
-    private final ModUser owner, admin;
+    private final dConomyUser owner, admin;
     private final BankAction action;
     private final double amount;
 
-    public BankTransaction(ModUser owner, ModUser admin, BankAction action, double amount) {
+    public BankTransaction(dConomyUser owner, dConomyUser admin, BankAction action, double amount) {
         this.owner = owner;
         this.admin = admin;
         this.action = action;
         this.amount = amount;
     }
 
-    public final ModUser getOwner() {
+    public final dConomyUser getOwner() {
         return owner;
     }
 
-    public final ModUser getAdmin() {
+    public final dConomyUser getAdmin() {
         return admin;
     }
 
