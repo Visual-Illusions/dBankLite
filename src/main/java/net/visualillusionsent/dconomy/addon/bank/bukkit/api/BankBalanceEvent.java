@@ -32,51 +32,42 @@
  * You should have received a copy of the GNU General Public License along with dConomy.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.accounting;
+package net.visualillusionsent.dconomy.addon.bank.bukkit.api;
 
-import net.visualillusionsent.dconomy.api.AccountTransaction;
-import net.visualillusionsent.dconomy.api.dConomyUser;
+import net.visualillusionsent.dconomy.bukkit.api.AccountBalanceEvent;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 
-public final class BankTransaction extends AccountTransaction {
+/**
+ * Bank Balance request Event<br>
+ * Plugins should call this Hook for BankBalance details
+ *
+ * @author Jason (darkdiplomat)
+ */
+public final class BankBalanceEvent extends AccountBalanceEvent {
+    private static final HandlerList handlers = new HandlerList();
 
-    public enum BankAction {
-        DEPOSIT, //
-        WITHDRAW, //
-        ADMIN_ADD, //
-        ADMIN_REMOVE, //
-        ADMIN_SET, //
-        ADMIN_RESET, //
-        PLUGIN_DEBIT, //
-        PLUGIN_DEPOSIT, //
-        PLUGIN_SET, //
-        ;
+    /**
+     * Constructs a new BankBalanceEvent
+     *
+     * @param plugin
+     *         the {@link Plugin} requesting balance information
+     * @param username
+     *         the user's name to get balance for
+     */
+    public BankBalanceEvent(Plugin plugin, String username) {
+        super(plugin, username);
     }
 
-    private final dConomyUser owner, admin;
-    private final BankAction action;
-    private final double amount;
-
-    public BankTransaction(dConomyUser owner, dConomyUser admin, BankAction action, double amount) {
-        this.owner = owner;
-        this.admin = admin;
-        this.action = action;
-        this.amount = amount;
+    // Bukkit Event methods
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
     }
 
-    public final dConomyUser getOwner() {
-        return owner;
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
-
-    public final dConomyUser getAdmin() {
-        return admin;
-    }
-
-    public final BankAction getAction() {
-        return action;
-    }
-
-    public final double getAmountChange() {
-        return amount;
-    }
+    //
 
 }

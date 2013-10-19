@@ -19,29 +19,33 @@ package net.visualillusionsent.dconomy.addon.bank.canary;
 
 import net.canarymod.commandsys.CommandDependencyException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
+import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
 import net.visualillusionsent.dconomy.addon.bank.dBankLite;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.dconomy.canary.api.Canary_AddOn;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPlugin;
 
 import java.util.logging.Logger;
 
-public final class CanarydBankLite extends VisualIllusionsCanaryPlugin implements dBankLite {
+public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements dBankLite, Canary_AddOn {
 
     @Override
     public final boolean enable() {
+        super.enable();
+
         new dBankLiteBase(this);
         BankHandler.initialize();
         try {
-            new CanarydBankLiteCommandListener(this);
+            new CanaryBankLiteCommandListener(this);
         }
         catch (CommandDependencyException ex) {
+            dBankLiteBase.severe("Failed to register dBankLite Commands", ex);
             return false;
         }
         dCoBase.getServer().registerTransactionHandler(BankTransactionHook.class, BankTransaction.class);
-        new CanarydBankLiteAPIListener(this);
+        new CanaryBankLiteAPIListener(this);
         return true;
     }
 
@@ -57,8 +61,22 @@ public final class CanarydBankLite extends VisualIllusionsCanaryPlugin implement
     }
 
     @Override
-    public final void check() {
-        checkStatus();
-        checkVersion();
+    public void error(String message) {
+        getLogman().warning(message);
+    }
+
+    @Override
+    public void message(String message) {
+        getLogman().info(message);
+    }
+
+    @Override
+    public boolean hasPermission(String message) {
+        return true;
+    }
+
+    @Override
+    public String getUserLocale() {
+        return dCoBase.getServerLocale();
     }
 }

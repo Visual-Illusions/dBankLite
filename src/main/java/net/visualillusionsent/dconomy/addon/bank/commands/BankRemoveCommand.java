@@ -19,7 +19,8 @@ package net.visualillusionsent.dconomy.addon.bank.commands;
 
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
+import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
+import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
@@ -31,18 +32,18 @@ public final class BankRemoveCommand extends dConomyCommand {
     }
 
     protected final void execute(dConomyUser user, String[] args) {
-        dConomyUser theUser = args[1].toUpperCase().equals("SERVER") ? (dConomyUser) dCoBase.getServer() : dCoBase.getServer().getUser(args[1]);
+        dConomyUser theUser = dCoBase.getServer().getUser(args[1]);
         if (theUser == null) {
-            user.error("error.404.user", args[1]);
+            dBankLiteBase.translateErrorMessageFor(user, "error.404.user", args[1]);
             return;
         }
         if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
-            user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
+            dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
         try {
             BankHandler.getBankAccountByName(theUser.getName()).debit(args[0]);
-            user.error("admin.remove.balance", theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
+            dBankLiteBase.translateErrorMessageFor(user, "admin.remove.balance", theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
             dCoBase.getServer().newTransaction(new BankTransaction(theUser, user, BankTransaction.BankAction.ADMIN_REMOVE, Double.parseDouble(args[0])));
         }
         catch (AccountingException ae) {

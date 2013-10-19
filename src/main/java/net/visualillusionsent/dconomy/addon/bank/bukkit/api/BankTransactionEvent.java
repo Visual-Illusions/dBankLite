@@ -15,17 +15,19 @@
  * You should have received a copy of the GNU General Public License along with dBankLite.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.canary.api;
+package net.visualillusionsent.dconomy.addon.bank.bukkit.api;
 
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
-import net.visualillusionsent.dconomy.canary.api.AccountTransactionHook;
+import net.visualillusionsent.dconomy.bukkit.api.AccountTransactionEvent;
+import org.bukkit.event.HandlerList;
 
 /**
- * Bank Transaction Hook
+ * Bank Transaction Event
  *
  * @author Jason (darkdiplomat)
  */
-public class BankTransactionHook extends AccountTransactionHook {
+public class BankTransactionEvent extends AccountTransactionEvent {
+    private static final HandlerList handlers = new HandlerList();
 
     /**
      * Constructs a new Bank Transaction Hook
@@ -33,7 +35,7 @@ public class BankTransactionHook extends AccountTransactionHook {
      * @param action
      *         the {@link BankTransaction} done
      */
-    public BankTransactionHook(BankTransaction action) {
+    public BankTransactionEvent(BankTransaction action) {
         super(action);
     }
 
@@ -42,4 +44,15 @@ public class BankTransactionHook extends AccountTransactionHook {
     public final BankTransaction getTransaction() {
         return (BankTransaction) action;
     }
+
+    // Bukkit Event methods
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+    //
 }

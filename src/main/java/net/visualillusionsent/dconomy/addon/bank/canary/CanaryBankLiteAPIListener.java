@@ -40,7 +40,7 @@ import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.Priority;
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankTransaction;
+import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankBalanceHook;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankDebitHook;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankDepositHook;
@@ -48,9 +48,9 @@ import net.visualillusionsent.dconomy.addon.bank.canary.api.BankSetBalanceHook;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
 import net.visualillusionsent.dconomy.dCoBase;
 
-public final class CanarydBankLiteAPIListener implements PluginListener {
+public final class CanaryBankLiteAPIListener implements PluginListener {
 
-    CanarydBankLiteAPIListener(CanarydBankLite dBL) {
+    CanaryBankLiteAPIListener(CanaryBankLite dBL) {
         Canary.hooks().registerListener(this, dBL);
     }
 

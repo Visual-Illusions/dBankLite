@@ -40,21 +40,21 @@ import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPluginInformationCommand;
 import net.visualillusionsent.utils.VersionChecker;
 
-public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryPluginInformationCommand implements CommandListener {
+public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPluginInformationCommand implements CommandListener {
 
-    private final dConomyCommand bankbase, bankdeposit, bankwithdraw, bankadd, bankremove, bankset, bankreset, bankreload, banklock;
+    private final dConomyCommand[] cmds = new dConomyCommand[9];
 
-    CanarydBankLiteCommandListener(CanarydBankLite dBL) throws CommandDependencyException {
+    CanaryBankLiteCommandListener(CanaryBankLite dBL) throws CommandDependencyException {
         super(dBL);
-        bankbase = new BankBaseCommand();
-        bankdeposit = new BankDepositCommand();
-        bankwithdraw = new BankWithdrawCommand();
-        bankadd = new BankAddCommand();
-        bankremove = new BankRemoveCommand();
-        bankset = new BankSetCommand();
-        bankreset = new BankResetCommand();
-        bankreload = new BankReloadCommand();
-        banklock = new BankLockCommand();
+        cmds[0] = new BankBaseCommand();
+        cmds[1] = new BankDepositCommand();
+        cmds[2] = new BankWithdrawCommand();
+        cmds[3] = new BankAddCommand();
+        cmds[4] = new BankRemoveCommand();
+        cmds[5] = new BankSetCommand();
+        cmds[6] = new BankResetCommand();
+        cmds[7] = new BankReloadCommand();
+        cmds[8] = new BankLockCommand();
         Canary.commands().registerCommands(this, dBL, false);
     }
 
@@ -88,7 +88,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             permissions = { "dconomy.bank.base" },
             toolTip = "/bank")
     public final void bankbase(MessageReceiver msgrec, String[] args) {
-        bankbase.parseCommand(getUser(msgrec), args, true);
+        cmds[0].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "deposit" },
@@ -97,7 +97,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank deposit <amount>",
             parent = "bank")
     public final void bankdeposit(MessageReceiver msgrec, String[] args) {
-        bankdeposit.parseCommand(getUser(msgrec), args, true);
+        cmds[1].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "withdraw" },
@@ -106,7 +106,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank withdraw <amount>",
             parent = "bank")
     public final void bankwithdraw(MessageReceiver msgrec, String[] args) {
-        bankwithdraw.parseCommand(getUser(msgrec), args, true);
+        cmds[2].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "add" },
@@ -115,7 +115,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank add <amount> <user>",
             parent = "bank")
     public final void bankadd(MessageReceiver msgrec, String[] args) {
-        bankadd.parseCommand(getUser(msgrec), args, true);
+        cmds[3].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "remove" },
@@ -124,7 +124,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank remove <amount> <user>",
             parent = "bank")
     public final void bankremove(MessageReceiver msgrec, String[] args) {
-        bankremove.parseCommand(getUser(msgrec), args, true);
+        cmds[4].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "set" },
@@ -133,7 +133,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank set <amount> <user>",
             parent = "bank")
     public final void bankset(MessageReceiver msgrec, String[] args) {
-        bankset.parseCommand(getUser(msgrec), args, true);
+        cmds[5].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "reset" },
@@ -142,7 +142,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank reset <user>",
             parent = "bank")
     public final void bankreset(MessageReceiver msgrec, String[] args) {
-        bankreset.parseCommand(getUser(msgrec), args, true);
+        cmds[6].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "reload" },
@@ -151,7 +151,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank reload <user>",
             parent = "bank")
     public final void bankreload(MessageReceiver msgrec, String[] args) {
-        bankreload.parseCommand(getUser(msgrec), args, true);
+        cmds[7].parseCommand(getUser(msgrec), args, true);
     }
 
     @Command(aliases = { "lock" },
@@ -160,7 +160,7 @@ public final class CanarydBankLiteCommandListener extends VisualIllusionsCanaryP
             toolTip = "/bank lock <yes|no> <user>",
             parent = "bank")
     public final void banklock(MessageReceiver msgrec, String[] args) {
-        banklock.parseCommand(getUser(msgrec), args, true);
+        cmds[8].parseCommand(getUser(msgrec), args, true);
     }
 
     private dConomyUser getUser(MessageReceiver msgrec) {

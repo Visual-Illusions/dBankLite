@@ -17,12 +17,12 @@
  */
 package net.visualillusionsent.dconomy.addon.bank;
 
+import net.visualillusionsent.dconomy.api.dConomyAddOn;
+
 import java.util.logging.Logger;
 
-public interface dBankLite {
+public interface dBankLite extends dConomyAddOn {
 
     Logger getPluginLogger();
-
-    void check();
 
 }

@@ -17,21 +17,25 @@
  */
 package net.visualillusionsent.dconomy.addon.bank;
 
-import net.visualillusionsent.dconomy.MessageTranslator;
+import net.visualillusionsent.dconomy.addon.bank.data.BankProperties;
+import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.logging.dCoLevel;
 import net.visualillusionsent.utils.PropertiesFile;
-import net.visualillusionsent.utils.UtilityException;
 
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class dBankLiteBase {
+    final static String lang_dir = "lang/dBankLite/";
 
     private final float dCoVersion = 3.0F;
     private final Logger logger;
     private final Timer timer;
+    private final BankProperties props;
+    private final PropertiesFile timer_reset;
+    private final MessageTranslator translator;
 
     private static dBankLiteBase $;
 
@@ -41,9 +45,9 @@ public final class dBankLiteBase {
         if (dCoBase.getVersion() > dCoVersion) {
             warning("dConomy appears to be a newer version. Incompatibility could result.");
         }
-        testdBankLiteProps();
-        dbanklite.check();
-        installBankMessages();
+        props = new BankProperties();
+        translator = new MessageTranslator();
+        timer_reset = new PropertiesFile("config/dBankLite/.reset.dbl");
         if (getInterestInterval() > 0) { // interest enabled?
             timer = new Timer();
             timer.scheduleAtFixedRate(new InterestPayer(this), getInitialStart(), getInterestInterval());
@@ -53,19 +57,41 @@ public final class dBankLiteBase {
         }
     }
 
-    private final void testdBankLiteProps() {
-        PropertiesFile dCoProps = dCoBase.getProperties().getPropertiesFile();
-        if (!dCoProps.containsKey("interest.rate")) {
-            dCoProps.setFloat("interest.rate", 2.0F, "dBankLite: Interest Rate (in percentage) (Default: 2%)");
+    /**
+     * Sends a dBankLite Translated message to a user
+     *
+     * @param user
+     *         the {@link dConomyUser} to send the message to
+     * @param key
+     *         the key to look up
+     * @param args
+     *         the arguments to format the message with
+     */
+    public static void translateMessageFor(dConomyUser user, String key, Object... args) {
+        if (key.matches("bank\\.(deposit|withdraw)")) {
+            user.message($.translator.translate(key, user.getUserLocale(), args));
         }
-        if (!dCoProps.containsKey("interest.pay.interval")) {
-            dCoProps.setInt("interest.pay.interval", 360, "dBankLite: Interest Pay Interval (in minutes) (Default: 360 [6 Hours]) Set to 0 or less to disable");
+        else { // Probably a dConomy default message
+            dCoBase.translateMessageFor(user, key, args);
         }
-        if (!dCoProps.containsKey("interest.max.payout")) {
-            dCoProps.setInt("interest.max.payout", 10000, "dBankLite: Max Interest Payout (Default: 10000)");
+    }
+
+    /**
+     * Sends a dBankLite Translated error message to a user
+     *
+     * @param user
+     *         the {@link dConomyUser} to send the message to
+     * @param key
+     *         the key to look up
+     * @param args
+     *         the arguments to format the message with
+     */
+    public static void translateErrorMessageFor(dConomyUser user, String key, Object... args) {
+        if (key.matches("bank\\.(deposit|withdraw)")) {
+            user.error($.translator.translate(key, user.getUserLocale(), args));
         }
-        if (!dCoProps.containsKey("sql.bank.table")) {
-            dCoProps.setString("sql.bank.table", "dBankLite", "dBankLite: SQL Bank table");
+        else { // Probably a dConomy default message
+            dCoBase.translateErrorMessageFor(user, key, args);
         }
     }
 
@@ -114,13 +140,13 @@ public final class dBankLiteBase {
     }
 
     private final long getInitialStart() {
-        if (dCoBase.getProperties().getPropertiesFile().containsKey("bank.timer.reset")) {
-            long reset = dCoBase.getProperties().getPropertiesFile().getLong("bank.timer.reset") - System.currentTimeMillis();
+        if (timer_reset.containsKey("bank.timer.reset")) {
+            long reset = timer_reset.getLong("bank.timer.reset") - System.currentTimeMillis();
             if (reset < 0) {
-                return 0;
+                return 60000;
             }
             else {
-                dCoBase.getProperties().getPropertiesFile().setLong("bank.timer.reset", System.currentTimeMillis() + reset);
+                timer_reset.setLong("bank.timer.reset", System.currentTimeMillis() + reset);
                 return reset;
             }
         }
@@ -131,27 +157,10 @@ public final class dBankLiteBase {
     }
 
     private final long getInterestInterval() {
-        return dCoBase.getProperties().getPropertiesFile().getLong("interest.pay.interval") * 60000;
+        return $.props.getLong("interest.pay.interval") * 60000;
     }
 
     final void setResetTime() {
-        dCoBase.getProperties().getPropertiesFile().setLong("bank.timer.reset", System.currentTimeMillis() + getInterestInterval());
-    }
-
-    private final void installBankMessages() {
-        try {
-            PropertiesFile lang = new PropertiesFile("lang/dConomy3/en_US.lang");
-            if (!lang.containsKey("bank.deposit")) {
-                lang.setString("bank.deposit", "$cAYou have deposited $cE{0, number, 0.00} $m$cA into your $c3Bank Account$cA.", ";dBankLite Message");
-            }
-            if (!lang.containsKey("bank.withdraw")) {
-                lang.setString("bank.withdraw", "$cAYou have withdrawn $cE{0, number, 0.00} $m$cA from your $c3Bank Account$cA.", ";dBankLite Message");
-            }
-            lang.save();
-            MessageTranslator.reloadMessages();
-        }
-        catch (UtilityException uex) {
-            warning("Failed to install dBankLite messages into dConomy English file (en_US.lang)");
-        }
+        timer_reset.setLong("bank.timer.reset", System.currentTimeMillis() + getInterestInterval());
     }
 }

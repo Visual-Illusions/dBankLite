@@ -19,6 +19,7 @@ package net.visualillusionsent.dconomy.addon.bank.commands;
 
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
+import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
@@ -32,30 +33,30 @@ public final class BankBaseCommand extends dConomyCommand {
     protected final void execute(dConomyUser user, String[] args) {
         BankAccount theAccount;
         if (args.length == 1 && (user.hasPermission("dconomy.admin.bank") || !dCoBase.getProperties().getBooleanValue("adminonly.balance.check"))) {
-            dConomyUser theUser = args[0].toUpperCase().equals("SERVER") ? null : dCoBase.getServer().getUser(args[0]);
+            dConomyUser theUser = dCoBase.getServer().getUser(args[0]);
             if (theUser == null && !args[0].toUpperCase().equals("SERVER")) {
-                user.error("error.404.user", args[0]);
+                dBankLiteBase.translateErrorMessageFor(user, "error.404.user", args[0]);
                 return;
             }
             if (!args[0].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
-                user.error("error.404.account", theUser.getName(), "BANK ACCOUNT");
+                dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
                 return;
             }
             theAccount = BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName());
             if (theAccount.isLocked()) {
-                user.message("error.lock.out", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
+                dBankLiteBase.translateErrorMessageFor(user, "error.lock.out", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
             }
             else {
-                user.message("account.balance.other", theUser == null ? "SERVER" : theUser.getName(), theAccount.getBalance());
+                dBankLiteBase.translateMessageFor(user, "account.balance.other", theUser == null ? "SERVER" : theUser.getName(), theAccount.getBalance());
             }
         }
         else {
             theAccount = BankHandler.getBankAccountByName(user.getName());
             if (theAccount.isLocked()) {
-                user.message("error.lock.out", user.getName(), "BANK ACCOUNT");
+                dBankLiteBase.translateErrorMessageFor(user, "error.lock.out", user.getName(), "BANK ACCOUNT");
             }
             else {
-                user.message("account.balance", Double.valueOf(theAccount.getBalance()), "BANK ACCOUNT");
+                dBankLiteBase.translateMessageFor(user, "account.balance", Double.valueOf(theAccount.getBalance()), "BANK ACCOUNT");
             }
         }
     }
