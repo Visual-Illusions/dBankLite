@@ -23,13 +23,12 @@ import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
 import net.visualillusionsent.dconomy.addon.bank.dBankLite;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.dconomy.canary.api.Canary_AddOn;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPlugin;
 
 import java.util.logging.Logger;
 
-public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements dBankLite, Canary_AddOn {
+public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements dBankLite {
 
     @Override
     public final boolean enable() {
