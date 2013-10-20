@@ -120,6 +120,11 @@
                 </executions>
                 <configuration>
                     <includes>
+                        <!-- Other files -->
+                        <include>target/**/*.cfg</include>
+                        <include>target/**/*.txt</include>
+                        <include>target/**/*.lang</include>
+                        <include>target/**/*.readme</include>
                         <!-- CanaryMod -->
                         <include>target/**/*.inf</include>
                         <!-- Bukkit -->
