@@ -28,6 +28,8 @@ import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.DEPOSIT;
+
 public final class BankDepositCommand extends dConomyCommand {
 
     public BankDepositCommand() {
@@ -44,7 +46,7 @@ public final class BankDepositCommand extends dConomyCommand {
             userBank.deposit(args[0]);
             userWallet.debit(args[0]);
             dBankLiteBase.translateMessageFor(user, "bank.deposit", Double.parseDouble(args[0]));
-            dCoBase.getServer().newTransaction(new BankTransaction(user, null, BankTransaction.BankAction.DEPOSIT, Double.parseDouble(args[0])));
+            dCoBase.getServer().newTransaction(new BankTransaction(null, user, DEPOSIT, Double.parseDouble(args[0])));
         }
         catch (AccountingException ae) {
             user.error(ae.getMessage());

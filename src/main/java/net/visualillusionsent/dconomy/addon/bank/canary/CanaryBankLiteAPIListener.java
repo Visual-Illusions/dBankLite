@@ -37,7 +37,6 @@ package net.visualillusionsent.dconomy.addon.bank.canary;
 import net.canarymod.Canary;
 import net.canarymod.hook.HookHandler;
 import net.canarymod.plugin.PluginListener;
-import net.canarymod.plugin.Priority;
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
@@ -48,13 +47,18 @@ import net.visualillusionsent.dconomy.addon.bank.canary.api.BankSetBalanceHook;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
 import net.visualillusionsent.dconomy.dCoBase;
 
+import static net.canarymod.plugin.Priority.CRITICAL;
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_DEBIT;
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_DEPOSIT;
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_SET;
+
 public final class CanaryBankLiteAPIListener implements PluginListener {
 
     CanaryBankLiteAPIListener(CanaryBankLite dBL) {
         Canary.hooks().registerListener(this, dBL);
     }
 
-    @HookHandler(priority = Priority.CRITICAL)
+    @HookHandler(priority = CRITICAL)
     public final void bankBalance(final BankBalanceHook hook) {
         try {
             if (BankHandler.verifyAccount(hook.getUserName())) {
@@ -70,12 +74,12 @@ public final class CanaryBankLiteAPIListener implements PluginListener {
         }
     }
 
-    @HookHandler(priority = Priority.CRITICAL)
+    @HookHandler(priority = CRITICAL)
     public final void bankDeposit(final BankDepositHook hook) {
         try {
             if (BankHandler.verifyAccount(hook.getUserName())) {
                 BankHandler.getBankAccountByName(hook.getUserName()).deposit(hook.getDeposit());
-                Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), BankTransaction.BankAction.PLUGIN_DEPOSIT, hook.getDeposit())));
+                Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), PLUGIN_DEPOSIT, hook.getDeposit())));
             }
             else {
                 hook.setErrorMessage("Bank Account Not Found");
@@ -87,12 +91,12 @@ public final class CanaryBankLiteAPIListener implements PluginListener {
         }
     }
 
-    @HookHandler(priority = Priority.CRITICAL)
+    @HookHandler(priority = CRITICAL)
     public final void bankDebit(final BankDebitHook hook) {
         try {
             if (BankHandler.verifyAccount(hook.getUserName())) {
                 BankHandler.getBankAccountByName(hook.getUserName()).debit(hook.getDebit());
-                Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), BankTransaction.BankAction.PLUGIN_DEBIT, hook.getDebit())));
+                Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), PLUGIN_DEBIT, hook.getDebit())));
             }
             else {
                 hook.setErrorMessage("Wallet Not Found");
@@ -104,12 +108,12 @@ public final class CanaryBankLiteAPIListener implements PluginListener {
         }
     }
 
-    @HookHandler(priority = Priority.CRITICAL)
+    @HookHandler(priority = CRITICAL)
     public final void bankSet(final BankSetBalanceHook hook) {
         try {
             if (BankHandler.verifyAccount(hook.getUserName())) {
                 BankHandler.getBankAccountByName(hook.getUserName()).setBalance(hook.getToSet());
-                Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), BankTransaction.BankAction.PLUGIN_SET, hook.getToSet())));
+                Canary.hooks().callHook(new BankTransactionHook(new BankTransaction(hook.getCaller(), dCoBase.getServer().getUser(hook.getUserName()), PLUGIN_SET, hook.getToSet())));
             }
             else {
                 hook.setErrorMessage("Wallet Not Found");
@@ -121,7 +125,7 @@ public final class CanaryBankLiteAPIListener implements PluginListener {
         }
     }
 
-    @HookHandler(priority = Priority.CRITICAL)
+    @HookHandler(priority = CRITICAL)
     public final void debugTransaction(final BankTransactionHook hook) {
         dCoBase.debug("BankTransactionHook processed");
     }

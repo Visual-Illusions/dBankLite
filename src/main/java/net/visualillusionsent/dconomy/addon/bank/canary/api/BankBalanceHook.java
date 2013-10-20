@@ -35,7 +35,7 @@
 package net.visualillusionsent.dconomy.addon.bank.canary.api;
 
 import net.canarymod.plugin.Plugin;
-import net.visualillusionsent.dconomy.canary.api.AccountBalanceHook;
+import net.visualillusionsent.dconomy.canary.api.account.AccountBalanceHook;
 
 /**
  * Bank Balance request Hook<br>

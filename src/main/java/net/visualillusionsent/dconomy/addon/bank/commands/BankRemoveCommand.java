@@ -25,6 +25,8 @@ import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_REMOVE;
+
 public final class BankRemoveCommand extends dConomyCommand {
 
     public BankRemoveCommand() {
@@ -44,7 +46,7 @@ public final class BankRemoveCommand extends dConomyCommand {
         try {
             BankHandler.getBankAccountByName(theUser.getName()).debit(args[0]);
             dBankLiteBase.translateErrorMessageFor(user, "admin.remove.balance", theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
-            dCoBase.getServer().newTransaction(new BankTransaction(theUser, user, BankTransaction.BankAction.ADMIN_REMOVE, Double.parseDouble(args[0])));
+            dCoBase.getServer().newTransaction(new BankTransaction(user, theUser, ADMIN_REMOVE, Double.parseDouble(args[0])));
         }
         catch (AccountingException ae) {
             user.error(ae.getMessage());

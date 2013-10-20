@@ -25,6 +25,8 @@ import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_ADD;
+
 public final class BankAddCommand extends dConomyCommand {
 
     public BankAddCommand() {
@@ -46,7 +48,7 @@ public final class BankAddCommand extends dConomyCommand {
         try {
             BankHandler.getBankAccountByName(theUser.getName()).deposit(args[0]);
             dBankLiteBase.translateErrorMessageFor(user, "admin.add.balance", theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
-            dCoBase.getServer().newTransaction(new BankTransaction(theUser, user, BankTransaction.BankAction.ADMIN_ADD, Double.parseDouble(args[0])));
+            dCoBase.getServer().newTransaction(new BankTransaction(user, theUser, ADMIN_ADD, Double.parseDouble(args[0])));
         }
         catch (AccountingException ae) {
             user.error(ae.getMessage());

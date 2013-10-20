@@ -24,6 +24,8 @@ import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_RESET;
+
 public final class BankResetCommand extends dConomyCommand {
 
     public BankResetCommand() {
@@ -42,6 +44,6 @@ public final class BankResetCommand extends dConomyCommand {
         }
         BankHandler.getBankAccountByName(theUser.getName()).setBalance(0);
         dBankLiteBase.translateErrorMessageFor(user, "admin.reset.balance", theUser.getName(), "BANK ACCOUNT");
-        dCoBase.getServer().newTransaction(new BankTransaction(theUser, user, BankTransaction.BankAction.ADMIN_RESET, 0));
+        dCoBase.getServer().newTransaction(new BankTransaction(user, theUser, ADMIN_RESET, 0));
     }
 }

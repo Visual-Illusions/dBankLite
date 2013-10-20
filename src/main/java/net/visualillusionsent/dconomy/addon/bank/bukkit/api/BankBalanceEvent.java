@@ -34,7 +34,7 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.bukkit.api;
 
-import net.visualillusionsent.dconomy.bukkit.api.AccountBalanceEvent;
+import net.visualillusionsent.dconomy.bukkit.api.account.AccountBalanceEvent;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 

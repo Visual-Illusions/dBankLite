@@ -15,31 +15,26 @@
  * You should have received a copy of the GNU General Public License along with dBankLite.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.canary.api;
+package net.visualillusionsent.dconomy.addon.bank.api;
 
-import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
-import net.visualillusionsent.dconomy.canary.api.account.AccountTransactionHook;
+import net.visualillusionsent.dconomy.api.account.AccountAction;
 
 /**
- * Bank Transaction Hook
+ * Bank Action
  *
  * @author Jason (darkdiplomat)
  */
-public class BankTransactionHook extends AccountTransactionHook {
+public enum BankAction implements AccountAction {
 
-    /**
-     * Constructs a new Bank Transaction Hook
-     *
-     * @param action
-     *         the {@link BankTransaction} done
-     */
-    public BankTransactionHook(BankTransaction action) {
-        super(action);
-    }
+    DEPOSIT, //
+    WITHDRAW, //
+    ADMIN_ADD, //
+    ADMIN_REMOVE, //
+    ADMIN_SET, //
+    ADMIN_RESET, //
+    PLUGIN_DEBIT, //
+    PLUGIN_DEPOSIT, //
+    PLUGIN_SET, //
+    ;
 
-    /** {@inheritDoc} */
-    @Override
-    public final BankTransaction getTransaction() {
-        return (BankTransaction) action;
-    }
 }

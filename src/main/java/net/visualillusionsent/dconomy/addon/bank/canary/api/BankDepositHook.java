@@ -35,7 +35,7 @@
 package net.visualillusionsent.dconomy.addon.bank.canary.api;
 
 import net.canarymod.plugin.Plugin;
-import net.visualillusionsent.dconomy.canary.api.AccountDepositHook;
+import net.visualillusionsent.dconomy.canary.api.account.AccountDepositHook;
 
 /**
  * Bank Deposit Hook<br>

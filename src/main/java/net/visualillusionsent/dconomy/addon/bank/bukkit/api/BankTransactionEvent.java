@@ -18,7 +18,7 @@
 package net.visualillusionsent.dconomy.addon.bank.bukkit.api;
 
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
-import net.visualillusionsent.dconomy.bukkit.api.AccountTransactionEvent;
+import net.visualillusionsent.dconomy.bukkit.api.account.AccountTransactionEvent;
 import org.bukkit.event.HandlerList;
 
 /**

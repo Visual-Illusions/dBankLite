@@ -28,9 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class dBankLiteBase {
-    final static String lang_dir = "lang/dBankLite/";
-
     private final float dCoVersion = 3.0F;
+    private final long dCoRevision = 0;
     private final Logger logger;
     private final Timer timer;
     private final BankProperties props;
@@ -42,8 +41,8 @@ public final class dBankLiteBase {
     public dBankLiteBase(dBankLite dbanklite) {
         $ = this;
         this.logger = dbanklite.getPluginLogger();
-        if (dCoBase.getVersion() > dCoVersion) {
-            warning("dConomy appears to be a newer version. Incompatibility could result.");
+        if (incompatibilityTest()) {
+            warning("dConomy appears to be a newer version. Incompatibility could result...");
         }
         props = new BankProperties();
         translator = new MessageTranslator();
@@ -162,5 +161,15 @@ public final class dBankLiteBase {
 
     final void setResetTime() {
         timer_reset.setLong("bank.timer.reset", System.currentTimeMillis() + getInterestInterval());
+    }
+
+    private final boolean incompatibilityTest() {
+        if (dCoBase.getVersion() > dCoVersion) {
+            return true;
+        }
+        else if (dCoBase.getRevision() > dCoRevision) {
+            return true;
+        }
+        return false;
     }
 }

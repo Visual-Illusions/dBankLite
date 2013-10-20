@@ -17,53 +17,56 @@
  */
 package net.visualillusionsent.dconomy.addon.bank;
 
-import net.visualillusionsent.dconomy.api.MineChatForm;
+import net.visualillusionsent.dconomy.ChatFormat;
 import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.plugin.PluginInitializationException;
 import net.visualillusionsent.utils.FileUtils;
 import net.visualillusionsent.utils.JarUtils;
 import net.visualillusionsent.utils.LocaleHelper;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 public final class MessageTranslator extends LocaleHelper {
+    private final static String lang_dir = "lang/dBankLite/";
 
     static {
-        boolean mvLangtxt = false, mven_US = false;
-        if (!new File(dBankLiteBase.lang_dir).exists()) {
-            new File(dBankLiteBase.lang_dir).mkdirs();
-            mvLangtxt = true;
-            mven_US = true;
+        if (!new File(lang_dir).exists()) {
+            new File(lang_dir).mkdirs();
         }
-        else {
-            if (!new File(dBankLiteBase.lang_dir.concat("languages.txt")).exists()) {
-                mvLangtxt = true;
+        try {
+            if (!new File(lang_dir.concat("languages.txt")).exists()) {
+                moveLang("languages.txt");
             }
-            if (!new File(dBankLiteBase.lang_dir.concat("en_US.lang")).exists()) {
-                mven_US = true;
+            else if (!FileUtils.md5SumMatch(dBankLite.class.getResourceAsStream("/resources/lang/languages.txt"), new FileInputStream(lang_dir.concat("languages.txt")))) {
+                moveLang("languages.txt");
+            }
+            if (!new File(lang_dir.concat("en_US.lang")).exists()) {
+                moveLang("en_US.lang");
+            }
+            else if (!FileUtils.md5SumMatch(dBankLite.class.getResourceAsStream("/resources/lang/en_US.lang"), new FileInputStream(lang_dir.concat("en_US.lang")))) {
+                moveLang("en_US.lang");
             }
         }
-        if (mvLangtxt) {
-            FileUtils.cloneFileFromJar(JarUtils.getJarPath(dBankLiteBase.class), "resources/lang/languages.txt", dBankLiteBase.lang_dir.concat("languages.txt"));
-        }
-        if (mven_US) {
-            FileUtils.cloneFileFromJar(JarUtils.getJarPath(dBankLiteBase.class), "resources/lang/en_US.lang", dBankLiteBase.lang_dir.concat("en_US.lang"));
+        catch (Exception ex) {
+            throw new PluginInitializationException("Failed to verify and move lang files", ex);
         }
     }
 
     MessageTranslator() {
-        super(true, dBankLiteBase.lang_dir, dCoBase.getServerLocale());
+        super(true, lang_dir, dCoBase.getServerLocale());
         reloadLangFiles();
     }
 
     public final String translate(String key, String locale, Object... args) {
-        String toRet = args != null ? colorForm(localeTranslate(key, locale, args)) : colorForm(localeTranslate(key, locale));
+        String toRet = ChatFormat.formatString(localeTranslate(key, locale, args), "$c");
         if (toRet.contains("$m")) {
             toRet = toRet.replace("$m", dCoBase.getProperties().getString("money.name"));
         }
         return toRet;
     }
 
-    private String colorForm(String msg) {
-        return msg.replace("$c", MineChatForm.MARKER.stringValue());
+    private static void moveLang(String locale) {
+        FileUtils.cloneFileFromJar(JarUtils.getJarPath(dBankLite.class), "resources/lang/".concat(locale), lang_dir.concat(locale));
     }
 }

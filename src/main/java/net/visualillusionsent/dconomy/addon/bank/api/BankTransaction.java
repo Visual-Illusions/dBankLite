@@ -34,53 +34,17 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.api;
 
-import net.visualillusionsent.dconomy.api.AccountTransaction;
+import net.visualillusionsent.dconomy.api.account.AccountTransaction;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 
 public final class BankTransaction extends AccountTransaction {
 
-    public enum BankAction {
-        DEPOSIT, //
-        WITHDRAW, //
-        ADMIN_ADD, //
-        ADMIN_REMOVE, //
-        ADMIN_SET, //
-        ADMIN_RESET, //
-        PLUGIN_DEBIT, //
-        PLUGIN_DEPOSIT, //
-        PLUGIN_SET, //
-        ;
-    }
-
-    private final dConomyUser owner, admin;
-    private final BankAction action;
-    private final double amount;
-
-    public BankTransaction(dConomyUser owner, dConomyUser admin, BankAction action, double amount) {
-        this.owner = owner;
-        this.admin = admin;
-        this.action = action;
-        this.amount = amount;
-    }
-
-    public final dConomyUser getOwner() {
-        return owner;
-    }
-
-    public final dConomyUser getAdmin() {
-        return admin;
-    }
-
-    public final BankAction getAction() {
-        return action;
-    }
-
-    public final double getAmountChange() {
-        return amount;
+    public BankTransaction(dConomyUser admin, dConomyUser owner, BankAction action, double amount) {
+        super(admin, owner, action, amount);
     }
 
     @Override
     public final String toString() {
-        return String.format("BankTransaction[Owner:%s Admin:%s Action:%s Change:%.2f]", owner.getName(), admin != null ? admin.getName() : "null", action, amount);
+        return String.format("BankTransaction[Owner:%s Admin:%s Action:%s Change:%.2f]", getRecipient().getName(), getSender() != null ? getSender().getName() : "null", getAction(), getAmountChange());
     }
 }

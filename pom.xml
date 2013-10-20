@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.visualillusionsent</groupId>
     <artifactId>dbanklite</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <name>dBankLite</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -11,8 +11,8 @@
         <build.number>0-dev</build.number>
         <canary.main.class>${project.groupId}.dconomy.addon.bank.canary.CanaryBankLite</canary.main.class>
         <bukkit.main.class>${project.groupId}.dconomy.addon.bank.bukkit.BukkitBankLite</bukkit.main.class>
-        <vimcplugin.version>1.1u1</vimcplugin.version>
-        <dCo.version>3.0</dCo.version>
+        <vimcplugin.version>1.0.0-SNAPSHOT</vimcplugin.version>
+        <dCo.version>3.0.0</dCo.version>
         <build.number>0-dev</build.number>
         <version.check.url>http://visualillusionsent.net/minecraft/plugins/</version.check.url>
         <devs>darkdiplomat</devs>
@@ -85,7 +85,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>${project.name}-${project.version}-${program.status}-b${build.number}</finalName>
+        <finalName>${project.name}-${project.version}-b${build.number}</finalName>
         <plugins>
             <!-- Timestamp for year -->
             <plugin>
@@ -139,7 +139,7 @@
                             <value>${project.issueManagement.url}</value>
                         </replacement>
                         <replace>
-                            <token>{version.check.url}</token>
+                            <token>{check.url}</token>
                             <value>${version.check.url}</value>
                         </replace>
                         <replace>
@@ -225,7 +225,7 @@
                     <quiet>false</quiet>
                     <encoding>UTF-8</encoding>
                     <strictCheck>true</strictCheck>
-                    <header>${basedir}/HEADER_GPL.txt</header>
+                    <header>${basedir}/HEADER.txt</header>
                     <keywords>
                         <keyword>${project.name}</keyword>
                         <keyword>license</keyword>
@@ -235,8 +235,9 @@
                     </mapping>
                     <properties>
                         <name>${project.name}</name>
-                        <copyright>Copyright © ${project.inceptionYear} Visual Illusions Entertainment
-                        </copyright>
+                        <years>${project.inceptionYear}</years>
+                        <gpl.type>GNU General Public License</gpl.type>
+                        <license.url>http://www.gnu.org/licenses/gpl.html</license.url>
                     </properties>
                     <includes>
                         <include>src/main/java/**</include>

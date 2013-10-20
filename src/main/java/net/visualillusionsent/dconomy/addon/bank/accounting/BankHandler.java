@@ -69,7 +69,7 @@ public final class BankHandler {
      * Gets a {@link Wallet} for a {@link net.visualillusionsent.dconomy.api.dConomyUser}
      *
      * @param user
-     *         the {@link net.visualillusionsent.dconomy.api.dConomyUser} to get a wallet for
+     *         the {@link dConomyUser} to get a wallet for
      *
      * @return the {@link Wallet} for the user if found; {@code null} if not found
      */

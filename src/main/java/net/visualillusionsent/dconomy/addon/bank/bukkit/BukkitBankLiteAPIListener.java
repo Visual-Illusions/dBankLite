@@ -29,12 +29,12 @@ import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import static net.visualillusionsent.dconomy.addon.bank.api.BankTransaction.BankAction.PLUGIN_DEBIT;
-import static net.visualillusionsent.dconomy.addon.bank.api.BankTransaction.BankAction.PLUGIN_DEPOSIT;
-import static net.visualillusionsent.dconomy.addon.bank.api.BankTransaction.BankAction.PLUGIN_SET;
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_DEBIT;
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_DEPOSIT;
+import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_SET;
+import static org.bukkit.event.EventPriority.HIGHEST;
 
 /**
  * Bukkit dBankLite API Listener
@@ -47,7 +47,7 @@ public class BukkitBankLiteAPIListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = HIGHEST)
     public final void bankBalance(BankBalanceEvent event) {
         try {
             if (BankHandler.verifyAccount(event.getUserName())) {
@@ -63,7 +63,7 @@ public class BukkitBankLiteAPIListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = HIGHEST)
     public final void bankDeposit(BankDepositEvent event) {
         try {
             if (BankHandler.verifyAccount(event.getUserName())) {
@@ -80,7 +80,7 @@ public class BukkitBankLiteAPIListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = HIGHEST)
     public final void bankDebit(BankDebitEvent event) {
         try {
             if (BankHandler.verifyAccount(event.getUserName())) {
@@ -97,7 +97,7 @@ public class BukkitBankLiteAPIListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = HIGHEST)
     public final void bankSet(BankSetBalanceEvent event) {
         try {
             if (BankHandler.verifyAccount(event.getUserName())) {
@@ -114,7 +114,7 @@ public class BukkitBankLiteAPIListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = HIGHEST)
     public final void debugTransaction(BankTransactionEvent event) {
         dBankLiteBase.debug("BankTransactionEvent called: " + event.getTransaction());
     }

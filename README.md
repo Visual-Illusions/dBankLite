@@ -3,18 +3,11 @@ dBankLite
 Banking add-on for dConomy 3
 ---------
 
-dBankLite is being designed for Bukkit and CanaryMod.
-
-(C) 2013 Visual Illusions Entertainment
-
-Licensed under the GNU General Public License v3
+dBankLite is designed for Bukkit and CanaryMod Minecraft Servers.
 
 License
 ---------
-dBankLite v1.0
-Copyright (C) 2013 Visual Illusions Entertainment
-
-Author: Jason Jones (darkdiplomat) <darkdiplomat@visualillusionsent.net>
+Copyright &copy; 2013 Visual Illusions Entertainment
 
 dBankLite is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
