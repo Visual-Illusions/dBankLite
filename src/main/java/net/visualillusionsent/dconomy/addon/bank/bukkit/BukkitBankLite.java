@@ -25,6 +25,7 @@ import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.plugin.bukkit.VisualIllusionsBukkitPlugin;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /** @author Jason (darkdiplomat) */
@@ -34,11 +35,24 @@ public class BukkitBankLite extends VisualIllusionsBukkitPlugin implements dBank
     public void onEnable() {
         super.onEnable();
 
-        new dBankLiteBase(this);
-        BankHandler.initialize();
-        dCoBase.getServer().registerTransactionHandler(BankTransactionEvent.class, BankTransaction.class);
-        new BukkitBankLiteAPIListener(this);
-        new BukkitBankLiteCommandExecutor(this);
+        try {
+            new dBankLiteBase(this);
+            BankHandler.initialize();
+            new BukkitBankLiteAPIListener(this);
+            new BukkitBankLiteCommandExecutor(this);
+
+            dCoBase.getServer().registerTransactionHandler(BankTransactionEvent.class, BankTransaction.class);
+        }
+        catch (Exception ex) {
+            String reason = ex.getMessage() != null ? ex.getMessage() : ex.getClass().getSimpleName();
+            if (debug) { // Only stack trace if debugging
+                getLogger().log(Level.SEVERE, "dBankLite failed to start. Reason: ".concat(reason), ex);
+            }
+            else {
+                getLogger().severe("dBankLite failed to start. Reason: ".concat(reason));
+            }
+            die();
+        }
     }
 
     @Override

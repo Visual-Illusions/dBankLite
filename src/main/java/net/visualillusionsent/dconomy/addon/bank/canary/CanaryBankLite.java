@@ -17,7 +17,6 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.canary;
 
-import net.canarymod.commandsys.CommandDependencyException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
@@ -26,6 +25,7 @@ import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPlugin;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements dBankLite {
@@ -33,19 +33,26 @@ public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements
     @Override
     public final boolean enable() {
         super.enable();
-
-        new dBankLiteBase(this);
-        BankHandler.initialize();
         try {
+            new dBankLiteBase(this);
+            BankHandler.initialize();
             new CanaryBankLiteCommandListener(this);
+            new CanaryBankLiteAPIListener(this);
+            new CanaryBankLiteMOTDListener(this);
+            dCoBase.getServer().registerTransactionHandler(BankTransactionHook.class, BankTransaction.class);
+
+            return true;
         }
-        catch (CommandDependencyException ex) {
-            dBankLiteBase.severe("Failed to register dBankLite Commands", ex);
-            return false;
+        catch (Exception ex) {
+            String reason = ex.getMessage() != null ? ex.getMessage() : ex.getClass().getSimpleName();
+            if (debug) { // Only stack trace if debugging
+                getLogman().log(Level.SEVERE, "dBankLite failed to start. Reason: ".concat(reason), ex);
+            }
+            else {
+                getLogman().severe("dBankLite failed to start. Reason: ".concat(reason));
+            }
         }
-        dCoBase.getServer().registerTransactionHandler(BankTransactionHook.class, BankTransaction.class);
-        new CanaryBankLiteAPIListener(this);
-        return true;
+        return false;
     }
 
     @Override

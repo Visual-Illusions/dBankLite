@@ -1,5 +1,4 @@
 ;# {name} - Canary Plugin Configuration File
-;# Copyright © {copyright.years} Visual Illusions Entertainment
 
 name={name}
 main-class={canary.main.class}

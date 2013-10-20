@@ -135,7 +135,6 @@ public final class dBankLiteBase {
             $.timer.cancel();
             $.timer.purge();
         }
-        dCoBase.getProperties().getPropertiesFile().save();
     }
 
     private final long getInitialStart() {
