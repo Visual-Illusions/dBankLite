@@ -44,18 +44,18 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
 
     private final dConomyCommand[] cmds = new dConomyCommand[9];
 
-    CanaryBankLiteCommandListener(CanaryBankLite dBL) throws CommandDependencyException {
-        super(dBL);
+    CanaryBankLiteCommandListener(CanaryBankLite cBankLite) throws CommandDependencyException {
+        super(cBankLite);
         cmds[0] = new BankBaseCommand();
-        cmds[1] = new BankDepositCommand();
-        cmds[2] = new BankWithdrawCommand();
+        cmds[1] = new BankDepositCommand(cBankLite);
+        cmds[2] = new BankWithdrawCommand(cBankLite);
         cmds[3] = new BankAddCommand();
         cmds[4] = new BankRemoveCommand();
         cmds[5] = new BankSetCommand();
         cmds[6] = new BankResetCommand();
         cmds[7] = new BankReloadCommand();
         cmds[8] = new BankLockCommand();
-        Canary.commands().registerCommands(this, dBL, false);
+        Canary.commands().registerCommands(this, cBankLite, false);
     }
 
     @Command(aliases = { "dbanklite" },
@@ -164,6 +164,6 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
     }
 
     private dConomyUser getUser(MessageReceiver msgrec) {
-        return msgrec instanceof Player ? new Canary_User((Player) msgrec) : (dConomyUser) dCoBase.getServer();
+        return msgrec instanceof Player ? new Canary_User((Player) msgrec) : dCoBase.getServer();
     }
 }

@@ -17,24 +17,12 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.bukkit;
 
-import net.visualillusionsent.dconomy.accounting.AccountingException;
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
-import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
-import net.visualillusionsent.dconomy.addon.bank.bukkit.api.BankBalanceEvent;
-import net.visualillusionsent.dconomy.addon.bank.bukkit.api.BankDebitEvent;
-import net.visualillusionsent.dconomy.addon.bank.bukkit.api.BankDepositEvent;
-import net.visualillusionsent.dconomy.addon.bank.bukkit.api.BankSetBalanceEvent;
 import net.visualillusionsent.dconomy.addon.bank.bukkit.api.BankTransactionEvent;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.dconomy.dCoBase;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_DEBIT;
-import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_DEPOSIT;
-import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_SET;
-import static org.bukkit.event.EventPriority.HIGHEST;
+import static org.bukkit.event.EventPriority.MONITOR;
 
 /**
  * Bukkit dBankLite API Listener
@@ -47,74 +35,7 @@ public class BukkitBankLiteAPIListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = HIGHEST)
-    public final void bankBalance(BankBalanceEvent event) {
-        try {
-            if (BankHandler.verifyAccount(event.getUserName())) {
-                event.setBalance(BankHandler.getBankAccountByName(event.getUserName()).getBalance());
-            }
-            else {
-                event.setErrorMessage("Bank Account Not Found");
-            }
-        }
-        catch (Exception aex) {
-            dBankLiteBase.warning("Failed to handle Event: '" + event.getEventName() + "' called from Plugin: '" + event.getCaller().getName() + "'. Reason: " + aex.getMessage());
-            event.setErrorMessage(aex.getMessage());
-        }
-    }
-
-    @EventHandler(priority = HIGHEST)
-    public final void bankDeposit(BankDepositEvent event) {
-        try {
-            if (BankHandler.verifyAccount(event.getUserName())) {
-                BankHandler.getBankAccountByName(event.getUserName()).deposit(event.getDeposit());
-                Bukkit.getPluginManager().callEvent(new BankTransactionEvent(new BankTransaction(event.getCaller(), dCoBase.getServer().getUser(event.getUserName()), PLUGIN_DEPOSIT, event.getDeposit())));
-            }
-            else {
-                event.setErrorMessage("Wallet Not Found");
-            }
-        }
-        catch (AccountingException aex) {
-            dBankLiteBase.warning("Failed to handle Event: '" + event.getEventName() + "' called from Plugin: '" + event.getCaller().getName() + "'. Reason: " + aex.getMessage());
-            event.setErrorMessage(aex.getMessage());
-        }
-    }
-
-    @EventHandler(priority = HIGHEST)
-    public final void bankDebit(BankDebitEvent event) {
-        try {
-            if (BankHandler.verifyAccount(event.getUserName())) {
-                BankHandler.getBankAccountByName(event.getUserName()).debit(event.getDebit());
-                Bukkit.getPluginManager().callEvent(new BankTransactionEvent(new BankTransaction(event.getCaller(), dCoBase.getServer().getUser(event.getUserName()), PLUGIN_DEBIT, event.getDebit())));
-            }
-            else {
-                event.setErrorMessage("Wallet Not Found");
-            }
-        }
-        catch (AccountingException aex) {
-            dBankLiteBase.warning("Failed to handle Event: '" + event.getEventName() + "' called from Plugin: '" + event.getCaller().getName() + "'. Reason: " + aex.getMessage());
-            event.setErrorMessage(aex.getMessage());
-        }
-    }
-
-    @EventHandler(priority = HIGHEST)
-    public final void bankSet(BankSetBalanceEvent event) {
-        try {
-            if (BankHandler.verifyAccount(event.getUserName())) {
-                BankHandler.getBankAccountByName(event.getUserName()).setBalance(event.getToSet());
-                Bukkit.getPluginManager().callEvent(new BankTransactionEvent(new BankTransaction(event.getCaller(), dCoBase.getServer().getUser(event.getUserName()), PLUGIN_SET, event.getToSet())));
-            }
-            else {
-                event.setErrorMessage("Wallet Not Found");
-            }
-        }
-        catch (AccountingException aex) {
-            dBankLiteBase.warning("Failed to handle Hook: '" + event.getEventName() + "' called from Plugin: '" + event.getCaller().getName() + "'. Reason: " + aex.getMessage());
-            event.setErrorMessage(aex.getMessage());
-        }
-    }
-
-    @EventHandler(priority = HIGHEST)
+    @EventHandler(priority = MONITOR)
     public final void debugTransaction(BankTransactionEvent event) {
         dBankLiteBase.debug("BankTransactionEvent called: " + event.getTransaction());
     }

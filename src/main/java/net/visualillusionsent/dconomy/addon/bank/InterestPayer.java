@@ -34,7 +34,7 @@ final class InterestPayer extends TimerTask {
 
     @Override
     public void run() {
-        for (BankAccount account : BankHandler.getAccounts()) {
+        for (BankAccount account : BankHandler.getBankAccounts().values()) {
             double interest = account.getBalance() * (dCoBase.getProperties().getDouble("interest.rate") / 100);
             double maxout = dCoBase.getProperties().getDouble("interest.max.payout");
             if (interest > maxout) {
@@ -47,7 +47,7 @@ final class InterestPayer extends TimerTask {
                 // Probably over balanced
             }
         }
-        dBankLiteBase.info(String.format("Interest Paid to %d Accounts", BankHandler.getAccounts().size()));
+        dBankLiteBase.info(String.format("Interest Paid to %d Accounts", BankHandler.getBankAccounts().size()));
         base.setResetTime();
     }
 }

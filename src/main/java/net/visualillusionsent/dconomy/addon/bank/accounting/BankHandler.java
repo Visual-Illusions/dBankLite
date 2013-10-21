@@ -24,8 +24,8 @@ import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.data.DataSourceType;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -126,7 +126,7 @@ public final class BankHandler {
         $.accounts.clear();
     }
 
-    public static final Collection<BankAccount> getAccounts() {
-        return Collections.unmodifiableCollection($.accounts.values());
+    public static final Map<String, BankAccount> getBankAccounts() {
+        return Collections.unmodifiableMap($.accounts);
     }
 }

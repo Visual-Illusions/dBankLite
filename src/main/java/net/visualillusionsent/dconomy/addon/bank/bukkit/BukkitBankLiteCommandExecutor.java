@@ -31,7 +31,6 @@ import net.visualillusionsent.dconomy.bukkit.api.Bukkit_User;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.plugin.bukkit.VisualIllusionsBukkitPluginInformationCommand;
-import net.visualillusionsent.utils.VersionChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -49,8 +48,8 @@ public class BukkitBankLiteCommandExecutor extends VisualIllusionsBukkitPluginIn
         super(bBankLite);
         // Initialize Commands
         cmds[0] = new BankBaseCommand();
-        cmds[1] = new BankDepositCommand();
-        cmds[2] = new BankWithdrawCommand();
+        cmds[1] = new BankDepositCommand(bBankLite);
+        cmds[2] = new BankWithdrawCommand(bBankLite);
         cmds[3] = new BankAddCommand();
         cmds[4] = new BankRemoveCommand();
         cmds[5] = new BankSetCommand();
@@ -67,24 +66,7 @@ public class BukkitBankLiteCommandExecutor extends VisualIllusionsBukkitPluginIn
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         dConomyUser user = sender instanceof Player ? new Bukkit_User((Player) sender) : (dConomyUser) dCoBase.getServer();
         if (label.equals("dbanklite")) {
-            for (String msg : about) {
-                if (msg.equals("$VERSION_CHECK$")) {
-                    VersionChecker vc = plugin.getVersionChecker();
-                    Boolean isLatest = vc.isLatest();
-                    if (isLatest == null) {
-                        sender.sendMessage(center(ChatColor.DARK_GRAY + "VersionCheckerError: " + vc.getErrorMessage()));
-                    }
-                    else if (!isLatest) {
-                        sender.sendMessage(center(ChatColor.DARK_GRAY + vc.getUpdateAvailibleMessage()));
-                    }
-                    else {
-                        sender.sendMessage(center(ChatColor.GREEN + "Latest Version Installed"));
-                    }
-                }
-                else {
-                    sender.sendMessage(msg);
-                }
-            }
+            this.sendInformation(sender);
             return true;
         }
         else if (label.equals("bank")) {
