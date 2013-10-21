@@ -17,6 +17,7 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.data;
 
+import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
@@ -142,6 +143,11 @@ public abstract class BankSQLSource implements BankDataSource {
         catch (SQLException sqlex) {
             dBankLiteBase.severe("SQL Exception while reloading Wallet for: " + account.getOwner());
             dBankLiteBase.stacktrace(sqlex);
+            success = false;
+        }
+        catch (AccountingException aex) {
+            dBankLiteBase.severe("Accounting Exception while reloading Wallet for: " + account.getOwner());
+            dBankLiteBase.stacktrace(aex);
             success = false;
         }
         finally {

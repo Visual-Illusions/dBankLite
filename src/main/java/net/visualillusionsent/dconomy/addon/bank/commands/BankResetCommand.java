@@ -17,6 +17,7 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.commands;
 
+import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
@@ -42,8 +43,13 @@ public final class BankResetCommand extends dConomyCommand {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
-        BankHandler.getBankAccountByName(theUser.getName()).setBalance(0);
-        dBankLiteBase.translateErrorMessageFor(user, "admin.reset.balance", theUser.getName(), "BANK ACCOUNT");
-        dCoBase.getServer().newTransaction(new BankTransaction(user, theUser, ADMIN_RESET, 0));
+        try {
+            BankHandler.getBankAccountByName(theUser.getName()).setBalance(0);
+            dBankLiteBase.translateErrorMessageFor(user, "admin.reset.balance", theUser.getName(), "BANK ACCOUNT");
+            dCoBase.getServer().newTransaction(new BankTransaction(user, theUser, ADMIN_RESET, 0));
+        }
+        catch (AccountingException aex) {
+            user.error(aex.getLocalizedMessage(user.getUserLocale()));
+        }
     }
 }

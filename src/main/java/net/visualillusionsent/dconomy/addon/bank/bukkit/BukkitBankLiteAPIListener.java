@@ -57,7 +57,7 @@ public class BukkitBankLiteAPIListener implements Listener {
                 event.setErrorMessage("Bank Account Not Found");
             }
         }
-        catch (AccountingException aex) {
+        catch (Exception aex) {
             dBankLiteBase.warning("Failed to handle Event: '" + event.getEventName() + "' called from Plugin: '" + event.getCaller().getName() + "'. Reason: " + aex.getMessage());
             event.setErrorMessage(aex.getMessage());
         }

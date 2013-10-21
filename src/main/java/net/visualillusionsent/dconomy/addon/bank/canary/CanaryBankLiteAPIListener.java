@@ -68,7 +68,7 @@ public final class CanaryBankLiteAPIListener implements PluginListener {
                 hook.setErrorMessage("Bank Account Not Found");
             }
         }
-        catch (AccountingException aex) {
+        catch (Exception aex) {
             dCoBase.warning("Failed to handle Hook: '" + hook.getName() + "' called from Plugin: '" + hook.getCaller().getName() + "'. Reason: " + aex.getMessage());
             hook.setErrorMessage(aex.getMessage());
         }
