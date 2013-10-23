@@ -19,7 +19,6 @@ package net.visualillusionsent.dconomy.addon.bank.canary;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
-import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.Command;
 import net.canarymod.commandsys.CommandDependencyException;
@@ -38,7 +37,6 @@ import net.visualillusionsent.dconomy.canary.api.Canary_User;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPluginInformationCommand;
-import net.visualillusionsent.utils.VersionChecker;
 
 public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPluginInformationCommand implements CommandListener {
 
@@ -63,24 +61,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             permissions = { "" },
             toolTip = "/dbanklite")
     public final void information(MessageReceiver msgrec, String[] args) {
-        for (String msg : about) {
-            if (msg.equals("$VERSION_CHECK$")) {
-                VersionChecker vc = plugin.getVersionChecker();
-                Boolean isLatest = vc.isLatest();
-                if (isLatest == null) {
-                    msgrec.message(center(Colors.GRAY + "VersionCheckerError: " + vc.getErrorMessage()));
-                }
-                else if (!isLatest) {
-                    msgrec.message(center(Colors.GRAY + vc.getUpdateAvailibleMessage()));
-                }
-                else {
-                    msgrec.message(center(Colors.LIGHT_GREEN + "Latest Version Installed"));
-                }
-            }
-            else {
-                msgrec.message(msg);
-            }
-        }
+        this.sendInformation(msgrec);
     }
 
     @Command(aliases = { "bank" },

@@ -41,7 +41,7 @@ public final class dBankLiteBase {
     public dBankLiteBase(dBankLite dbanklite) {
         $ = this;
         this.logger = dbanklite.getPluginLogger();
-        if (incompatibilityTest()) {
+        if (dCoBase.isNewerThan(dCoVersion, dCoRevision)) {
             warning("dConomy appears to be a newer version. Incompatibility could result...");
         }
         props = new BankProperties();
@@ -160,15 +160,5 @@ public final class dBankLiteBase {
 
     final void setResetTime() {
         timer_reset.setLong("bank.timer.reset", System.currentTimeMillis() + getInterestInterval());
-    }
-
-    private final boolean incompatibilityTest() {
-        if (dCoBase.getVersion() > dCoVersion) {
-            return true;
-        }
-        else if (dCoBase.getRevision() > dCoRevision) {
-            return true;
-        }
-        return false;
     }
 }

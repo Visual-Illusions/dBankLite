@@ -17,14 +17,14 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.commands;
 
+import net.visualillusionsent.dconomy.accounting.AccountNotFoundException;
 import net.visualillusionsent.dconomy.accounting.AccountingException;
-import net.visualillusionsent.dconomy.accounting.wallet.Wallet;
-import net.visualillusionsent.dconomy.accounting.wallet.WalletHandler;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.dBankLite;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
+import net.visualillusionsent.dconomy.api.account.wallet.WalletAPIListener;
 import net.visualillusionsent.dconomy.api.account.wallet.WalletAction;
 import net.visualillusionsent.dconomy.api.account.wallet.WalletTransaction;
 import net.visualillusionsent.dconomy.api.dConomyUser;
@@ -43,19 +43,21 @@ public final class BankDepositCommand extends dConomyCommand {
 
     @Override
     protected final void execute(dConomyUser user, String[] args) {
-        Wallet userWallet = WalletHandler.getWallet(user);
         BankAccount userBank = BankHandler.getBankAccount(user);
         try {
-            userWallet.testDebit(args[0]);
+            WalletAPIListener.testWalletDebit(user.getName(), args[0]);
             userBank.testDeposit(args[0]);
             userBank.deposit(args[0]);
-            userWallet.debit(args[0]);
+            WalletAPIListener.walletDebit(dbl, user, args[0], false);
             dBankLiteBase.translateMessageFor(user, "bank.deposit", Double.parseDouble(args[0]));
             dCoBase.getServer().newTransaction(new WalletTransaction(dbl, user, WalletAction.PLUGIN_DEBIT, Double.parseDouble(args[0])));
             dCoBase.getServer().newTransaction(new BankTransaction(null, user, DEPOSIT, Double.parseDouble(args[0])));
         }
         catch (AccountingException ae) {
             user.error(ae.getMessage());
+        }
+        catch (AccountNotFoundException anfex) {
+            user.error(anfex.getMessage());
         }
     }
 }
