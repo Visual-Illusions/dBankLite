@@ -18,6 +18,7 @@
 package net.visualillusionsent.dconomy.addon.bank;
 
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
+import net.visualillusionsent.dconomy.addon.bank.api.BankAPIListener;
 import net.visualillusionsent.dconomy.addon.bank.data.BankProperties;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
@@ -48,6 +49,7 @@ public final class dBankLiteBase {
         }
         props = new BankProperties();
         bank_handler = new BankHandler(dCoBase.getDataHandler().getDataSourceType());
+        BankAPIListener.setBankHandler(bank_handler);
         translator = new MessageTranslator();
         timer_reset = new PropertiesFile("config/dBankLite/.reset.dbl");
         if (getInterestInterval() > 0) { // interest enabled?
