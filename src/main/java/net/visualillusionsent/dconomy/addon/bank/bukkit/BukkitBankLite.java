@@ -17,7 +17,6 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.bukkit;
 
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.bukkit.api.BankTransactionEvent;
 import net.visualillusionsent.dconomy.addon.bank.dBankLite;
@@ -30,14 +29,14 @@ import java.util.logging.Logger;
 
 /** @author Jason (darkdiplomat) */
 public class BukkitBankLite extends VisualIllusionsBukkitPlugin implements dBankLite {
+    private dBankLiteBase base;
 
     @Override
     public void onEnable() {
         super.onEnable();
 
         try {
-            new dBankLiteBase(this);
-            BankHandler.initialize();
+            base = new dBankLiteBase(this);
             new BukkitBankLiteAPIListener(this);
             new BukkitBankLiteCommandExecutor(this);
 
@@ -57,8 +56,10 @@ public class BukkitBankLite extends VisualIllusionsBukkitPlugin implements dBank
 
     @Override
     public void onDisable() {
-        dCoBase.getServer().unregisterTransactionHandler(BankTransactionEvent.class);
-        dBankLiteBase.cleanUp();
+        if (base != null) {
+            dCoBase.getServer().unregisterTransactionHandler(BankTransactionEvent.class);
+            base.cleanUp();
+        }
     }
 
     @Override
@@ -84,5 +85,9 @@ public class BukkitBankLite extends VisualIllusionsBukkitPlugin implements dBank
     @Override
     public String getUserLocale() {
         return dCoBase.getServerLocale();
+    }
+
+    final dBankLiteBase getBaseInstance() {
+        return base;
     }
 }

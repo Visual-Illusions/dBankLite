@@ -22,15 +22,14 @@ import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
-import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_REMOVE;
 
-public final class BankRemoveCommand extends dConomyCommand {
+public final class BankRemoveCommand extends BankCommand {
 
-    public BankRemoveCommand() {
-        super(2);
+    public BankRemoveCommand(BankHandler bank_handler) {
+        super(2, bank_handler);
     }
 
     protected final void execute(dConomyUser user, String[] args) {
@@ -39,12 +38,12 @@ public final class BankRemoveCommand extends dConomyCommand {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.user", args[1]);
             return;
         }
-        if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
+        if (!args[1].toUpperCase().equals("SERVER") && !bank_handler.verifyAccount(theUser.getName())) {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
         try {
-            BankHandler.getBankAccountByName(theUser.getName()).debit(args[0]);
+            bank_handler.getBankAccountByName(theUser.getName()).debit(args[0]);
             dBankLiteBase.translateErrorMessageFor(user, "admin.remove.balance", theUser.getName(), Double.valueOf(args[0]), "BANK ACCOUNT");
             dCoBase.getServer().newTransaction(new BankTransaction(user, theUser, ADMIN_REMOVE, Double.parseDouble(args[0])));
         }

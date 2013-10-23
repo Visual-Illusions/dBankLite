@@ -28,22 +28,21 @@ import net.visualillusionsent.dconomy.api.account.wallet.WalletAPIListener;
 import net.visualillusionsent.dconomy.api.account.wallet.WalletAction;
 import net.visualillusionsent.dconomy.api.account.wallet.WalletTransaction;
 import net.visualillusionsent.dconomy.api.dConomyUser;
-import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.DEPOSIT;
 
-public final class BankDepositCommand extends dConomyCommand {
+public final class BankDepositCommand extends BankCommand {
     private final dBankLite dbl;
 
-    public BankDepositCommand(dBankLite dbl) {
-        super(1);
+    public BankDepositCommand(dBankLite dbl, BankHandler bank_handler) {
+        super(1, bank_handler);
         this.dbl = dbl;
     }
 
     @Override
     protected final void execute(dConomyUser user, String[] args) {
-        BankAccount userBank = BankHandler.getBankAccount(user);
+        BankAccount userBank = bank_handler.getBankAccount(user);
         try {
             WalletAPIListener.testWalletDebit(user.getName(), args[0]);
             userBank.testDeposit(args[0]);

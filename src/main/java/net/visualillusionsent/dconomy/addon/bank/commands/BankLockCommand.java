@@ -20,14 +20,13 @@ package net.visualillusionsent.dconomy.addon.bank.commands;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
-import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.utils.BooleanUtils;
 
-public final class BankLockCommand extends dConomyCommand {
+public final class BankLockCommand extends BankCommand {
 
-    public BankLockCommand() {
-        super(1);
+    public BankLockCommand(BankHandler bank_handler) {
+        super(1, bank_handler);
     }
 
     protected final void execute(dConomyUser user, String[] args) {
@@ -36,12 +35,12 @@ public final class BankLockCommand extends dConomyCommand {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.user", args[1]);
             return;
         }
-        if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
+        if (!args[1].toUpperCase().equals("SERVER") && !bank_handler.verifyAccount(theUser.getName())) {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
         boolean locked = BooleanUtils.parseBoolean(args[0]);
-        BankHandler.getBankAccountByName(theUser.getName()).setLockOut(locked);
+        bank_handler.getBankAccountByName(theUser.getName()).setLockOut(locked);
         if (locked) {
             dBankLiteBase.translateErrorMessageFor(user, "admin.account.locked", theUser.getName(), "BANK ACCOUNT");
         }

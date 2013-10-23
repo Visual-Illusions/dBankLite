@@ -19,7 +19,6 @@ package net.visualillusionsent.dconomy.addon.bank;
 
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.dCoBase;
 
 import java.util.TimerTask;
@@ -34,7 +33,7 @@ final class InterestPayer extends TimerTask {
 
     @Override
     public void run() {
-        for (BankAccount account : BankHandler.getBankAccounts().values()) {
+        for (BankAccount account : base.getHandlerInstance().getBankAccounts().values()) {
             double interest = account.getBalance() * (dCoBase.getProperties().getDouble("interest.rate") / 100);
             double maxout = dCoBase.getProperties().getDouble("interest.max.payout");
             if (interest > maxout) {
@@ -47,7 +46,7 @@ final class InterestPayer extends TimerTask {
                 // Probably over balanced
             }
         }
-        dBankLiteBase.info(String.format("Interest Paid to %d Accounts", BankHandler.getBankAccounts().size()));
+        dBankLiteBase.info(String.format("Interest Paid to %d Accounts", base.getHandlerInstance().getBankAccounts().size()));
         base.setResetTime();
     }
 }

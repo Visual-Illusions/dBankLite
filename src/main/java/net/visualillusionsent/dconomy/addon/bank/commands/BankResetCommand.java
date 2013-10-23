@@ -22,15 +22,14 @@ import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
-import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_RESET;
 
-public final class BankResetCommand extends dConomyCommand {
+public final class BankResetCommand extends BankCommand {
 
-    public BankResetCommand() {
-        super(1);
+    public BankResetCommand(BankHandler bank_handler) {
+        super(1, bank_handler);
     }
 
     protected final void execute(dConomyUser user, String[] args) {
@@ -39,12 +38,12 @@ public final class BankResetCommand extends dConomyCommand {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.user", args[0]);
             return;
         }
-        if (!args[0].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
+        if (!args[0].toUpperCase().equals("SERVER") && !bank_handler.verifyAccount(theUser.getName())) {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
         try {
-            BankHandler.getBankAccountByName(theUser.getName()).setBalance(0);
+            bank_handler.getBankAccountByName(theUser.getName()).setBalance(0);
             dBankLiteBase.translateErrorMessageFor(user, "admin.reset.balance", theUser.getName(), "BANK ACCOUNT");
             dCoBase.getServer().newTransaction(new BankTransaction(user, theUser, ADMIN_RESET, 0));
         }

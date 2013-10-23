@@ -17,6 +17,7 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.data;
 
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.dCoBase;
 
 import java.sql.DriverManager;
@@ -28,7 +29,8 @@ public final class BankSQLiteSource extends BankSQLSource {
     private static BankSQLiteSource $;
     private final String db_Path = dCoBase.getProperties().getString("sql.database.url");
 
-    public BankSQLiteSource() {
+    public BankSQLiteSource(BankHandler bank_handler) {
+        super(bank_handler);
         if ($ == null) {
             $ = this;
         }

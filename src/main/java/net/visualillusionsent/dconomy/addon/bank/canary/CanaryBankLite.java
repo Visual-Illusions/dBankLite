@@ -17,7 +17,6 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.canary;
 
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.api.BankTransaction;
 import net.visualillusionsent.dconomy.addon.bank.canary.api.BankTransactionHook;
 import net.visualillusionsent.dconomy.addon.bank.dBankLite;
@@ -29,13 +28,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements dBankLite {
+    private dBankLiteBase base;
 
     @Override
     public final boolean enable() {
         super.enable();
         try {
-            new dBankLiteBase(this);
-            BankHandler.initialize();
+            base = new dBankLiteBase(this);
             new CanaryBankLiteCommandListener(this);
             new CanaryBankLiteAPIListener(this);
             new CanaryBankLiteMOTDListener(this);
@@ -57,8 +56,10 @@ public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements
 
     @Override
     public final void disable() {
-        dCoBase.getServer().unregisterTransactionHandler(BankTransactionHook.class);
-        dBankLiteBase.cleanUp();
+        if (base != null) {
+            dCoBase.getServer().unregisterTransactionHandler(BankTransactionHook.class);
+            base.cleanUp();
+        }
     }
 
     @Override
@@ -84,5 +85,9 @@ public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements
     @Override
     public String getUserLocale() {
         return dCoBase.getServerLocale();
+    }
+
+    final dBankLiteBase getBaseInstance() {
+        return base;
     }
 }

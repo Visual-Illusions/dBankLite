@@ -44,15 +44,15 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
 
     CanaryBankLiteCommandListener(CanaryBankLite cBankLite) throws CommandDependencyException {
         super(cBankLite);
-        cmds[0] = new BankBaseCommand();
-        cmds[1] = new BankDepositCommand(cBankLite);
-        cmds[2] = new BankWithdrawCommand(cBankLite);
-        cmds[3] = new BankAddCommand();
-        cmds[4] = new BankRemoveCommand();
-        cmds[5] = new BankSetCommand();
-        cmds[6] = new BankResetCommand();
-        cmds[7] = new BankReloadCommand();
-        cmds[8] = new BankLockCommand();
+        cmds[0] = new BankBaseCommand(cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[1] = new BankDepositCommand(cBankLite, cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[2] = new BankWithdrawCommand(cBankLite, cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[3] = new BankAddCommand(cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[4] = new BankRemoveCommand(cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[5] = new BankSetCommand(cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[6] = new BankResetCommand(cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[7] = new BankReloadCommand(cBankLite.getBaseInstance().getHandlerInstance());
+        cmds[8] = new BankLockCommand(cBankLite.getBaseInstance().getHandlerInstance());
         Canary.commands().registerCommands(this, cBankLite, false);
     }
 

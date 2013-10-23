@@ -47,15 +47,15 @@ public class BukkitBankLiteCommandExecutor extends VisualIllusionsBukkitPluginIn
     BukkitBankLiteCommandExecutor(BukkitBankLite bBankLite) {
         super(bBankLite);
         // Initialize Commands
-        cmds[0] = new BankBaseCommand();
-        cmds[1] = new BankDepositCommand(bBankLite);
-        cmds[2] = new BankWithdrawCommand(bBankLite);
-        cmds[3] = new BankAddCommand();
-        cmds[4] = new BankRemoveCommand();
-        cmds[5] = new BankSetCommand();
-        cmds[6] = new BankResetCommand();
-        cmds[7] = new BankReloadCommand();
-        cmds[8] = new BankLockCommand();
+        cmds[0] = new BankBaseCommand(bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[1] = new BankDepositCommand(bBankLite, bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[2] = new BankWithdrawCommand(bBankLite, bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[3] = new BankAddCommand(bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[4] = new BankRemoveCommand(bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[5] = new BankSetCommand(bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[6] = new BankResetCommand(bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[7] = new BankReloadCommand(bBankLite.getBaseInstance().getHandlerInstance());
+        cmds[8] = new BankLockCommand(bBankLite.getBaseInstance().getHandlerInstance());
 
         // Register commands
         bBankLite.getCommand("dbanklite").setExecutor(this);

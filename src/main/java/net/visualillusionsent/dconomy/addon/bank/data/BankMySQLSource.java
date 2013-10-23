@@ -18,6 +18,7 @@
 package net.visualillusionsent.dconomy.addon.bank.data;
 
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.dCoBase;
 
 import java.sql.DriverManager;
@@ -25,6 +26,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public final class BankMySQLSource extends BankSQLSource {
+
+    public BankMySQLSource(BankHandler bank_handler) {
+        super(bank_handler);
+    }
 
     @Override
     public final boolean load() {

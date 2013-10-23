@@ -19,9 +19,10 @@ package net.visualillusionsent.dconomy.addon.bank.accounting;
 
 import net.visualillusionsent.dconomy.accounting.wallet.Wallet;
 import net.visualillusionsent.dconomy.addon.bank.data.BankDataSource;
+import net.visualillusionsent.dconomy.addon.bank.data.BankMySQLSource;
+import net.visualillusionsent.dconomy.addon.bank.data.BankSQLiteSource;
 import net.visualillusionsent.dconomy.addon.bank.data.BankXMLSource;
 import net.visualillusionsent.dconomy.api.dConomyUser;
-import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.data.DataSourceType;
 
 import java.util.Collections;
@@ -37,30 +38,25 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class BankHandler {
 
     private final ConcurrentHashMap<String, BankAccount> accounts;
-    private static final BankHandler $;
     private final BankDataSource source;
-    private static boolean init;
 
-    static {
-        $ = new BankHandler(dCoBase.getDataHandler().getDataSourceType());
-    }
-
-    private BankHandler(DataSourceType type) {
+    public BankHandler(DataSourceType type) {
         accounts = new ConcurrentHashMap<String, BankAccount>();
         if (type == DataSourceType.MYSQL) {
-            source = new BankXMLSource();
+            source = new BankMySQLSource(this);
         }
         else if (type == DataSourceType.SQLITE) {
-            source = new BankXMLSource();
+            source = new BankSQLiteSource(this);
         }
         else {
-            source = new BankXMLSource();
+            source = new BankXMLSource(this);
         }
+        source.load();
     }
 
-    public static final BankAccount getBankAccountByName(String username) {
+    public final BankAccount getBankAccountByName(String username) {
         if (verifyAccount(username)) {
-            return $.accounts.get(username);
+            return accounts.get(username);
         }
         return newBankAccount(username);
     }
@@ -73,7 +69,7 @@ public final class BankHandler {
      *
      * @return the {@link Wallet} for the user if found; {@code null} if not found
      */
-    public static final BankAccount getBankAccount(dConomyUser user) {
+    public final BankAccount getBankAccount(dConomyUser user) {
         return getBankAccountByName(user.getName());
     }
 
@@ -83,8 +79,8 @@ public final class BankHandler {
      * @param account
      *         the {@link BankAccount} to be added
      */
-    public static final void addAccount(BankAccount account) {
-        $.accounts.put(account.getOwner(), account);
+    public final void addAccount(BankAccount account) {
+        accounts.put(account.getOwner(), account);
     }
 
     /**
@@ -95,8 +91,8 @@ public final class BankHandler {
      *
      * @return {@code true} if the wallet exists; {@code false} otherwise
      */
-    public static final boolean verifyAccount(String username) {
-        return $.accounts.containsKey(username);
+    public final boolean verifyAccount(String username) {
+        return accounts.containsKey(username);
     }
 
     /**
@@ -107,26 +103,18 @@ public final class BankHandler {
      *
      * @return the new {@link Wallet}
      */
-    public static final BankAccount newBankAccount(String username) {
-        BankAccount account = new BankAccount(username, 0, false, $.source);
+    public final BankAccount newBankAccount(String username) {
+        BankAccount account = new BankAccount(username, 0, false, source);
         addAccount(account);
         return account;
     }
 
-    /** Initializer method */
-    public static final void initialize() {
-        if (!init) {
-            $.source.load();
-            init = true;
-        }
-    }
-
     /** Cleans up */
-    public static final void cleanUp() {
-        $.accounts.clear();
+    public final void cleanUp() {
+        accounts.clear();
     }
 
-    public static final Map<String, BankAccount> getBankAccounts() {
-        return Collections.unmodifiableMap($.accounts);
+    public final Map<String, BankAccount> getBankAccounts() {
+        return Collections.unmodifiableMap(accounts);
     }
 }

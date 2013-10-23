@@ -31,9 +31,18 @@ import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_DE
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.PLUGIN_SET;
 
 /**
+ * Bank API Listener
  *
+ * @author Jason (darkdiplomat)
  */
 public class BankAPIListener {
+    private static BankHandler bank_handler;
+
+    public static void setBankHandler(BankHandler handler) {
+        if (bank_handler == null) {
+            bank_handler = handler;
+        }
+    }
 
     /**
      * Gets the balance of a user's bank account
@@ -48,8 +57,8 @@ public class BankAPIListener {
      * @throws AccountNotFoundException
      */
     public static double bankAccountBalance(String userName, boolean forceAccount) throws AccountingException, AccountNotFoundException {
-        if (BankHandler.verifyAccount(userName) || forceAccount) {
-            return BankHandler.getBankAccountByName(userName).getBalance();
+        if (bank_handler.verifyAccount(userName) || forceAccount) {
+            return bank_handler.getBankAccountByName(userName).getBalance();
         }
         throw new AccountNotFoundException("Bank Account", userName);
     }
@@ -65,8 +74,8 @@ public class BankAPIListener {
      * @throws AccountNotFoundException
      */
     public static boolean isLocked(String userName) throws AccountNotFoundException {
-        if (BankHandler.verifyAccount(userName)) {
-            return BankHandler.getBankAccountByName(userName).isLocked();
+        if (bank_handler.verifyAccount(userName)) {
+            return bank_handler.getBankAccountByName(userName).isLocked();
         }
         throw new AccountNotFoundException("Wallet", userName);
     }
@@ -112,8 +121,8 @@ public class BankAPIListener {
      * @throws InvalidPluginException
      */
     public static double bankDeposit(dConomyAddOn addOn, String userName, double deposit, boolean forceAccount) throws AccountingException, AccountNotFoundException {
-        if (BankHandler.verifyAccount(userName) || forceAccount) {
-            double newBalance = BankHandler.getBankAccountByName(userName).deposit(deposit);
+        if (bank_handler.verifyAccount(userName) || forceAccount) {
+            double newBalance = bank_handler.getBankAccountByName(userName).deposit(deposit);
             dCoBase.getServer().newTransaction(new BankTransaction(addOn, dCoBase.getServer().getUser(userName), PLUGIN_DEPOSIT, deposit));
             return newBalance;
         }
@@ -161,8 +170,8 @@ public class BankAPIListener {
      * @throws InvalidPluginException
      */
     public static double bankDebit(dConomyAddOn addOn, String userName, double debit, boolean forceAccount) throws AccountingException, AccountNotFoundException {
-        if (BankHandler.verifyAccount(userName) || forceAccount) {
-            double newBalance = BankHandler.getBankAccountByName(userName).debit(debit);
+        if (bank_handler.verifyAccount(userName) || forceAccount) {
+            double newBalance = bank_handler.getBankAccountByName(userName).debit(debit);
             dCoBase.getServer().newTransaction(new BankTransaction(addOn, dCoBase.getServer().getUser(userName), PLUGIN_DEBIT, debit));
             return newBalance;
         }
@@ -210,8 +219,8 @@ public class BankAPIListener {
      * @throws InvalidPluginException
      */
     public static double bankSet(dConomyAddOn addOn, String userName, double set, boolean forceAccount) throws AccountingException, AccountNotFoundException {
-        if (BankHandler.verifyAccount(userName) || forceAccount) {
-            double newBalance = BankHandler.getBankAccountByName(userName).setBalance(set);
+        if (bank_handler.verifyAccount(userName) || forceAccount) {
+            double newBalance = bank_handler.getBankAccountByName(userName).setBalance(set);
             dCoBase.getServer().newTransaction(new BankTransaction(addOn, dCoBase.getServer().getUser(userName), PLUGIN_SET, set));
             return newBalance;
         }
@@ -229,8 +238,8 @@ public class BankAPIListener {
      * @throws AccountingException
      */
     public static void testBankDebit(String userName, double debit) throws AccountingException {
-        if (BankHandler.verifyAccount(userName)) {
-            BankHandler.getBankAccountByName(userName).testDebit(debit);
+        if (bank_handler.verifyAccount(userName)) {
+            bank_handler.getBankAccountByName(userName).testDebit(debit);
         }
     }
 
@@ -245,8 +254,8 @@ public class BankAPIListener {
      * @throws AccountingException
      */
     public static void testBankDeposit(String userName, double deposit) throws AccountingException {
-        if (BankHandler.verifyAccount(userName)) {
-            BankHandler.getBankAccountByName(userName).testDeposit(deposit);
+        if (bank_handler.verifyAccount(userName)) {
+            bank_handler.getBankAccountByName(userName).testDeposit(deposit);
         }
     }
 
@@ -256,7 +265,7 @@ public class BankAPIListener {
      * @return set of owner names
      */
     public static Set<String> getBankAccountOwners() {
-        return BankHandler.getBankAccounts().keySet();
+        return bank_handler.getBankAccounts().keySet();
     }
 
     private static dConomyAddOn pluginNameToAddOn(String pluginName) throws InvalidPluginException {

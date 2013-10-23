@@ -15,16 +15,23 @@
  * You should have received a copy of the GNU General Public License along with dBankLite.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.data;
+package net.visualillusionsent.dconomy.addon.bank.commands;
 
-import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
-import net.visualillusionsent.dconomy.data.dCoDataSource;
+import net.visualillusionsent.dconomy.commands.dConomyCommand;
 
-public abstract class BankDataSource implements dCoDataSource<BankAccount> {
-    final BankHandler bank_handler;
+/**
+ * Created with IntelliJ IDEA.
+ * User: darkdiplomat
+ * Date: 10/23/13
+ * Time: 1:20 AM
+ * To change this template use File | Settings | File Templates.
+ */
+abstract class BankCommand extends dConomyCommand {
+    protected final BankHandler bank_handler;
 
-    public BankDataSource(BankHandler bank_handler) {
+    public BankCommand(int minArgs, BankHandler bank_handler) {
+        super(minArgs);
         this.bank_handler = bank_handler;
     }
 }

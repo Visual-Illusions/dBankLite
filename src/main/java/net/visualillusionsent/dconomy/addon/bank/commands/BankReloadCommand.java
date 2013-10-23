@@ -20,13 +20,12 @@ package net.visualillusionsent.dconomy.addon.bank.commands;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
-import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
-public final class BankReloadCommand extends dConomyCommand {
+public final class BankReloadCommand extends BankCommand {
 
-    public BankReloadCommand() {
-        super(1);
+    public BankReloadCommand(BankHandler bank_handler) {
+        super(1, bank_handler);
     }
 
     protected final void execute(dConomyUser user, String[] args) {
@@ -35,11 +34,11 @@ public final class BankReloadCommand extends dConomyCommand {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.user", args[1]);
             return;
         }
-        if (!args[1].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
+        if (!args[1].toUpperCase().equals("SERVER") && !bank_handler.verifyAccount(theUser.getName())) {
             dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
             return;
         }
-        if (BankHandler.getBankAccountByName(theUser.getName()).reload()) {
+        if (bank_handler.getBankAccountByName(theUser.getName()).reload()) {
             dBankLiteBase.translateErrorMessageFor(user, "admin.reload.account.success", theUser.getName(), "BANK ACCOUNT");
         }
         else {

@@ -19,6 +19,7 @@ package net.visualillusionsent.dconomy.addon.bank.data;
 
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
 
@@ -27,10 +28,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class BankSQLSource implements BankDataSource {
+public abstract class BankSQLSource extends BankDataSource {
 
     protected Connection conn;
     protected String bank_table = dCoBase.getProperties().getString("sql.bank.table");
+
+    public BankSQLSource(BankHandler bank_handler) {
+        super(bank_handler);
+    }
 
     @Override
     public boolean load() {
@@ -45,7 +50,7 @@ public abstract class BankSQLSource implements BankDataSource {
                 String name = rs.getString("owner");
                 double balance = rs.getDouble("balance");
                 boolean locked = rs.getBoolean("lockedOut");
-                new BankAccount(name, balance, locked, this);
+                bank_handler.addAccount(new BankAccount(name, balance, locked, this));
                 load++;
             }
             dBankLiteBase.info(String.format("Loaded %d Bank Accounts...", load));

@@ -21,13 +21,12 @@ import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
-import net.visualillusionsent.dconomy.commands.dConomyCommand;
 import net.visualillusionsent.dconomy.dCoBase;
 
-public final class BankBaseCommand extends dConomyCommand {
+public final class BankBaseCommand extends BankCommand {
 
-    public BankBaseCommand() {
-        super(0);
+    public BankBaseCommand(BankHandler bank_handler) {
+        super(0, bank_handler);
     }
 
     protected final void execute(dConomyUser user, String[] args) {
@@ -38,11 +37,11 @@ public final class BankBaseCommand extends dConomyCommand {
                 dBankLiteBase.translateErrorMessageFor(user, "error.404.user", args[0]);
                 return;
             }
-            if (!args[0].toUpperCase().equals("SERVER") && !BankHandler.verifyAccount(theUser.getName())) {
+            if (!args[0].toUpperCase().equals("SERVER") && !bank_handler.verifyAccount(theUser.getName())) {
                 dBankLiteBase.translateErrorMessageFor(user, "error.404.account", theUser.getName(), "BANK ACCOUNT");
                 return;
             }
-            theAccount = BankHandler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName());
+            theAccount = bank_handler.getBankAccountByName(theUser == null ? "SERVER" : theUser.getName());
             if (theAccount.isLocked()) {
                 dBankLiteBase.translateErrorMessageFor(user, "error.lock.out", theUser == null ? "SERVER" : theUser.getName(), "BANK ACCOUNT");
             }
@@ -51,7 +50,7 @@ public final class BankBaseCommand extends dConomyCommand {
             }
         }
         else {
-            theAccount = BankHandler.getBankAccountByName(user.getName());
+            theAccount = bank_handler.getBankAccountByName(user.getName());
             if (theAccount.isLocked()) {
                 dBankLiteBase.translateErrorMessageFor(user, "error.lock.out", user.getName(), "BANK ACCOUNT");
             }

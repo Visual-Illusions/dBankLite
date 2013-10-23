@@ -19,6 +19,7 @@ package net.visualillusionsent.dconomy.addon.bank.data;
 
 import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.utils.SystemUtils;
@@ -34,13 +35,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public final class BankXMLSource implements BankDataSource {
+public final class BankXMLSource extends BankDataSource {
 
     private final Format xmlform = Format.getPrettyFormat().setExpandEmptyElements(false).setOmitDeclaration(true).setOmitEncoding(true).setLineSeparator(SystemUtils.LINE_SEP);
     private final XMLOutputter outputter = new XMLOutputter(xmlform);
     private final SAXBuilder builder = new SAXBuilder();
     private final String bank_Path = dCoBase.getProperties().getConfigurationDirectory().concat("bankaccounts.xml");
     private FileWriter writer;
+
+    public BankXMLSource(BankHandler bank_handler) {
+        super(bank_handler);
+    }
 
     @Override
     public final boolean load() {
@@ -81,7 +86,7 @@ public final class BankXMLSource implements BankDataSource {
                 Element root = doc.getRootElement();
                 List<Element> accounts = root.getChildren();
                 for (Element account : accounts) {
-                    new BankAccount(account.getAttributeValue("owner"), account.getAttribute("balance").getDoubleValue(), account.getAttribute("lockedOut").getBooleanValue(), this);
+                    bank_handler.addAccount(new BankAccount(account.getAttributeValue("owner"), account.getAttribute("balance").getDoubleValue(), account.getAttribute("lockedOut").getBooleanValue(), this));
                     load++;
                 }
             }
@@ -114,7 +119,7 @@ public final class BankXMLSource implements BankDataSource {
                     String name = account.getAttributeValue("owner");
                     if (name.equals(bankaccount.getOwner())) {
                         account.getAttribute("balance").setValue(String.format("%.2f", bankaccount.getBalance()));
-                        account.getAttribute("lockedOut").setValue(String.valueOf(((BankAccount) bankaccount).isLocked()));
+                        account.getAttribute("lockedOut").setValue(String.valueOf(bankaccount.isLocked()));
                         found = true;
                         break;
                     }
@@ -123,7 +128,7 @@ public final class BankXMLSource implements BankDataSource {
                     Element newWallet = new Element("bankaccount");
                     newWallet.setAttribute("owner", bankaccount.getOwner());
                     newWallet.setAttribute("balance", String.format("%.2f", bankaccount.getBalance()));
-                    newWallet.setAttribute("lockedOut", String.valueOf(((BankAccount) bankaccount).isLocked()));
+                    newWallet.setAttribute("lockedOut", String.valueOf(bankaccount.isLocked()));
                     root.addContent(newWallet);
                 }
                 try {
@@ -173,7 +178,7 @@ public final class BankXMLSource implements BankDataSource {
                     String name = account.getChildText("owner");
                     if (name.equals(bankaccount.getOwner())) {
                         bankaccount.setBalance(account.getAttribute("balance").getDoubleValue());
-                        ((BankAccount) bankaccount).setLockOut(account.getAttribute("lockedOut").getBooleanValue());
+                        bankaccount.setLockOut(account.getAttribute("lockedOut").getBooleanValue());
                         break;
                     }
                 }

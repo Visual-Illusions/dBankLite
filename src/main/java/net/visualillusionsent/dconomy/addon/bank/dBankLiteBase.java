@@ -17,6 +17,7 @@
  */
 package net.visualillusionsent.dconomy.addon.bank;
 
+import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.data.BankProperties;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
@@ -35,6 +36,7 @@ public final class dBankLiteBase {
     private final BankProperties props;
     private final PropertiesFile timer_reset;
     private final MessageTranslator translator;
+    private final BankHandler bank_handler;
 
     private static dBankLiteBase $;
 
@@ -45,6 +47,7 @@ public final class dBankLiteBase {
             warning("dConomy appears to be a newer version. Incompatibility could result...");
         }
         props = new BankProperties();
+        bank_handler = new BankHandler(dCoBase.getDataHandler().getDataSourceType());
         translator = new MessageTranslator();
         timer_reset = new PropertiesFile("config/dBankLite/.reset.dbl");
         if (getInterestInterval() > 0) { // interest enabled?
@@ -130,10 +133,13 @@ public final class dBankLiteBase {
         }
     }
 
-    public final static void cleanUp() {
+    public final void cleanUp() {
         if ($.timer != null) {
             $.timer.cancel();
             $.timer.purge();
+        }
+        if ($.bank_handler != null) {
+            $.bank_handler.cleanUp();
         }
     }
 
@@ -160,5 +166,9 @@ public final class dBankLiteBase {
 
     final void setResetTime() {
         timer_reset.setLong("bank.timer.reset", System.currentTimeMillis() + getInterestInterval());
+    }
+
+    public final BankHandler getHandlerInstance() {
+        return bank_handler;
     }
 }
