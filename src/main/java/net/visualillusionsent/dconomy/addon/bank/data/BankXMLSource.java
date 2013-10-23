@@ -21,7 +21,6 @@ import net.visualillusionsent.dconomy.accounting.AccountingException;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
-import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.utils.SystemUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -40,7 +39,7 @@ public final class BankXMLSource extends BankDataSource {
     private final Format xmlform = Format.getPrettyFormat().setExpandEmptyElements(false).setOmitDeclaration(true).setOmitEncoding(true).setLineSeparator(SystemUtils.LINE_SEP);
     private final XMLOutputter outputter = new XMLOutputter(xmlform);
     private final SAXBuilder builder = new SAXBuilder();
-    private final String bank_Path = dCoBase.getProperties().getConfigurationDirectory().concat("bankaccounts.xml");
+    private final String bank_Path = ("config/dBankLite/bankaccounts.xml");
     private FileWriter writer;
 
     public BankXMLSource(BankHandler bank_handler) {

@@ -41,7 +41,7 @@ public final class CanaryBankLiteMOTDListener implements MessageOfTheDayListener
     @MOTDKey(key = "{bank.balance}")
     public String bank_balance(MessageReceiver msgrec) {
         try {
-            return MessageFormat.format("{0,number,0.00}", BankAPIListener.bankAccountBalance(msgrec.getName(), false));
+            return MessageFormat.format("{0,number,0.00}", BankAPIListener.bankAccountBalance(msgrec.getName(), msgrec.hasPermission("dconomy.bank.base")));
         }
         catch (AccountingException e) {
             return "no bank access";
