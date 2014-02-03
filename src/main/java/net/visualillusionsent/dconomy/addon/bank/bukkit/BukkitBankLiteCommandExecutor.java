@@ -17,15 +17,7 @@
  */
 package net.visualillusionsent.dconomy.addon.bank.bukkit;
 
-import net.visualillusionsent.dconomy.addon.bank.commands.BankAddCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankBaseCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankDepositCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankLockCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankReloadCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankRemoveCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankResetCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankSetCommand;
-import net.visualillusionsent.dconomy.addon.bank.commands.BankWithdrawCommand;
+import net.visualillusionsent.dconomy.addon.bank.commands.*;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.bukkit.api.Bukkit_User;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
@@ -78,12 +70,12 @@ public class BukkitBankLiteCommandExecutor extends VisualIllusionsBukkitPluginIn
             else if (args.length > 0) {
                 String sub = args[0].toLowerCase();
                 // Check Permissions
-                if ((sub.matches("(add|remove|set|reload|reset|lock)") && !sender.hasPermission("dconomy.admin.bank.".concat(sub)))
-                        || (sub.matches("(deposit|withdraw)") && !sender.hasPermission("dconomy.bank.".concat(sub)))) {
+                if ((TabCompleteUtil.matchA.reset(sub).matches() && !sender.hasPermission("dconomy.admin.bank.".concat(sub)))
+                        || (TabCompleteUtil.matchP.reset(sub).matches() && !sender.hasPermission("dconomy.bank.".concat(sub)))) {
                     sender.sendMessage(ChatColor.RED + "I'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error."); // Borrow Bukkit's default message
                 }
                 else if (sub.equals("deposit") && !cmds[1].parseCommand(user, args, true)) {
-                    sender.sendMessage(ChatColor.RED + "/bank pay <amount>");
+                    sender.sendMessage(ChatColor.RED + "/bank deposit <amount>");
                 }
                 else if (sub.equals("withdraw") && !cmds[2].parseCommand(user, args, true)) {
                     sender.sendMessage(ChatColor.RED + "/bank withdraw <amount>");
@@ -117,6 +109,7 @@ public class BukkitBankLiteCommandExecutor extends VisualIllusionsBukkitPluginIn
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        return null; //TODO
+        dConomyUser user = sender instanceof Player ? new Bukkit_User((Player) sender) : (dConomyUser) dCoBase.getServer();
+        return TabCompleteUtil.match(user, args);
     }
 }

@@ -28,6 +28,8 @@ import net.visualillusionsent.utils.PropertiesFile;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class dBankLiteBase {
     private final float dCoVersion = 3.0F;
@@ -38,8 +40,8 @@ public final class dBankLiteBase {
     private final PropertiesFile timer_reset;
     private final dBankLiteTranslator translator;
     private final BankHandler bank_handler;
-
     private static dBankLiteBase $;
+    private static final Matcher bankDepWith = Pattern.compile("bank\\.(deposit|withdraw)").matcher("");
 
     public dBankLiteBase(dBankLite dbanklite) {
         $ = this;
@@ -72,7 +74,7 @@ public final class dBankLiteBase {
      *         the arguments to format the message with
      */
     public static void translateMessageFor(dConomyUser user, String key, Object... args) {
-        if (key.matches("bank\\.(deposit|withdraw)")) {
+        if (bankDepWith.reset(key).matches()) {
             user.message($.translator.translate(key, user.getUserLocale(), args));
         }
         else { // Probably a dConomy default message
@@ -91,7 +93,7 @@ public final class dBankLiteBase {
      *         the arguments to format the message with
      */
     public static void translateErrorMessageFor(dConomyUser user, String key, Object... args) {
-        if (key.matches("bank\\.(deposit|withdraw)")) {
+        if (bankDepWith.reset(key).matches()) {
             user.error($.translator.translate(key, user.getUserLocale(), args));
         }
         else { // Probably a dConomy default message
