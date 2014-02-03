@@ -72,7 +72,7 @@ Copyright © 2011-2014 Visual Illusions Entertainment
     <distributionManagement>
         <repository>
             <id>vi-repo</id>
-            <url>http://repo2.visualillusionsent.net/</url>
+            <url>http://repo2.visualillusionsent.net/repository/public/</url>
         </repository>
     </distributionManagement>
     <repositories>
