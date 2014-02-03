@@ -15,26 +15,20 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
-package net.visualillusionsent.dconomy.addon.bank.api;
+package net.visualillusionsent.dconomy.addon.bank;
 
-import net.visualillusionsent.dconomy.api.account.AccountAction;
+import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.minecraft.plugin.ChatFormat;
+import net.visualillusionsent.minecraft.plugin.MessageTranslator;
+import net.visualillusionsent.minecraft.plugin.VisualIllusionsPlugin;
 
-/**
- * Bank Action
- *
- * @author Jason (darkdiplomat)
- */
-public enum BankAction implements AccountAction {
+public final class dBankLiteTranslator extends MessageTranslator {
 
-    DEPOSIT, //
-    WITHDRAW, //
-    ADMIN_ADD, //
-    ADMIN_REMOVE, //
-    ADMIN_SET, //
-    ADMIN_RESET, //
-    PLUGIN_DEBIT, //
-    PLUGIN_DEPOSIT, //
-    PLUGIN_SET, //
-    ;
+    dBankLiteTranslator(dBankLite dBankLite) {
+        super((VisualIllusionsPlugin) dBankLite, dCoBase.getServerLocale(), true);
+    }
 
+    public final String translate(String key, String locale, Object... args) {
+        return ChatFormat.formatString(localeTranslate(key, locale, args), "~").replace("$m", dCoBase.getMoneyName());
+    }
 }

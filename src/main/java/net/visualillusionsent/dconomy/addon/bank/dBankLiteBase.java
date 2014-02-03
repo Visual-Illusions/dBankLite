@@ -1,18 +1,18 @@
 /*
  * This file is part of dBankLite.
  *
- * Copyright © 2013 Visual Illusions Entertainment
+ * Copyright © 2013-2014 Visual Illusions Entertainment
  *
  * dBankLite is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License,
  * or (at your option) any later version.
  *
- * dBankLite is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with dBankLite.
+ * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/gpl.html.
  */
 package net.visualillusionsent.dconomy.addon.bank;
@@ -36,7 +36,7 @@ public final class dBankLiteBase {
     private final Timer timer;
     private final BankProperties props;
     private final PropertiesFile timer_reset;
-    private final MessageTranslator translator;
+    private final dBankLiteTranslator translator;
     private final BankHandler bank_handler;
 
     private static dBankLiteBase $;
@@ -50,7 +50,7 @@ public final class dBankLiteBase {
         props = new BankProperties();
         bank_handler = new BankHandler(dCoBase.getDataHandler().getDataSourceType());
         BankAPIListener.setBankHandler(bank_handler);
-        translator = new MessageTranslator();
+        translator = new dBankLiteTranslator(dbanklite);
         timer_reset = new PropertiesFile("config/dBankLite/.reset.dbl");
         if (getInterestInterval() > 0) { // interest enabled?
             timer = new Timer();
