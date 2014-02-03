@@ -5,5 +5,5 @@
 ;# This file is also the default Language file and needs to be included
 ;# DO NOT MODIFY THIS FILE! clone the file to create new translations.
 ;# Saving the new file as <localeCode>.lang
-bank.deposit=$cAYou have deposited $cE{0, number, 0.00} $m$cA into your $c3Bank Account$cA.
-bank.withdraw=$cAYou have withdrawn $cE{0, number, 0.00} $m$cA from your $c3Bank Account$cA.
+bank.deposit=~AYou have deposited ~E{0, number, 0.00} $m~A into your ~3Bank Account~A.
+bank.withdraw=~AYou have withdrawn ~E{0, number, 0.00} $m~A from your ~3Bank Account~A.

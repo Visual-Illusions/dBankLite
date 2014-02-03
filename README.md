@@ -1,15 +1,28 @@
-dBankLite
-====================
-Banking add-on for dConomy 3
----------
+# dBankLite #
+### Banking add-on for dConomy ###
+#### Copyright &copy; 2013-2014 Visual Illusions Entertainment ####
+#### Licensed under the GNU General Public License v3 (See License below) ####
 
-dBankLite is designed for Bukkit and CanaryMod Minecraft Servers.
+## About ##
+dBankLite is a plugin for the Canary and Bukkit Minecraft Server Modifications.
+See the [dBankLite Wiki Page](http://wiki.visualillusionsent.net/view/dBankLite) for more information
+
+## Bug Reporting ##
+Please use the [GitHub issue tracker](https://github.com/Visual-Illusions/dBankLite/issues) associated with this repository.<br/>  
+Be sure to include as much information about the issue as possible, including Server Mod info
+
+## Compiling ##
+
+Maven is used for dependency management
+
+Install [Maven 3](http://maven.apache.org/download.html)<br/>
+Check out this repository<br/>
+run from command line: mvn clean install<br/>
 
 License
 ---------
-Copyright &copy; 2013 Visual Illusions Entertainment
 
-dBankLite is free software: you can redistribute it and/or modify
+This Program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
