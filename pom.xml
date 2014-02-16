@@ -272,17 +272,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                                         <!-- Relocate base VIMCPlugin stuff to base of plugin -->
                                         <relocation>
                                             <pattern>net.visualillusionsent.minecraft.plugin</pattern>
-                                            <shadedPattern>${project.groupId}.${project.artifactId}</shadedPattern>
-                                        </relocation>
-                                        <!-- Canary -->
-                                        <relocation>
-                                            <pattern>net.visualillusionsent.minecraft.plugin.canary</pattern>
-                                            <shadedPattern>${project.groupId}.${project.artifactId}.canary</shadedPattern>
-                                        </relocation>
-                                        <!-- Bukkit -->
-                                        <relocation>
-                                            <pattern>net.visualillusionsent.minecraft.plugin.bukkit</pattern>
-                                            <shadedPattern>${project.groupId}.${project.artifactId}.bukkit</shadedPattern>
+                                            <shadedPattern>${project.groupId}.dconomy.addon.bank</shadedPattern>
                                         </relocation>
                                     </relocations>
                                     <shadedArtifactAttached>true</shadedArtifactAttached>
@@ -369,11 +359,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                                         <!-- Relocate base VIMCPlugin stuff to base of plugin -->
                                         <relocation>
                                             <pattern>net.visualillusionsent.minecraft.plugin</pattern>
-                                            <shadedPattern>${project.groupId}.${project.artifactId}</shadedPattern>
-                                        </relocation>
-                                        <relocation>
-                                            <pattern>net.visualillusionsent.minecraft.plugin.bukkit</pattern>
-                                            <shadedPattern>${project.groupId}.${project.artifactId}.bukkit</shadedPattern>
+                                            <shadedPattern>${project.groupId}.dconomy.addon.bank</shadedPattern>
                                         </relocation>
                                     </relocations>
                                     <shadedArtifactAttached>true</shadedArtifactAttached>
@@ -390,7 +376,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                         <configuration>
                             <!-- Don't include Canary specific things in a Bukkit Jar -->
                             <excludes>
-                                <exclude>net/visualillusionsent/realms/canary/</exclude>
+                                <exclude>net/visualillusionsent/dconomy/addon/bank/canary/</exclude>
                                 <exclude>Canary.inf</exclude>
                             </excludes>
                             <archive>
@@ -465,11 +451,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                                         <!-- Relocate base VIMCPlugin stuff to base of plugin -->
                                         <relocation>
                                             <pattern>net.visualillusionsent.minecraft.plugin</pattern>
-                                            <shadedPattern>${project.groupId}.${project.artifactId}</shadedPattern>
-                                        </relocation>
-                                        <relocation>
-                                            <pattern>net.visualillusionsent.minecraft.plugin.canary</pattern>
-                                            <shadedPattern>${project.groupId}.${project.artifactId}.canary</shadedPattern>
+                                            <shadedPattern>${project.groupId}.dconomy.addon.bank</shadedPattern>
                                         </relocation>
                                     </relocations>
                                     <shadedArtifactAttached>true</shadedArtifactAttached>
@@ -486,7 +468,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                         <configuration>
                             <!-- Don't include Bukkit specific things in a Canary Jar -->
                             <excludes>
-                                <exclude>net/visualillusionsent/realms/bukkit/</exclude>
+                                <exclude>net/visualillusionsent/dconomy/addon/bank/bukkit/</exclude>
                                 <exclude>plugin.yml</exclude>
                             </excludes>
                             <archive>
