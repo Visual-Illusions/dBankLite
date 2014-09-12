@@ -2,18 +2,28 @@
  * This file is part of dBankLite.
  *
  * Copyright © 2013-2014 Visual Illusions Entertainment
+ * All rights reserved.
  *
- * dBankLite is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License,
- * or (at your option) any later version.
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
+ *     1. Redistributions of source code must retain the above copyright notice,
+ *        this list of conditions and the following disclaimer.
  *
- * You should have received a copy of the GNU General Public License along with this program.
- * If not, see http://www.gnu.org/licenses/gpl.html.
+ *     2. Redistributions in binary form must reproduce the above copyright notice,
+ *        this list of conditions and the following disclaimer in the documentation
+ *        and/or other materials provided with the distribution.
+ *
+ *     3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse
+ *        or promote products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+ * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package net.visualillusionsent.dconomy.addon.bank.accounting;
 
@@ -23,10 +33,12 @@ import net.visualillusionsent.dconomy.addon.bank.data.BankMySQLSource;
 import net.visualillusionsent.dconomy.addon.bank.data.BankSQLiteSource;
 import net.visualillusionsent.dconomy.addon.bank.data.BankXMLSource;
 import net.visualillusionsent.dconomy.api.dConomyUser;
+import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.data.DataSourceType;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -37,11 +49,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class BankHandler {
 
-    private final ConcurrentHashMap<String, BankAccount> accounts;
+    private final ConcurrentHashMap<UUID, BankAccount> accounts;
     private final BankDataSource source;
 
     public BankHandler(DataSourceType type) {
-        accounts = new ConcurrentHashMap<String, BankAccount>();
+        accounts = new ConcurrentHashMap<UUID, BankAccount>();
         if (type == DataSourceType.MYSQL) {
             source = new BankMySQLSource(this);
         }
@@ -54,11 +66,11 @@ public final class BankHandler {
         source.load();
     }
 
-    public final BankAccount getBankAccountByName(String username) {
-        if (verifyAccount(username)) {
-            return accounts.get(username);
+    public final BankAccount getBankAccountByUUID(UUID owner) {
+        if (verifyAccount(owner)) {
+            return accounts.get(owner);
         }
-        return newBankAccount(username);
+        return newBankAccount(owner);
     }
 
     /**
@@ -70,7 +82,7 @@ public final class BankHandler {
      * @return the {@link Wallet} for the user if found; {@code null} if not found
      */
     public final BankAccount getBankAccount(dConomyUser user) {
-        return getBankAccountByName(user.getName());
+        return getBankAccountByUUID(user.getUUID());
     }
 
     /**
@@ -86,13 +98,13 @@ public final class BankHandler {
     /**
      * Checks if a {@link Wallet} exists
      *
-     * @param username
-     *         the user's name to check Wallet for
+     * @param owner
+     *         the user's {@link UUID} to check Wallet for
      *
      * @return {@code true} if the wallet exists; {@code false} otherwise
      */
-    public final boolean verifyAccount(String username) {
-        return accounts.containsKey(username);
+    public final boolean verifyAccount(UUID owner) {
+        return owner.equals(dCoBase.getServer().getUUID()) || accounts.containsKey(owner);
     }
 
     /**
@@ -103,7 +115,7 @@ public final class BankHandler {
      *
      * @return the new {@link Wallet}
      */
-    public final BankAccount newBankAccount(String username) {
+    public final BankAccount newBankAccount(UUID username) {
         BankAccount account = new BankAccount(username, 0, false, source);
         addAccount(account);
         return account;
@@ -114,7 +126,7 @@ public final class BankHandler {
         accounts.clear();
     }
 
-    public final Map<String, BankAccount> getBankAccounts() {
+    public final Map<UUID, BankAccount> getBankAccounts() {
         return Collections.unmodifiableMap(accounts);
     }
 }
