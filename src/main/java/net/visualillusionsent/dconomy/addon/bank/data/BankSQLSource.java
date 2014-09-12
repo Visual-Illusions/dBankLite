@@ -32,6 +32,7 @@ import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.dconomy.data.DataLock;
 import net.visualillusionsent.minecraft.plugin.util.Tools;
 
 import java.sql.Connection;
@@ -41,7 +42,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 public abstract class BankSQLSource extends BankDataSource {
-
+    private final DataLock lock = new DataLock();
     protected Connection conn;
     protected String bank_table = dCoBase.getProperties().getString("sql.bank.table");
 
@@ -115,7 +116,7 @@ public abstract class BankSQLSource extends BankDataSource {
                     ps.close();
                     ps = conn.prepareStatement("UPDATE `" + bank_table + "` SET `balance`=?, `lockedOut`=? WHERE `owner`=?");
                     ps.setDouble(1, account.getBalance());
-                    ps.setInt(2, ((BankAccount) account).isLocked() ? 1 : 0);
+                    ps.setInt(2, account.isLocked() ? 1 : 0);
                     ps.setString(3, account.getOwner().toString());
                     ps.execute();
                 }
@@ -123,7 +124,7 @@ public abstract class BankSQLSource extends BankDataSource {
                     ps.close();
                     ps = conn.prepareStatement("INSERT INTO `" + bank_table + "` (`owner`,`balance`,`lockedOut`) VALUES(?,?,?)");
                     ps.setString(1, account.getOwner().toString());
-                    ps.setInt(2, ((BankAccount) account).isLocked() ? 1 : 0);
+                    ps.setInt(2, account.isLocked() ? 1 : 0);
                     ps.setDouble(3, account.getBalance());
                     ps.execute();
                 }
@@ -132,6 +133,7 @@ public abstract class BankSQLSource extends BankDataSource {
             catch (SQLException sqlex) {
                 dBankLiteBase.severe("Failed to save Bank Account for: " + account.getOwner());
                 dBankLiteBase.stacktrace(sqlex);
+                success = false;
             }
             finally {
                 try {
@@ -163,7 +165,7 @@ public abstract class BankSQLSource extends BankDataSource {
             rs = ps.executeQuery();
             while (rs.next()) {
                 account.setBalance(rs.getDouble("balance"));
-                ((BankAccount) account).setLockOut(rs.getBoolean("lockedOut"));
+                account.setLockOut(rs.getBoolean("lockedOut"));
             }
             dBankLiteBase.debug("Reloaded Wallet for: ".concat(account.getOwner().toString()));
         }

@@ -32,6 +32,7 @@ import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.dCoBase;
+import net.visualillusionsent.dconomy.data.DataLock;
 import net.visualillusionsent.minecraft.plugin.util.Tools;
 import net.visualillusionsent.utils.SystemUtils;
 import org.jdom2.Document;
@@ -48,7 +49,7 @@ import java.util.List;
 import java.util.UUID;
 
 public final class BankXMLSource extends BankDataSource {
-
+    private final DataLock lock = new DataLock();
     private final Format xmlform = Format.getPrettyFormat().setExpandEmptyElements(false).setOmitDeclaration(true).setOmitEncoding(true).setLineSeparator(SystemUtils.LINE_SEP);
     private final XMLOutputter outputter = new XMLOutputter(xmlform);
     private final SAXBuilder builder = new SAXBuilder();
@@ -83,13 +84,13 @@ public final class BankXMLSource extends BankDataSource {
                     }
                 }
                 catch (IOException e) {
+                    //
                 }
-                writer = null;
-                if (ex != null) {
-                    dBankLiteBase.severe("Failed to create new BankAccounts file...");
-                    dBankLiteBase.stacktrace(ex);
-                    return false;
-                }
+            }
+            if (ex != null) {
+                dBankLiteBase.severe("Failed to create new BankAccounts file...");
+                dBankLiteBase.stacktrace(ex);
+                return false;
             }
         }
         else {
@@ -115,12 +116,12 @@ public final class BankXMLSource extends BankDataSource {
             }
             catch (JDOMException jdomex) {
                 dBankLiteBase.severe("JDOM Exception while parsing BankAccounts file...");
-                dBankLiteBase.stacktrace(ex);
+                dBankLiteBase.stacktrace(jdomex);
                 return false;
             }
-            catch (IOException e) {
+            catch (IOException ioex) {
                 dBankLiteBase.severe("Input/Output Exception while parsing BankAccounts file...");
-                dBankLiteBase.stacktrace(ex);
+                dBankLiteBase.stacktrace(ioex);
                 return false;
             }
         }
@@ -140,7 +141,7 @@ public final class BankXMLSource extends BankDataSource {
                 boolean found = false;
                 for (Element account : accounts) {
                     String name = account.getAttributeValue("owner");
-                    if (name.equals(bankaccount.getOwner())) {
+                    if (name.equals(bankaccount.getOwner().toString())) {
                         account.getAttribute("balance").setValue(String.format("%.2f", bankaccount.getBalance()));
                         account.getAttribute("lockedOut").setValue(String.valueOf(bankaccount.isLocked()));
                         found = true;
@@ -199,7 +200,7 @@ public final class BankXMLSource extends BankDataSource {
                 List<Element> accounts = root.getChildren();
                 for (Element account : accounts) {
                     String name = account.getChildText("owner");
-                    if (name.equals(bankaccount.getOwner())) {
+                    if (name.equals(bankaccount.getOwner().toString())) {
                         bankaccount.setBalance(account.getAttribute("balance").getDoubleValue());
                         bankaccount.setLockOut(account.getAttribute("lockedOut").getBooleanValue());
                         break;
