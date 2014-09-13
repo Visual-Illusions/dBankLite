@@ -77,6 +77,11 @@ public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements
     }
 
     @Override
+    public UUID getOfflineUUID() {
+        return getUUID();
+    }
+
+    @Override
     public void error(String message) {
         getLogman().warn(message);
     }
