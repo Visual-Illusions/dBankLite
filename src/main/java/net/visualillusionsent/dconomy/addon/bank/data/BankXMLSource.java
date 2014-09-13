@@ -55,6 +55,7 @@ public final class BankXMLSource extends BankDataSource {
     private final SAXBuilder builder = new SAXBuilder();
     private final String bank_Path = ("config/dBankLite/bankaccounts.xml");
     private FileWriter writer;
+    private Document doc;
 
     public BankXMLSource(BankHandler bank_handler) {
         super(bank_handler);
@@ -69,10 +70,10 @@ public final class BankXMLSource extends BankDataSource {
         if (!bankFile.exists()) {
             dBankLiteBase.info("BankAccounts file not found. Creating...");
             Element accounts = new Element("bankaccounts");
-            Document root = new Document(accounts);
+            doc = new Document(accounts);
             try {
                 writer = new FileWriter(bank_Path);
-                outputter.output(root, writer);
+                outputter.output(doc, writer);
             }
             catch (IOException e) {
                 ex = e;
@@ -95,7 +96,9 @@ public final class BankXMLSource extends BankDataSource {
         }
         else {
             try {
-                Document doc = builder.build(bankFile);
+                if (doc == null) {
+                    doc = builder.build(bankFile);
+                }
                 Element root = doc.getRootElement();
                 List<Element> accounts = root.getChildren();
                 for (Element account : accounts) {
@@ -103,9 +106,7 @@ public final class BankXMLSource extends BankDataSource {
                     UUID ownerUUID;
                     if (Tools.isUserName(owner)) {
                         ownerUUID = dCoBase.getServer().getUUIDFromName(owner);
-                        if (ownerUUID == null) {
-                            ownerUUID = UUID.nameUUIDFromBytes("OfflinePlayer:".concat(owner).getBytes());
-                        }
+                        account.detach(); // Remove the old account
                     }
                     else {
                         ownerUUID = UUID.fromString(owner);
@@ -135,7 +136,9 @@ public final class BankXMLSource extends BankDataSource {
         synchronized (lock) {
             File bankFile = new File(bank_Path);
             try {
-                Document doc = builder.build(bankFile);
+                if (doc == null) {
+                    doc = builder.build(bankFile);
+                }
                 Element root = doc.getRootElement();
                 List<Element> accounts = root.getChildren();
                 boolean found = false;
@@ -195,7 +198,9 @@ public final class BankXMLSource extends BankDataSource {
         synchronized (lock) {
             File bankFile = new File(bank_Path);
             try {
-                Document doc = builder.build(bankFile);
+                if (doc == null) {
+                    doc = builder.build(bankFile);
+                }
                 Element root = doc.getRootElement();
                 List<Element> accounts = root.getChildren();
                 for (Element account : accounts) {
@@ -224,8 +229,5 @@ public final class BankXMLSource extends BankDataSource {
             }
         }
         return success;
-    }
-
-    public final void cleanUp() {
     }
 }

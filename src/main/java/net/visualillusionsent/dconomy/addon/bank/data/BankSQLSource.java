@@ -39,6 +39,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class BankSQLSource extends BankDataSource {
@@ -56,6 +58,7 @@ public abstract class BankSQLSource extends BankDataSource {
         ResultSet rs = null;
         int load = 0;
         boolean success = true;
+        HashMap<String, UUID> queuedUpdate = new HashMap<String, UUID>();
         try {
             ps = conn.prepareStatement("SELECT * FROM `" + bank_table + "`");
             rs = ps.executeQuery();
@@ -64,9 +67,7 @@ public abstract class BankSQLSource extends BankDataSource {
                 UUID ownerUUID;
                 if (Tools.isUserName(owner)) {
                     ownerUUID = dCoBase.getServer().getUUIDFromName(owner);
-                    if (ownerUUID == null) {
-                        ownerUUID = UUID.nameUUIDFromBytes("OfflinePlayer:".concat(owner).getBytes());
-                    }
+                    queuedUpdate.put(owner, ownerUUID);
                 }
                 else {
                     ownerUUID = UUID.fromString(owner);
@@ -93,8 +94,35 @@ public abstract class BankSQLSource extends BankDataSource {
                 }
             }
             catch (AbstractMethodError e) {
-            } // SQLite weird stuff
+                // SQLite weird stuff
+            }
             catch (Exception e) {
+                //
+            }
+        }
+        // I have no clue if this will work...
+        if (!queuedUpdate.isEmpty()) {
+            try {
+                ps = conn.prepareStatement("UPDATE `" + bank_table + "` SET `owner`=? WHERE `owner`=?");
+                for (Map.Entry<String, UUID> entry : queuedUpdate.entrySet()) {
+                    ps.setString(1, entry.getValue().toString());
+                    ps.setString(2, entry.getKey());
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+            }
+            catch (SQLException sqlex) {
+                dCoBase.severe("Failed to update owners of BankAccounts... Old data and duplicates are likely to have occured...");
+            }
+            finally {
+                try {
+                    if (ps != null) {
+                        ps.close();
+                    }
+                }
+                catch (SQLException sqlex) {
+                    //
+                }
             }
         }
         return success;
