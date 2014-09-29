@@ -1,5 +1,5 @@
-;# ${name} - Language Configuration File
-;# Copyright © ${copyright.years} Visual Illusions Entertainment
+;# dBankLite - Language Configuration File
+;# Copyright © 2013-${current.year} Visual Illusions Entertainment
 ;# Licensed under the ${license}
 ;# This file NEEDS to be in UTF-8 format!
 ;# This file tells VIUtils which languages are supported

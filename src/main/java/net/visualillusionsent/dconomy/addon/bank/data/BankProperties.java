@@ -32,6 +32,7 @@ import net.visualillusionsent.utils.JarUtils;
 import net.visualillusionsent.utils.PropertiesFile;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * dBankLite Properties
@@ -51,7 +52,12 @@ public class BankProperties {
         }
         File real = new File(configDir.concat("settings.cfg"));
         if (!real.exists()) {
-            FileUtils.cloneFileFromJar(JarUtils.getJarPath(getClass()), "resources/default_config.cfg", configDir.concat("settings.cfg"));
+            try {
+                FileUtils.cloneFileFromJar(JarUtils.getJarPath(getClass()), "resources/default_config.cfg", configDir.concat("settings.cfg"));
+            }
+            catch (IOException e) {
+                // Doesn't matter
+            }
         }
         propsFile = new PropertiesFile(configDir.concat("settings.cfg"));
         testProperties();

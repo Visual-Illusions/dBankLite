@@ -1,6 +1,6 @@
-;# ${name} - Canary Plugin Configuration File
-;# Copyright © ${copyright.years} Visual Illusions Entertainment
-;# Licensed under the ${license}
+;# dBankLite - Canary Plugin Configuration File
+;# Copyright © 2013-${current.year} Visual Illusions Entertainment
+;# Licensed under the BSD 3-Clause License
 
 name=${name}
 main-class=${canary.main.class}
