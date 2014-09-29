@@ -33,6 +33,9 @@ import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.utils.BooleanUtils;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankLockCommand extends BankCommand {
 
     public BankLockCommand(BankHandler bank_handler) {

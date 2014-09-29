@@ -48,6 +48,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankXMLSource extends BankDataSource {
     private final DataLock lock = new DataLock();
     private final Format xmlform = Format.getPrettyFormat().setExpandEmptyElements(false).setOmitDeclaration(true).setOmitEncoding(true).setLineSeparator(SystemUtils.LINE_SEP);

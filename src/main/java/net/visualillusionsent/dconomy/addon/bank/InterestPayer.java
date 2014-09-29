@@ -33,6 +33,9 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import java.util.TimerTask;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 final class InterestPayer extends TimerTask {
 
     private final dBankLiteBase base;

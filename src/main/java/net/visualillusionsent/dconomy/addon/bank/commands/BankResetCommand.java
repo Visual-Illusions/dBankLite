@@ -36,6 +36,9 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_RESET;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankResetCommand extends BankCommand {
 
     public BankResetCommand(BankHandler bank_handler) {

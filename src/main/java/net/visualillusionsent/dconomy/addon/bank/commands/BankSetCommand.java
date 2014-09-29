@@ -36,6 +36,9 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_SET;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankSetCommand extends BankCommand {
 
     public BankSetCommand(BankHandler bank_handler) {

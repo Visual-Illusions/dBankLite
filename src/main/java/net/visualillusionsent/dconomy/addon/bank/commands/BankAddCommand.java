@@ -36,6 +36,9 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_ADD;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankAddCommand extends BankCommand {
 
     public BankAddCommand(BankHandler bank_handler) {

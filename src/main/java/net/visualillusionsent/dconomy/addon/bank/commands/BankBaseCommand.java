@@ -33,6 +33,9 @@ import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankBaseCommand extends BankCommand {
 
     public BankBaseCommand(BankHandler bank_handler) {

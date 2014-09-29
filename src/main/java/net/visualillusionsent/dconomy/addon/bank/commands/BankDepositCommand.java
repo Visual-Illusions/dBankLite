@@ -42,6 +42,9 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.DEPOSIT;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankDepositCommand extends BankCommand {
     private final dBankLite dbl;
 

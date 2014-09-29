@@ -45,6 +45,9 @@ import java.util.List;
 
 import static net.visualillusionsent.dconomy.addon.bank.commands.BankPermissions.*;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPluginInformationCommand implements CommandListener {
 
     private final dConomyCommand[] cmds = new dConomyCommand[9];
@@ -178,6 +181,6 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
 
     @TabComplete(commands = {"bank"})
     public final List<String> bankComp(MessageReceiver msgrec, String[] args) {
-        return TabCompleteUtil.match(getUser(msgrec), args);
+        return BankTabComplete.match(getUser(msgrec), args);
     }
 }

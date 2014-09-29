@@ -36,6 +36,11 @@ import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPlugi
 
 import java.util.UUID;
 
+/**
+ * dBankLite Main Canary Plugin
+ *
+ * @author Jason (darkdiplomat)
+ */
 public final class CanaryBankLite extends VisualIllusionsCanaryPlugin implements dBankLite {
     private dBankLiteBase base;
 

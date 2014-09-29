@@ -32,6 +32,9 @@ import net.visualillusionsent.dconomy.addon.bank.dBankLiteBase;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankReloadCommand extends BankCommand {
 
     public BankReloadCommand(BankHandler bank_handler) {

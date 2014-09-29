@@ -41,6 +41,9 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class dBankLiteBase {
     private final float dCoVersion = 3.0F;
     private final long dCoRevision = 0;

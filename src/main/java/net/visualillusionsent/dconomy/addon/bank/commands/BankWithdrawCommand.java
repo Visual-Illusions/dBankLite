@@ -42,6 +42,9 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.WITHDRAW;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankWithdrawCommand extends BankCommand {
     private final dBankLite dbl;
 

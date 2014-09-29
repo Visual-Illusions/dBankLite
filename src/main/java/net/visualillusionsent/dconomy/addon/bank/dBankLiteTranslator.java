@@ -32,6 +32,9 @@ import net.visualillusionsent.minecraft.plugin.ChatFormat;
 import net.visualillusionsent.minecraft.plugin.MessageTranslator;
 import net.visualillusionsent.minecraft.plugin.VisualIllusionsPlugin;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class dBankLiteTranslator extends MessageTranslator {
 
     dBankLiteTranslator(dBankLite dBankLite) {

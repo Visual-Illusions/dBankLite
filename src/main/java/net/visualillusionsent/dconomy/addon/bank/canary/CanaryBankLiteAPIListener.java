@@ -52,6 +52,11 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.canarymod.plugin.Priority.PASSIVE;
 
+/**
+ * dBankLite Canary API Listener Tracker
+ *
+ * @author Jason (darkdiplomat)
+ */
 public final class CanaryBankLiteAPIListener implements PluginListener {
 
     CanaryBankLiteAPIListener(CanaryBankLite dBL) {

@@ -35,6 +35,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankMySQLSource extends BankSQLSource {
 
     public BankMySQLSource(BankHandler bank_handler) {

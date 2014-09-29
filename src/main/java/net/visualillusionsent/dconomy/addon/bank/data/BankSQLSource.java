@@ -43,6 +43,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public abstract class BankSQLSource extends BankDataSource {
     private final DataLock lock = new DataLock();
     protected Connection conn;

@@ -31,6 +31,9 @@ import net.visualillusionsent.dconomy.api.dConomyAddOn;
 
 import java.util.logging.Logger;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public interface dBankLite extends dConomyAddOn {
 
     Logger getPluginLogger();

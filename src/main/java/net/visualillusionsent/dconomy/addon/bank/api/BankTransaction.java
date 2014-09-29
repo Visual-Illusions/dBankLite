@@ -47,6 +47,11 @@ package net.visualillusionsent.dconomy.addon.bank.api;
 import net.visualillusionsent.dconomy.api.account.AccountTransaction;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 
+/**
+ * dBankLite Bank Transaction
+ *
+ * @author Jason (darkdiplomat)
+ */
 public final class BankTransaction extends AccountTransaction {
 
     public BankTransaction(dConomyUser admin, dConomyUser owner, BankAction action, double amount) {

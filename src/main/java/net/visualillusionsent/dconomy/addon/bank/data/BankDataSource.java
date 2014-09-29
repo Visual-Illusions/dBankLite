@@ -31,6 +31,9 @@ import net.visualillusionsent.dconomy.addon.bank.accounting.BankAccount;
 import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.data.dCoDataSource;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public abstract class BankDataSource implements dCoDataSource<BankAccount> {
     final BankHandler bank_handler;
 

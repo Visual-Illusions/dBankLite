@@ -36,6 +36,9 @@ import net.visualillusionsent.dconomy.dCoBase;
 
 import static net.visualillusionsent.dconomy.addon.bank.api.BankAction.ADMIN_REMOVE;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankRemoveCommand extends BankCommand {
 
     public BankRemoveCommand(BankHandler bank_handler) {

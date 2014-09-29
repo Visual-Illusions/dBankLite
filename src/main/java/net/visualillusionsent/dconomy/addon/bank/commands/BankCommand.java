@@ -31,11 +31,7 @@ import net.visualillusionsent.dconomy.addon.bank.accounting.BankHandler;
 import net.visualillusionsent.dconomy.commands.dConomyCommand;
 
 /**
- * Created with IntelliJ IDEA.
- * User: darkdiplomat
- * Date: 10/23/13
- * Time: 1:20 AM
- * To change this template use File | Settings | File Templates.
+ * @author Jason (darkdiplomat)
  */
 abstract class BankCommand extends dConomyCommand {
     protected final BankHandler bank_handler;

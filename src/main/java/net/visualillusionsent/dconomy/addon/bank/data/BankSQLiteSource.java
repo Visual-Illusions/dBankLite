@@ -34,6 +34,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * @author Jason (darkdiplomat)
+ */
 public final class BankSQLiteSource extends BankSQLSource {
 
     private static BankSQLiteSource $;
