@@ -16,7 +16,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <canary.main.class>${project.groupId}.dconomy.addon.bank.canary.CanaryBankLite</canary.main.class>
         <vimcplugin.version>1.1.0</vimcplugin.version>
-        <dCo.version>3.0.0</dCo.version>
+        <dCo.version>3.0.1</dCo.version>
         <status.url>http://status.visualillusionsent.net/</status.url>
         <devs>darkdiplomat</devs>
         <license>BSD 3-Clause License</license>

@@ -33,6 +33,7 @@ import net.visualillusionsent.dconomy.addon.bank.data.BankProperties;
 import net.visualillusionsent.dconomy.api.dConomyUser;
 import net.visualillusionsent.dconomy.dCoBase;
 import net.visualillusionsent.dconomy.logging.dCoLevel;
+import net.visualillusionsent.minecraft.plugin.PluginInitializationException;
 import net.visualillusionsent.utils.PropertiesFile;
 
 import java.util.Timer;
@@ -46,7 +47,6 @@ import java.util.regex.Pattern;
  */
 public final class dBankLiteBase {
     private final float dCoVersion = 3.0F;
-    private final long dCoRevision = 0;
     private final Logger logger;
     private final Timer timer;
     private final BankProperties props;
@@ -59,7 +59,11 @@ public final class dBankLiteBase {
     public dBankLiteBase(dBankLite dbanklite) {
         $ = this;
         this.logger = dbanklite.getPluginLogger();
-        if (dCoBase.isNewerThan(dCoVersion, dCoRevision)) {
+        System.out.println(dCoBase.getVersion());
+        if (!dCoBase.isNewerThan(3.0F, 1, true)) {
+            throw new PluginInitializationException("dBankLite requires dConomy 3.0.1 or newer to function...");
+        }
+        if (dCoBase.isNewerThan(dCoVersion, 0xDEAD, false)) {
             warning("dConomy appears to be a newer version. Incompatibility could result...");
         }
         props = new BankProperties();
