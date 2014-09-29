@@ -58,7 +58,7 @@ public class BankAccount extends Account {
      */
     public final void testDebit(double remove) throws AccountingException {
         if (locked) {
-            throw new AccountingException("error.lock.out", this.owner, "BANK ACCOUNT");
+            throw new AccountingException("error.account.lock", this.owner, "BANK ACCOUNT");
         }
         if (balance - remove < 0) {
             throw new AccountingException("error.no.money");
@@ -66,7 +66,7 @@ public class BankAccount extends Account {
     }
 
     /**
-     * Tests a debit before modifing the wallet
+     * Tests a debit before modifying the wallet
      *
      * @param remove
      *         the amount to test removal for
@@ -82,7 +82,7 @@ public class BankAccount extends Account {
     @Override
     public void testDeposit(double add) throws AccountingException {
         if (locked) {
-            throw new AccountingException("error.lock.out", this.owner, "BANK ACCOUNT");
+            throw new AccountingException("error.account.lock", this.owner, "BANK ACCOUNT");
         }
         super.testDeposit(add);
     }

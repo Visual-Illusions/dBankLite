@@ -56,16 +56,16 @@ public final class BankBaseCommand extends BankCommand {
             }
             theAccount = bank_handler.getBankAccount(theUser);
             if (theAccount.isLocked()) {
-                dBankLiteBase.translateErrorMessageFor(user, "error.lock.out", theUser.getUUID(), "BANK ACCOUNT");
+                dBankLiteBase.translateErrorMessageFor(user, "error.account.lock", theUser.getName(), "BANK ACCOUNT");
             }
             else {
-                dBankLiteBase.translateMessageFor(user, "account.balance.other", theUser.getUUID(), theAccount.getBalance());
+                dBankLiteBase.translateMessageFor(user, "account.balance.other", theUser.getName(), theAccount.getBalance());
             }
         }
         else {
             theAccount = bank_handler.getBankAccount(user);
             if (theAccount.isLocked()) {
-                dBankLiteBase.translateErrorMessageFor(user, "error.lock.out", user.getName(), "BANK ACCOUNT");
+                dBankLiteBase.translateErrorMessageFor(user, "error.account.lock", user.getName(), "BANK ACCOUNT");
             }
             else {
                 dBankLiteBase.translateMessageFor(user, "account.balance", Double.valueOf(theAccount.getBalance()), "BANK ACCOUNT");
