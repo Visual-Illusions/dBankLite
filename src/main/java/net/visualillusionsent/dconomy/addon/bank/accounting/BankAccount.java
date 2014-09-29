@@ -33,6 +33,11 @@ import net.visualillusionsent.dconomy.addon.bank.data.BankDataSource;
 
 import java.util.UUID;
 
+/**
+ * dBankLite Bank Account
+ *
+ * @author Jason (darkdiplomat)
+ */
 public class BankAccount extends Account {
 
     private boolean locked;

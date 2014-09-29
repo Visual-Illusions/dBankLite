@@ -15,8 +15,8 @@ Copyright © 2013-2014 Visual Illusions Entertainment
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <canary.main.class>${project.groupId}.dconomy.addon.bank.canary.CanaryBankLite</canary.main.class>
-        <vimcplugin.version>1.1.0-SNAPSHOT</vimcplugin.version>
-        <dCo.version>3.0.0-SNAPSHOT</dCo.version>
+        <vimcplugin.version>1.1.0</vimcplugin.version>
+        <dCo.version>3.0.0</dCo.version>
         <status.url>http://status.visualillusionsent.net/</status.url>
         <devs>darkdiplomat</devs>
         <license>BSD 3-Clause License</license>
@@ -80,7 +80,6 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                 CONTRACT, STRICT LIABILITY,
                 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
                 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
             </comments>
         </license>
     </licenses>
@@ -148,7 +147,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                         <![CDATA[Licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License v3</a>]]></footer>
                     <links>
                         <link>http://docs.visualillusionsent.net/dConomy/${dCo.version}/</link>
-                        <link>http://docs.visualillusionsent.net/CanaryLib/1.0.0/</link>
+                        <link>http://docs.visualillusionsent.net/CanaryLib/1.1.0/</link>
                     </links>
                 </configuration>
             </plugin>

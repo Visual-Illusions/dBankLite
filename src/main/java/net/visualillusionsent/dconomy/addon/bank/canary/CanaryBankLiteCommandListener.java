@@ -43,6 +43,8 @@ import net.visualillusionsent.minecraft.plugin.canary.VisualIllusionsCanaryPlugi
 
 import java.util.List;
 
+import static net.visualillusionsent.dconomy.addon.bank.commands.BankPermissions.*;
+
 public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPluginInformationCommand implements CommandListener {
 
     private final dConomyCommand[] cmds = new dConomyCommand[9];
@@ -65,8 +67,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             aliases = {"dbanklite"},
             description = "dBankLite Information Command",
             permissions = {""},
-            toolTip = "/dbanklite",
-            tabCompleteMethod = "bankComp"
+            toolTip = "/dbanklite"
     )
     public final void information(MessageReceiver msgrec, String[] args) {
         this.sendInformation(msgrec);
@@ -75,106 +76,107 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
     @Command(
             aliases = {"bank"},
             description = "dBankLite Bank Account balance display",
-            permissions = {"dconomy.bank.base"},
-            toolTip = "/bank"
+            permissions = {BANK$BASE},
+            toolTip = "/bank",
+            version = 2
     )
     public final void bankbase(MessageReceiver msgrec, String[] args) {
-        cmds[0].parseCommand(getUser(msgrec), args, true);
+        cmds[0].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"deposit"},
             description = "Bank Deposit command",
-            permissions = {"dconomy.bank.deposit"},
+            permissions = {BANK$DEPOSIT},
             toolTip = "/bank deposit <amount>",
             parent = "bank"
     )
     public final void bankdeposit(MessageReceiver msgrec, String[] args) {
-        cmds[1].parseCommand(getUser(msgrec), args, true);
+        cmds[1].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"withdraw"},
             description = "Bank withdraw command",
-            permissions = {"dconomy.bank.withdraw"},
+            permissions = {BANK$WITHDRAW},
             toolTip = "/bank withdraw <amount>",
             parent = "bank"
     )
     public final void bankwithdraw(MessageReceiver msgrec, String[] args) {
-        cmds[2].parseCommand(getUser(msgrec), args, true);
+        cmds[2].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"add"},
             description = "Bank add command",
-            permissions = {"dconomy.admin.bank"},
+            permissions = {BANK$ADMIN$ADD},
             toolTip = "/bank add <amount> <user>",
             parent = "bank"
     )
     public final void bankadd(MessageReceiver msgrec, String[] args) {
-        cmds[3].parseCommand(getUser(msgrec), args, true);
+        cmds[3].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"remove"},
             description = "Bank remove command",
-            permissions = {"dconomy.admin.bank"},
+            permissions = {BANK$ADMIN$REMOVE},
             toolTip = "/bank remove <amount> <user>",
             parent = "bank"
     )
     public final void bankremove(MessageReceiver msgrec, String[] args) {
-        cmds[4].parseCommand(getUser(msgrec), args, true);
+        cmds[4].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"set"},
             description = "Bank set command",
-            permissions = {"dconomy.admin.bank"},
+            permissions = {BANK$ADMIN$SET},
             toolTip = "/bank set <amount> <user>",
             parent = "bank"
     )
     public final void bankset(MessageReceiver msgrec, String[] args) {
-        cmds[5].parseCommand(getUser(msgrec), args, true);
+        cmds[5].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"reset"},
             description = "Bank reset command",
-            permissions = {"dconomy.admin.bank"},
+            permissions = {BANK$ADMIN$RESET},
             toolTip = "/bank reset <user>",
             parent = "bank"
     )
     public final void bankreset(MessageReceiver msgrec, String[] args) {
-        cmds[6].parseCommand(getUser(msgrec), args, true);
+        cmds[6].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"reload"},
             description = "Bank reload command",
-            permissions = {"dconomy.admin.bank"},
+            permissions = {BANK$ADMIN$RELOAD},
             toolTip = "/bank reload <user>",
             parent = "bank"
     )
     public final void bankreload(MessageReceiver msgrec, String[] args) {
-        cmds[7].parseCommand(getUser(msgrec), args, true);
+        cmds[7].parseCommand(getUser(msgrec), args, false);
     }
 
     @Command(
             aliases = {"lock"},
             description = "Bank lock command",
-            permissions = {"dconomy.admin.bank"},
+            permissions = {BANK$ADMIN$LOCK},
             toolTip = "/bank lock <yes|no> <user>",
             parent = "bank"
     )
     public final void banklock(MessageReceiver msgrec, String[] args) {
-        cmds[8].parseCommand(getUser(msgrec), args, true);
+        cmds[8].parseCommand(getUser(msgrec), args, false);
     }
 
     private dConomyUser getUser(MessageReceiver msgrec) {
         return msgrec instanceof Player ? new Canary_User((Player) msgrec) : dCoBase.getServer();
     }
 
-    @TabComplete
+    @TabComplete(commands = {"bank"})
     public final List<String> bankComp(MessageReceiver msgrec, String[] args) {
         return TabCompleteUtil.match(getUser(msgrec), args);
     }

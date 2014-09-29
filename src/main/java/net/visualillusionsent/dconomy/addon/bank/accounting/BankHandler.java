@@ -42,7 +42,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Bank Handler class<br>
+ * Bank Handler class<br />
  * manages Bank Accounts
  *
  * @author Jason (darkdiplomat)
