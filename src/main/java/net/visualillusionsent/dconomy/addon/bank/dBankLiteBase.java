@@ -46,7 +46,6 @@ import java.util.regex.Pattern;
  * @author Jason (darkdiplomat)
  */
 public final class dBankLiteBase {
-    private final float dCoVersion = 3.0F;
     private final Logger logger;
     private final Timer timer;
     private final BankProperties props;
@@ -59,11 +58,10 @@ public final class dBankLiteBase {
     public dBankLiteBase(dBankLite dbanklite) {
         $ = this;
         this.logger = dbanklite.getPluginLogger();
-        System.out.println(dCoBase.getVersion());
-        if (!dCoBase.isNewerThan(3.0F, 1, true)) {
+        if (!dCoBase.isNewerThan(3.0F, 0, true)) {
             throw new PluginInitializationException("dBankLite requires dConomy 3.0.1 or newer to function...");
         }
-        if (dCoBase.isNewerThan(dCoVersion, 0xDEAD, false)) {
+        if (dCoBase.isNewerThan(3.0F, 0xDEAD, false)) {
             warning("dConomy appears to be a newer version. Incompatibility could result...");
         }
         props = new BankProperties();
@@ -118,37 +116,37 @@ public final class dBankLiteBase {
         }
     }
 
-    public final static void info(String msg) {
+    public static void info(String msg) {
         $.logger.info(msg);
     }
 
-    public final static void info(String msg, Throwable thrown) {
+    public static void info(String msg, Throwable thrown) {
         $.logger.log(Level.INFO, msg, thrown);
     }
 
-    public final static void warning(String msg) {
+    public static void warning(String msg) {
         $.logger.warning(msg);
     }
 
-    public final static void warning(String msg, Throwable thrown) {
+    public static void warning(String msg, Throwable thrown) {
         $.logger.log(Level.WARNING, msg, thrown);
     }
 
-    public final static void severe(String msg) {
+    public static void severe(String msg) {
         $.logger.severe(msg);
     }
 
-    public final static void severe(String msg, Throwable thrown) {
+    public static void severe(String msg, Throwable thrown) {
         $.logger.log(Level.SEVERE, msg, thrown);
     }
 
-    public final static void stacktrace(Throwable thrown) {
+    public static void stacktrace(Throwable thrown) {
         if (dCoBase.getProperties().getBooleanValue("debug.enabled")) {
             $.logger.log(dCoLevel.STACKTRACE, "Stacktrace: ", thrown);
         }
     }
 
-    public final static void debug(String msg) {
+    public static void debug(String msg) {
         if (dCoBase.getProperties().getBooleanValue("debug.enabled")) {
             $.logger.log(dCoLevel.GENERAL, msg);
         }
@@ -164,7 +162,7 @@ public final class dBankLiteBase {
         }
     }
 
-    private final long getInitialStart() {
+    private long getInitialStart() {
         if (timer_reset.containsKey("bank.timer.reset")) {
             long reset = timer_reset.getLong("bank.timer.reset") - System.currentTimeMillis();
             if (reset < 0) {
@@ -181,7 +179,7 @@ public final class dBankLiteBase {
         }
     }
 
-    private final long getInterestInterval() {
+    private long getInterestInterval() {
         return $.props.getLong("interest.pay.interval") * 60000;
     }
 
