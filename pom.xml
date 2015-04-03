@@ -11,7 +11,7 @@ Copyright © 2013-2015 Visual Illusions Entertainment
     <inceptionYear>2013</inceptionYear>
     <groupId>net.visualillusionsent</groupId>
     <artifactId>dbanklite</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <canary.main.class>${project.groupId}.dconomy.addon.bank.canary.CanaryBankLite</canary.main.class>
