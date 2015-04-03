@@ -1,7 +1,7 @@
 /*
  * This file is part of dBankLite.
  *
- * Copyright © 2013-2014 Visual Illusions Entertainment
+ * Copyright © 2013-2015 Visual Illusions Entertainment
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -92,6 +92,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank Deposit command",
             permissions = {BANK$DEPOSIT},
             toolTip = "/bank deposit <amount>",
+            helpLookup = "bank deposit",
             parent = "bank"
     )
     public final void bankdeposit(MessageReceiver msgrec, String[] args) {
@@ -103,6 +104,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank withdraw command",
             permissions = {BANK$WITHDRAW},
             toolTip = "/bank withdraw <amount>",
+            helpLookup = "bank withdraw",
             parent = "bank"
     )
     public final void bankwithdraw(MessageReceiver msgrec, String[] args) {
@@ -114,6 +116,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank add command",
             permissions = {BANK$ADMIN$ADD},
             toolTip = "/bank add <amount> <user>",
+            helpLookup = "bank add",
             parent = "bank"
     )
     public final void bankadd(MessageReceiver msgrec, String[] args) {
@@ -125,6 +128,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank remove command",
             permissions = {BANK$ADMIN$REMOVE},
             toolTip = "/bank remove <amount> <user>",
+            helpLookup = "bank remove",
             parent = "bank"
     )
     public final void bankremove(MessageReceiver msgrec, String[] args) {
@@ -136,6 +140,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank set command",
             permissions = {BANK$ADMIN$SET},
             toolTip = "/bank set <amount> <user>",
+            helpLookup = "bank set",
             parent = "bank"
     )
     public final void bankset(MessageReceiver msgrec, String[] args) {
@@ -147,6 +152,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank reset command",
             permissions = {BANK$ADMIN$RESET},
             toolTip = "/bank reset <user>",
+            helpLookup = "bank reset",
             parent = "bank"
     )
     public final void bankreset(MessageReceiver msgrec, String[] args) {
@@ -158,6 +164,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank reload command",
             permissions = {BANK$ADMIN$RELOAD},
             toolTip = "/bank reload <user>",
+            helpLookup = "bank reload",
             parent = "bank"
     )
     public final void bankreload(MessageReceiver msgrec, String[] args) {
@@ -169,6 +176,7 @@ public final class CanaryBankLiteCommandListener extends VisualIllusionsCanaryPl
             description = "Bank lock command",
             permissions = {BANK$ADMIN$LOCK},
             toolTip = "/bank lock <yes|no> <user>",
+            helpLookup = "bank lock",
             parent = "bank"
     )
     public final void banklock(MessageReceiver msgrec, String[] args) {

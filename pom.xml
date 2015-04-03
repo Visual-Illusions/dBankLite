@@ -1,6 +1,6 @@
 <!--
 dBankLite Maven POM File
-Copyright © 2013-2014 Visual Illusions Entertainment
+Copyright © 2013-2015 Visual Illusions Entertainment
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -15,14 +15,15 @@ Copyright © 2013-2014 Visual Illusions Entertainment
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <canary.main.class>${project.groupId}.dconomy.addon.bank.canary.CanaryBankLite</canary.main.class>
-        <vimcplugin.version>1.1.0</vimcplugin.version>
-        <dCo.version>3.0.1</dCo.version>
+        <mcpluginlib.version>1.2.0</mcpluginlib.version>
+        <dCo.version>3.0.2</dCo.version>
         <status.url>http://status.visualillusionsent.net/</status.url>
         <devs>darkdiplomat</devs>
         <license>BSD 3-Clause License</license>
         <plugin.version>${project.version}</plugin.version>
         <copyright.years>${project.inceptionYear}-${current.year}</copyright.years>
         <build.number/>
+        <build.number.display/>
         <!-- Jar Signing -->
         <keystore.path/>
         <keystore.alias/>
@@ -52,7 +53,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
             <name>BSD 3-Clause License</name>
             <url>http://www.gnu.org/licenses/gpl.html</url>
             <comments>
-                Copyright © 2013-2014 Visual Illusions Entertainment
+                Copyright © 2013-2015 Visual Illusions Entertainment
                 All rights reserved.
 
                 Redistribution and use in source and binary forms, with or without modification,
@@ -117,8 +118,8 @@ Copyright © 2013-2014 Visual Illusions Entertainment
         </dependency>
         <dependency>
             <groupId>net.visualillusionsent</groupId>
-            <artifactId>vimcplugin</artifactId>
-            <version>${vimcplugin.version}</version>
+            <artifactId>mcpluginlib</artifactId>
+            <version>${mcpluginlib.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -147,7 +148,7 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                         <![CDATA[Licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License v3</a>]]></footer>
                     <links>
                         <link>http://docs.visualillusionsent.net/dConomy/${dCo.version}/</link>
-                        <link>http://docs.visualillusionsent.net/CanaryLib/1.1.0/</link>
+                        <link>http://docs.visualillusionsent.net/CanaryLib/1.2.0/</link>
                     </links>
                 </configuration>
             </plugin>
@@ -197,8 +198,6 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                     <properties>
                         <name>${project.name}</name>
                         <years>${project.inceptionYear}-${current.year}</years>
-                        <gpl.type>GNU General Public License</gpl.type>
-                        <license.url>http://www.gnu.org/licenses/gpl.html</license.url>
                     </properties>
                     <includes>
                         <include>src/main/java/**</include>
@@ -226,7 +225,8 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                 </property>
             </activation>
             <properties>
-                <build.number>-jnks${BUILD_NUMBER}</build.number>
+                <build.number>${BUILD_NUMBER}</build.number>
+                <build.number.display>-b${BUILD_NUMBER}</build.number.display>
             </properties>
         </profile>
         <profile>
@@ -247,16 +247,17 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                                     <goal>shade</goal>
                                 </goals>
                                 <configuration>
-                                    <finalName>${project.name}-${project.version}${build.number}-universal</finalName>
+                                    <finalName>${project.name}-${project.version}${build.number.display}-universal
+                                    </finalName>
                                     <artifactSet>
                                         <includes>
                                             <!-- Only need to shade the VIMCPlugin stuff -->
-                                            <include>net.visualillusionsent:vimcplugin</include>
+                                            <include>net.visualillusionsent:mcpluginlib</include>
                                         </includes>
                                     </artifactSet>
                                     <filters>
                                         <filter>
-                                            <artifact>net.visualillusionsent:vimcplugin</artifact>
+                                            <artifact>net.visualillusionsent:mcpluginlib</artifact>
                                             <includes>
                                                 <!-- Always include the license stuff -->
                                                 <include>META-INF/license/**</include>
@@ -331,16 +332,17 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                                     <goal>shade</goal>
                                 </goals>
                                 <configuration>
-                                    <finalName>${project.name}-${project.version}${build.number}-canary</finalName>
+                                    <finalName>${project.name}-${project.version}${build.number.display}-canary
+                                    </finalName>
                                     <artifactSet>
                                         <includes>
                                             <!-- Only need to shade the VIMCPlugin stuff -->
-                                            <include>net.visualillusionsent:vimcplugin</include>
+                                            <include>net.visualillusionsent:mcpluginlib</include>
                                         </includes>
                                     </artifactSet>
                                     <filters>
                                         <filter>
-                                            <artifact>net.visualillusionsent:vimcplugin</artifact>
+                                            <artifact>net.visualillusionsent:mcpluginlib</artifact>
                                             <includes>
                                                 <!-- Always include the license stuff -->
                                                 <include>META-INF/license/**</include>
@@ -350,8 +352,8 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                                                 <include>net/visualillusionsent/minecraft/plugin/**</include>
                                             </includes>
                                             <excludes>
-                                                <!-- Bukkit is not used in this artifact -->
-                                                <exclude>net/visualillusionsent/minecraft/plugin/bukkit/**</exclude>
+                                                <!-- Sponge not yet implemented -->
+                                                <exclude>net/visualillusionsent/minecraft/plugin/sponge/**</exclude>
                                             </excludes>
                                         </filter>
                                     </filters>
@@ -374,11 +376,11 @@ Copyright © 2013-2014 Visual Illusions Entertainment
                         <artifactId>maven-jar-plugin</artifactId>
                         <version>2.4</version>
                         <configuration>
-                            <!-- Don't include Bukkit specific things in a Canary Jar -->
+                            <!-- Don't include Sponge specific things in a Canary Jar -->
+                            <!-- There are none currently - ->
                             <excludes>
-                                <exclude>net/visualillusionsent/dconomy/addon/bank/bukkit/</exclude>
-                                <exclude>plugin.yml</exclude>
                             </excludes>
+                            -->
                             <archive>
                                 <addMavenDescriptor>false</addMavenDescriptor>
                                 <manifest>

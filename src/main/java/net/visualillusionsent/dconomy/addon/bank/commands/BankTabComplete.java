@@ -1,7 +1,7 @@
 /*
  * This file is part of dBankLite.
  *
- * Copyright © 2013-2014 Visual Illusions Entertainment
+ * Copyright © 2013-2015 Visual Illusions Entertainment
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
